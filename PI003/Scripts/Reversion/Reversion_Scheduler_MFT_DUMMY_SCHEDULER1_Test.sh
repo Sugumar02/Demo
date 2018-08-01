@@ -1,1 +1,1 @@
-fteDeleteScheduledTransfer -agentName FTE_LOCAL_FTP -m QDT1MFT1 6
+fteDeleteScheduledTransfer -agentName FTE_LOCAL_FTP -m QDT1MFT1 10
