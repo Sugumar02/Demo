@@ -8,7 +8,7 @@
             <destinationAgent QMgr="QDT1MFT1" agent="FTE_LOCAL_FTP"/>
 			<transferSet>
 				<preSourceCall>	 
-				<command name="PreSource_MONITOR_FOR_DUMMY1.sh" retryCount="0" retryWait="0" successRC="0" type="executable">
+				<command name="PreSource_MONITOR_FOR_DUMMY1_Test.sh" retryCount="0" retryWait="0" successRC="0" type="executable">
 				</command>
 			</preSourceCall>
               <item checksumMethod="MD5" mode="binary">
