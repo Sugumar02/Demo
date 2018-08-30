@@ -8,6 +8,7 @@ if [[ "$#" = 0 || "$1" = '-?' || "$1" = '?' || "$1" = '-help' || "$1" = 'help' ]
      exit 0
 fi
 
+
 qmgr=$1
 clustname=$2
 CENV='echo $qmgr | cut -c-2'
