@@ -1,0 +1,1 @@
+fteDeleteMonitor -p QDT1MFT1 -mn MONITOR_FOR_DUMMY1 -ma FTE_LOCAL_FTP
