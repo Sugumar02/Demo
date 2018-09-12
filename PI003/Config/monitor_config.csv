@@ -1,0 +1,9 @@
+Env,DepType,ScriptName,FilePath,MonitorXml,MonitorAgent,MonitorName,MonitorQmanager,MonitorQueue,CoordinationQmanager,MonitorDir,TriggerCond,PollingInterval,PollingUnit,ConfigQmanager,BatchTask,PatternType
+Dev,Reversion,RevertMonitorScript.sh,/var/mqm/Monitor,TASKXML.xml,WIN_AGENT,MONITOR_FOR_TEST,MFT1,,MFT2,/temp/temp/temp/,"noSizeChange=2,*.json",1,minutes,MFT2,1,regex
+Dev,Creation,MonitorScript.sh,/var/mqm/Monitor,TASKXML.xml,WIN_AGENT,MONITOR_FOR_TEST,MFT1,,MFT2,/temp/temp/temp/,"noSizeChange=2,*.json",1,minutes,MFT2,1,regex
+Test,Reversion,RevertMonitorScript.sh,/var/mqm/Monitor,TASKXML.xml,WIN_AGENT,MONITOR_FOR_TEST,MFT1,,MFT2,/temp/temp/temp/,"noSizeChange=2,*.json",1,minutes,MFT2,1,regex
+Test,Creation,MonitorScript.sh,/var/mqm/Monitor,TASKXML.xml,WIN_AGENT,MONITOR_FOR_TEST,MFT1,,MFT2,/temp/temp/temp/,"noSizeChange=2,*.json",1,minutes,MFT2,1,regex
+Prod,Reversion,RevertMonitorScript.sh,/var/mqm/Monitor,TASKXML.xml,WIN_AGENT,MONITOR_FOR_TEST,MFT1,,MFT2,/temp/temp/temp/,"noSizeChange=2,*.json",1,minutes,MFT2,1,regex
+Prod,Creation,MonitorScript.sh,/var/mqm/Monitor,TASKXML.xml,WIN_AGENT,MONITOR_FOR_TEST,MFT1,,MFT2,/temp/temp/temp/,"noSizeChange=2,*.json",1,minutes,MFT2,1,regex
+Pre-Prod,Reversion,RevertMonitorScript.sh,/var/mqm/Monitor,TASKXML.xml,WIN_AGENT,MONITOR_FOR_TEST,MFT1,,MFT2,/temp/temp/temp/,"noSizeChange=2,*.json",1,minutes,MFT2,1,regex
+Pre-Prod,Creation,MonitorScript.sh,/var/mqm/Monitor,TASKXML.xml,WIN_AGENT,MONITOR_FOR_TEST,MFT1,,MFT2,/temp/temp/temp/,"noSizeChange=2,*.json",1,minutes,MFT2,1,regex

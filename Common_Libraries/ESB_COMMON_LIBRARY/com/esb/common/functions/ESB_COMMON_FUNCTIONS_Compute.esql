@@ -1,0 +1,11 @@
+BROKER SCHEMA com.esb.common.functions
+/*
+* Date 			ProjectName 				Name 				Version 			Description
+26/05/2017 		ESB-Cherwell Integration 	Vidya Ravisankar 	0.1 				Initial Draft - Added two procedures 
+																					encrypt and decrypt which will call respective 
+																					java routines for encryption and decryption of a string
+*/
+	
+	CREATE PROCEDURE encrypt(IN OriginalString CHAR) RETURNS CHAR LANGUAGE JAVA	EXTERNAL NAME "com.esb.java.esbJavaRoutines.encrypt";
+	CREATE PROCEDURE decrypt(IN encryptedString CHAR) RETURNS CHAR LANGUAGE JAVA EXTERNAL NAME "com.esb.java.esbJavaRoutines.decrypt";
+
