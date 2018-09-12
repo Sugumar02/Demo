@@ -2,20 +2,6 @@
 	<creds>
 		<password>xCwCRcLo3yge9+ZXSHIU4A==</password>
 	</creds>
-	<interface id = "PI174">
-		<object>
-			<objectName>esb.primark.core.CORE_GL_JOURNALS_MF</objectName>
-			<objectName>MONITOR_FOR_CORE_PI174_ESB</objectName>
-			<description>
-				<source>WINDOWS FILE SERVER-IEDU0WVPAPP014</source>
-				<target>ORACLE [of-prod-scan:1521]</target>
-				<interfaceId>PI174</interfaceId>
-				<interfaceName>GL JOURNALS</interfaceName>
-				<cmdbEntryName>PI174-DUBSUN-NFS-ESB-ORACLE</cmdbEntryName>
-				<businessImpact>Employee payroll will be impacted for the Ireland/UK region</businessImpact>
-			</description>
-		</object>
-	</interface>
 	<interface id = "PI175">
 		<object>
 			<objectName>MFT_ORACLEHUB_PI175_NFS</objectName>
@@ -357,7 +343,7 @@
 			</description>
 		</object>
 	</interface>
-		<interface id = "PI218">
+	<interface id = "PI218">
 		<object>
 			<objectName>ADRA_AMEX_GL_MF</objectName>
 			<objectName>ADRA_RECON_STMTS_MF</objectName> 
@@ -398,7 +384,7 @@
 			</description>
 		</object>
 	</interface>
-	
+
 	<interface id = "PI224">
 		<object>
 			<objectName>MFT_TERADATA001_PI226_SALESLOAD_IPP</objectName>
