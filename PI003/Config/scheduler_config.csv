@@ -1,9 +1,0 @@
-Env,DepType,ScriptName,SourceAgent,SourceQmanager,DestAgent,DestQmanager,SourcePath,DestPath,Interval,JobName,Severity,SchDateTime,OccurFreq,ConfigQmanager,SourceDisp,DestExists,PreSourceCall,PreDestCall,PostSourceCall,PostDestCall
-Dev,Reversion,RevertSchedulerScript.sh,MFT01,MFT01,,,,,,MFT_DUMMY,,,,MFT01,leave,overwrite,DUMMY.sh,,,
-Dev,Creation,SchedulerScript.sh,MFT01,MFT01,MFT01,MFT01,/home/TEST/test/*.txt,/home/MQFTE_LINUX,days,MFT_DUMMY,2,2014-09-29T23:45,5,MFT01,leave,overwrite,DUMMY.sh,,,
-Test,Reversion,RevertSchedulerScript.sh,MFT01,MFT01,,,,,,MFT_DUMMY,,,,MFT01,leave,overwrite,DUMMY.sh,,,
-Test,Creation,SchedulerScript.sh,MFT01,MFT01,MFT01,MFT01,/home/TEST/test/*.txt,/home/MQFTE_LINUX,days,MFT_DUMMY,2,2014-09-29T23:45,5,MFT01,leave,overwrite,DUMMY.sh,,,
-PreProd,Reversion,RevertSchedulerScript.sh,MFT01,MFT01,,,,,,MFT_DUMMY,,,,MFT01,leave,overwrite,DUMMY.sh,,,
-PreProd,Creation,SchedulerScript.sh,MFT01,MFT01,MFT01,MFT01,/home/TEST/test/*.txt,/home/MQFTE_LINUX,days,MFT_DUMMY,2,2014-09-29T23:45,5,MFT01,leave,overwrite,DUMMY.sh,,,
-Prod,Reversion,RevertSchedulerScript.sh,MFT01,MFT01,,,,,,MFT_DUMMY,,,,MFT01,leave,overwrite,DUMMY.sh,,,
-Prod,Creation,SchedulerScript.sh,MFT01,MFT01,MFT01,MFT01,/home/TEST/test/*.txt,/home/MQFTE_LINUX,days,MFT_DUMMY,2,2014-09-29T23:45,5,MFT01,leave,overwrite,DUMMY.sh,,,
