@@ -1,0 +1,5 @@
+#!/bin/sh
+git pull origin master
+git push origin master
+curl --user sugumar:b8bb2e3323e418ed24d3bced867a0083 http://10.144.23.80:8004/job/Git_Auto_Trigger/build?token=Local_Auto_Trigger
+echo "success"
