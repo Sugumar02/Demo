@@ -1,0 +1,164 @@
+BROKER SCHEMA pib.wms.asn
+PATH pib.esb.common;
+
+/* --------------------------------------------------------------------------------------------------
+		Program Details:
+		----------------
+		This Interface will receive external trigger and poll the Database to reads the contents of the data 
+		and creates the XML file.
+		----------------------------------------------------------------------------------------------------
+		Version:     		Initials:   Date:       	Description:
+		--------     		---------   -----      		------------
+		Revision  1.0  		RBH     	16/02/2018     	Initial version of the file.
+
+		----------------------------------------------------------------------------------------------------*/
+		
+
+CREATE COMPUTE MODULE ESB_RP_ASN_1217_AGGREGATION_CaptureBusinessData
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+
+		DECLARE envRef REFERENCE TO Environment;
+	
+		CREATE FIELD envRef.Variables AS envRef;
+		--SET envRef.BussinessInfo.MessageId 	= UUIDASCHAR;-- For Audit Purpose
+		SET envRef.MessageId			= UUIDASCHAR;-- For Audit Purpose
+		
+		RETURN TRUE;
+	
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE ESB_RP_ASN_1217_AGGREGATION_Aggregation
+	DECLARE WhDepotsFolder 		SHARED CHARACTER;
+	DECLARE WhDepotsList 		SHARED ROW;
+	
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+	
+		DECLARE envRef,envDepotsRef,envDepotRef1	REFERENCE TO Environment.Variables;
+		DECLARE dataRef 							REFERENCE TO envRef;
+		DECLARE outRef,outMsgRef					REFERENCE TO OutputRoot;
+		DECLARE localEnvRef							REFERENCE TO OutputLocalEnvironment;
+		DECLARE charDate,charTime					CHARACTER '';
+				
+		SET outRef.Properties.CodedCharSetId 		= PCC_GetUTF8CCSID();
+		SET envRef.AuditName 						= 'File Written';
+		SET charDate								= CAST(CURRENT_DATE AS CHARACTER FORMAT 'yyyyMMdd');
+		SET charTime 								= CAST(CURRENT_TIMESTAMP AS CHARACTER FORMAT 'HHmmss');		
+		
+		-- Get the base folder where the files will be written to. Will be /home/ftpuser/<env>/out/rp/ASN/
+		IF COALESCE(WhDepotsFolder, '') = '' THEN
+   			SET WhDepotsFolder = TRIM(THE(SELECT ITEM T.VALUE
+										   	 FROM Database.dbo.ESB_OBJ_XREF_VALUES AS T 
+								 			 WHERE T.ID = 'RPAsn' AND
+								 			 	   T.OBJECT = 'Depot Folder' AND
+								 			 	   T.TYPE = 'Location'));
+		END IF;		
+		
+		-- Retrives all the RP_DEPOTS id values from Database.
+		IF CARDINALITY(WhDepotsList.Data[]) = 0 THEN
+   			SET WhDepotsList.Data[] = SELECT T.VALUE FROM Database.dbo.ESB_OBJ_XREF_VALUES AS T 
+								 	  WHERE T.ID 	= 'RP_DEPOTS' 
+								 	  AND T.OBJECT 	= 'Red Prarie Depots' 
+								 	  AND T.TYPE 	= 'List';
+		END IF;
+			
+		-- Parses the list received from the database.
+		CALL ParseTokenList(WhDepotsList.Data.VALUE, envDepotsRef);
+		MOVE envDepotRef1 TO envDepotsRef.Variables.Record.Token[1];
+		
+		WHILE LASTMOVE(envDepotRef1) DO
+			
+			-- Set the flag to W(Working) for this record(s) so it can be selected later for update. Other records may be inserted via Insert service in Consumer flow, in between this processing which
+			-- we don't want to affect.
+			UPDATE Database.dbo.ESB_AGGREGATION_LOGGER AS P SET STATUS_FLAG = 'W' WHERE
+				(P.INTERFACE_ID = '1217' AND P.STATUS_FLAG = 'N' AND P.UNIQUE_ID = envDepotRef1);
+			COMMIT;
+
+			SET envRef.Asn.Row[] = PASSTHRU('SELECT * FROM dbo.ESB_AGGREGATION_LOGGER WITH (NOLOCK) WHERE
+				(INTERFACE_ID = ''1217'' AND STATUS_FLAG = ''W'' AND UNIQUE_ID = ?)', envDepotRef1);
+			
+			IF EXISTS(envRef.Asn.Row[]) THEN
+				CALL CopyMessageHeaders();
+				CREATE LASTCHILD OF outRef AS outRef DOMAIN 'XMLNSC';
+				
+				SET outRef.(XMLNSC.XmlDeclaration)*.(XMLNSC.Attribute)Version = '1.0';
+				SET outRef.(XMLNSC.XmlDeclaration)*.(XMLNSC.Attribute)Encoding = 'UTF-8';
+				
+				CREATE LASTCHILD OF outRef AS outRef NAME 'RCPT_INB_IFD';
+			
+				MOVE dataRef TO envRef.Asn.Row[1];
+				
+				-- Create the output message
+				WHILE LASTMOVE(dataRef) DO
+					CREATE LASTCHILD OF envRef DOMAIN 'XMLNSC' PARSE(dataRef.MESSAGE CCSID PCC_GetUTF8CCSID() ENCODING InputRoot.Properties.Encoding);
+					CREATE LASTCHILD OF outRef AS outMsgRef FROM envRef.XMLNSC.CTRL_SEG;
+					DELETE FIELD envRef.XMLNSC;
+				
+					MOVE dataRef NEXTSIBLING REPEAT TYPE NAME;
+				END WHILE;
+			
+				DELETE FIELD envRef.Asn;
+				
+				-- Create file name
+				SET localEnvRef.Destination.File.Name 	= 'asn'||charDate||charTime||'.xml';
+				
+				-- Write file to that Red Prarie DHL Depot. Will be of format /home/ftpuser/<env>/out/rp/Asn/depot<depotid>
+				-- Set the filename folder destination.
+				SET localEnvRef.Destination.File.Directory =  WhDepotsFolder || 'depot' || envDepotRef1;
+
+				-- Used to update the status once the file has been written successfully.
+				SET envRef.Depot = envDepotRef1;
+				
+				-- Audit the File contents
+				PROPAGATE TO LABEL 'Logger' DELETE NONE;
+				
+				PROPAGATE TO TERMINAL 'out';
+			
+			END IF;	
+		
+			MOVE envDepotRef1 NEXTSIBLING REPEAT TYPE NAME;
+		END WHILE;	
+
+		-- Send a ping back to the Automic Reply Queue to indicate that this Aggregation job is complete. Even if no Aggrgation is performed, still send ping back
+		-- which is why we do here and not at the end of aggregationn, since there may have been none.
+		PROPAGATE TO TERMINAL 'out2' DELETE NONE;
+
+		RETURN FALSE;
+		
+	END;
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_RP_ASN_1217_AGGREGATION_UpdateDBStatus
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE envRef REFERENCE TO Environment.Variables;
+
+		UPDATE Database.dbo.ESB_AGGREGATION_LOGGER AS P SET STATUS_FLAG = 'Y', EXTRACTION_TIMESTAMP = CURRENT_TIMESTAMP WHERE
+			(P.INTERFACE_ID = '1217' AND P.STATUS_FLAG = 'W' AND P.UNIQUE_ID = envRef.Depot);
+
+	    RETURN TRUE;
+	END;
+END MODULE;

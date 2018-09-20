@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--RedPrarie Corp.
+
+W3C XML Schema for IFD [UC_INV_RECONCILIATION_IFD] Version [PRI_V1.0]
+
+Assumptions:
+- Parent Tag []
+- Show ifd tag [T]
+- Envelope IFD [] Version []
+
+IFD Description: Inventory Reconciliation IFD-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="UC_INV_RECONCILIATION_IFD">
+<xsd:annotation>
+<xsd:documentation>Inventory Reconciliation IFD</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="CTRL_SEG">
+<xsd:annotation>
+<xsd:documentation>Control Segment</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element fixed="INVENTORY RECONCILIATION" minOccurs="0" name="TRNNAM">
+<xsd:annotation>
+<xsd:documentation>Transaction Name</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element fixed="0002" minOccurs="0" name="TRNVER">
+<xsd:annotation>
+<xsd:documentation>Transaction Version</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="INVENTORY_RECONCILIATION_SEG">
+<xsd:annotation>
+<xsd:documentation>Inventory Reconciliation IFD</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="LOCATION">
+<xsd:annotation>
+<xsd:documentation>Warehouse ID</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ITEM_ID">
+<xsd:annotation>
+<xsd:documentation>Part Number</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TOTAL_QTY">
+<xsd:annotation>
+<xsd:documentation>Unit Quantity</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TSF_RESERVED_QTY" type="xsd:decimal">
+<xsd:annotation>
+<xsd:documentation>Allocated Quantity</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="NON_SELLABLE_QTY" type="xsd:decimal">
+<xsd:annotation>
+<xsd:documentation>Quantity On Hold</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="RTV_QTY" type="xsd:decimal">
+<xsd:annotation>
+<xsd:documentation>RTV Quantity</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="FINISHER_UNITS" type="xsd:decimal">
+<xsd:annotation>
+<xsd:documentation>Total WIP Quantity</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="AVAILABLE_QTY" type="xsd:decimal">
+<xsd:annotation>
+<xsd:documentation>Available Quantity</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="PACK_IND">
+<xsd:annotation>
+<xsd:documentation>Pack Indicator</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>

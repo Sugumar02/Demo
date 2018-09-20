@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/base/bo/XOrderRef/v1" version="1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/integration/base/bo/XOrderRef/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="XOrderDtlRef">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="item" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>An approved, transaction level item. If a pack, it must be an orderable pack (with an order_as_type of 'P').</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="location" type="xs:long">
+                            <xs:annotation>
+                                <xs:documentation>An active store or warehouse. If multichannel is on, and a warehouse is being order to, a virtual warehouse is expected.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ref_item" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The id of a reference item which can be used instead of using the item field. If the item field is not populated this field is required.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="XOrderRef">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="order_no" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The unique identifier for the order.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:XOrderDtlRef">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attempt_rms_load" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field indicates if the order will be created in RMS or the staging tables. Valid values are RMS or STG. If not defined, the default is STG.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>

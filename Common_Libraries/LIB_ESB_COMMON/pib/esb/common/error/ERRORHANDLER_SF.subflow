@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmFilter.msgnode="ComIbmFilter.msgnode" xmlns:ComIbmFlowOrder.msgnode="ComIbmFlowOrder.msgnode" xmlns:ComIbmMQOutput.msgnode="ComIbmMQOutput.msgnode" xmlns:ComIbmResetContentDescriptor.msgnode="ComIbmResetContentDescriptor.msgnode" xmlns:ComIbmThrow.msgnode="ComIbmThrow.msgnode" xmlns:ComIbmTryCatch.msgnode="ComIbmTryCatch.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:pib_esb_common_ESB_FailureHandler_SF.subflow="pib/esb/common/ESB_FailureHandler_SF.subflow" xmlns:pib_esb_common_sequence_ESB_SEQUENCE_ERROR_SF.subflow="pib/esb/common/sequence/ESB_SEQUENCE_ERROR_SF.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="pib/esb/common/error/ERRORHANDLER_SF.subflow" nsPrefix="pib_esb_common_error_ERRORHANDLER_SF.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_ProjectName" name="UDP_ProjectName" defaultValueLiteral="&lt;ProjectName>">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_InterfaceName" name="UDP_InterfaceName" defaultValueLiteral="&lt;InterfaceName>">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_InterfaceId" name="UDP_InterfaceId" lowerBound="1" defaultValueLiteral="XXXX">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_SourceAppln" name="UDP_SourceAppln" defaultValueLiteral="&lt;SourceAppln>">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_TargetAppln" name="UDP_TargetAppln" defaultValueLiteral="&lt;TargetAppln>">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_LoggingType" name="UDP_LoggingType" defaultValueLiteral="DATABASE">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_Emailcc" name="UDP_Emailcc" defaultValueLiteral="imathy@primark.co.uk,suraja@primark.co.uk,vravisankar@primark.co.uk">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_EmailErrorMessageString" name="UDP_EmailErrorMessageString" lowerBound="1" defaultValueLiteral="&lt;EmailErrorMessageString>">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_EmailFrom" name="UDP_EmailFrom" lowerBound="1" defaultValueLiteral="admin@primark.co.uk">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_EmailToIf_DBDown" name="UDP_EmailToIf_DBDown" lowerBound="1" defaultValueLiteral="kmanivannan@primark.co.uk">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_FailedMessageRequired" name="UDP_FailedMessageRequired" lowerBound="1" defaultValueLiteral="Y">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_Severity" name="UDP_Severity" lowerBound="1" defaultValueLiteral="3">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="ERRORHANDLER_SF" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LIB_ESB_COMMON/icons/full/obj16/ERRORHANDLER_SF.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LIB_ESB_COMMON/icons/full/obj30/ERRORHANDLER_SF.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="17,196">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="609,212" computeExpression="esql://routine/pib.esb.common.error#ERRORHANDLER_SF_GenerateErrorAndEmailMessage.Main" computeMode="all">
+        <translation xmi:type="utility:ConstantString" string="Generate Error And Email Message"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="851,109" queueName="ESB.AUDIT.IN" transactionMode="no" validateMaster="none">
+        <translation xmi:type="utility:ConstantString" string="Error Logging Queue"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="851,320" queueName="ESB.EMAIL.IN" transactionMode="no" validateMaster="none">
+        <translation xmi:type="utility:ConstantString" string="Email Logging Queue"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="852,213" destinationMode="list" transactionMode="no">
+        <translation xmi:type="utility:ConstantString" string="Error Message Queue"/>
+      </nodes>
+      <nodes xmi:type="ComIbmResetContentDescriptor.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="505,208" messageDomain="BLOB" resetMessageDomain="true">
+        <translation xmi:type="utility:ConstantString" string="Reset To BLOB"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFlowOrder.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="242,204">
+        <translation xmi:type="utility:ConstantString" string="Flow Order1"/>
+      </nodes>
+      <nodes xmi:type="ComIbmThrow.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="377,343">
+        <translation xmi:type="utility:ConstantString" string="Throw"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTryCatch.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="373,204">
+        <translation xmi:type="utility:ConstantString" string="Try Catch"/>
+      </nodes>
+      <nodes xmi:type="pib_esb_common_ESB_FailureHandler_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_11" location="516,118">
+        <translation xmi:type="utility:ConstantString" string="Failure Handler"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFilter.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="232,48" dataSource="ESBDB" filterExpression="esql://routine/pib.esb.common.error#ERRORHANDLER_SF_LogSequenceError.Main">
+        <translation xmi:type="utility:ConstantString" string="Log Sequence Error ?"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFlowOrder.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="103,196">
+        <translation xmi:type="utility:ConstantString" string="Flow Order"/>
+      </nodes>
+      <nodes xmi:type="pib_esb_common_sequence_ESB_SEQUENCE_ERROR_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_12" location="397,56">
+        <translation xmi:type="utility:ConstantString" string="Log Sequence Error"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.second" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.first" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_13" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_10" sourceTerminalName="OutTerminal.try" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_11" sourceNode="FCMComposite_1_10" sourceTerminalName="OutTerminal.catch" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out2" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_6" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.first" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_9" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.second" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.true" targetTerminalName="InTerminal.Input1"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_ProjectName">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_ProjectName" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+        <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_InterfaceName">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_InterfaceName" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+          <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_InterfaceId">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_InterfaceId" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+            <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_SourceAppln">
+              <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_SourceAppln" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+              <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_TargetAppln">
+                <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_TargetAppln" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+                <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_LoggingType">
+                  <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_LoggingType" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+                  <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_Emailcc">
+                    <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_Emailcc" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+                    <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_EmailErrorMessageString">
+                      <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_EmailErrorMessageString" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+                      <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_EmailFrom">
+                        <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_EmailFrom" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+                        <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_EmailToIf_DBDown">
+                          <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_EmailToIf_DBDown" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+                          <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_FailedMessageRequired">
+                            <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_FailedMessageRequired" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+                            <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.UDP_Severity">
+                              <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_Severity" bundleName="pib/esb/common/error/ERRORHANDLER_SF" pluginId="LIB_ESB_COMMON"/>
+                            </propertyDescriptor>
+                          </propertyDescriptor>
+                        </propertyDescriptor>
+                      </propertyDescriptor>
+                    </propertyDescriptor>
+                  </propertyDescriptor>
+                </propertyDescriptor>
+              </propertyDescriptor>
+            </propertyDescriptor>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

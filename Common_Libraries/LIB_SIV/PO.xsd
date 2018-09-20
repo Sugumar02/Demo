@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+	<xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="IBMdefined/RecordSeparatedFieldFormat.xsd"/>
+	<xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format encoding="{$dfdl:encoding}" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element ibmSchExtn:docRoot="true" name="SIVPO">
+		<xsd:annotation/>
+		<xsd:complexType>
+			<xsd:sequence dfdl:initiatedContent="no" dfdl:separator="%NL;%WSP*;" dfdl:separatorSuppressionPolicy="anyEmpty">
+				<xsd:element dfdl:initiator="FilHdr|" maxOccurs="1" name="FileHeader">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="%#124;">
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="Filename" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="FileDate" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="FileTime" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="PO">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="%CR;%LF;" dfdl:separatorPosition="infix">
+							<xsd:element dfdl:initiator="Header|" name="POHeader">
+								<xsd:complexType>
+									<xsd:sequence dfdl:separator="%#124;">
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="POC" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="DestinationCountry" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="OrderType" type="xsd:string"/>
+										<xsd:element name="SourceSystem" type="xsd:string"/>
+										<xsd:element default="" name="TransactionType" type="xsd:string"/>
+										<xsd:element name="ToPhysicalLocation" type="xsd:string"/>
+										<xsd:element name="FromPhysicalLocation" type="xsd:string"/>
+										<xsd:element name="PaymentTerms" type="xsd:string"/>
+										<xsd:element name="PaymentMethod" type="xsd:string"/>
+										<xsd:element name="ShippingTerms" type="xsd:string"/>
+										<xsd:element default="" name="ShippingMethod" type="xsd:string"/>
+										<xsd:element name="CartonSet" type="xsd:string"/>
+										<xsd:element default="" name="BuyerName" type="xsd:string"/>
+										<xsd:element name="OrderDate" type="xsd:string"/>
+										<xsd:element name="RequiredHandoverDate" type="xsd:string"/>
+										<xsd:element default="" name="RequiredDeliveryDate" type="xsd:string"/>
+										<xsd:element name="PortOfOriginCode" type="xsd:string"/>
+										<xsd:element default="" name="PortOfOriginDescription" type="xsd:string"/>
+										<xsd:element name="SupplierID" type="xsd:string"/>
+										<xsd:element default="" name="SupplierName" type="xsd:string"/>
+										<xsd:element default="" name="SupplierAddressLine1" type="xsd:string"/>
+										<xsd:element default="" name="SupplierAddressLine2" type="xsd:string"/>
+										<xsd:element default="" name="SupplierAddressLine3" type="xsd:string"/>
+										<xsd:element default="" name="SupplierAddressLine4" type="xsd:string"/>
+										<xsd:element default="" name="SupplierAddressCity" type="xsd:string"/>
+										<xsd:element default="" name="SupplierAddressState" type="xsd:string"/>
+										<xsd:element default="" name="SupplierAddressCountry" type="xsd:string"/>
+										<xsd:element default="" name="SupplierAddressCountryCode" type="xsd:string"/>
+										<xsd:element name="SupplierSiteID" type="xsd:string"/>
+										<xsd:element default="" name="SupplierSiteOrganisationalUnit" type="xsd:string"/>
+										<xsd:element default="" name="SupplierSiteBusinessUnit" type="xsd:string"/>
+										<xsd:element default="" name="FactoryID" type="xsd:string"/>
+										<xsd:element default="" name="FactoryName" type="xsd:string"/>
+										<xsd:element default="" name="FactoryAddressLine1" type="xsd:string"/>
+										<xsd:element default="" name="FactoryAddressLine2" type="xsd:string"/>
+										<xsd:element default="" name="FactoryAddressLine3" type="xsd:string"/>
+										<xsd:element default="" name="FactoryAddressLine4" type="xsd:string"/>
+										<xsd:element default="" name="FactoryAddressCity" type="xsd:string"/>
+										<xsd:element default="" name="FactoryAddressState" type="xsd:string"/>
+										<xsd:element default="" name="FactoryAddressCountry" type="xsd:string"/>
+										<xsd:element default="" name="FactoryAddressCountryCode" type="xsd:string"/>
+										<xsd:element name="NumberOfPacks" type="xsd:string"/>
+										<xsd:element name="SellingValue" type="xsd:string"/>
+										<xsd:element default="" name="SellingValueCurrencyCode" type="xsd:string"/>
+										<xsd:element name="TransferPrice" type="xsd:string"/>
+										<xsd:element name="TransferPriceCurrencyCode" type="xsd:string"/>
+										<xsd:element name="DepartmentNumber" type="xsd:string"/>
+										<xsd:element name="DepartmentDescription" type="xsd:string"/>
+										<xsd:element default="" name="ClassNumber" type="xsd:string"/>
+										<xsd:element default="" name="ClassDescription" type="xsd:string"/>
+										<xsd:element default="" name="SubclassNumber" type="xsd:string"/>
+										<xsd:element default="" name="SubclassDescription" type="xsd:string"/>
+										<xsd:element default="" name="SellingSeasonYear" type="xsd:string"/>
+										<xsd:element name="CurrencyCode" type="xsd:string"/>
+										<xsd:element default="" name="CertificateIssued" type="xsd:string"/>
+										<xsd:element default="" name="CertificateDate" type="xsd:string"/>
+										<xsd:element name="NewLineInd" type="xsd:string"/>
+										<xsd:element default="" name="Comments" type="xsd:string"/>
+										<xsd:element default="" name="CountryOfManufactoring" type="xsd:string"/>
+										<xsd:element default="" name="CountryOfManufactoringCode" type="xsd:string"/>
+                                        									<xsd:element default="" name="IncotermsLocation" type="xsd:string"/>
+                                        <xsd:element default="" name="LockedDate" type="xsd:string"/>
+                                    </xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element dfdl:initiator="Detail|" maxOccurs="unbounded" name="Detail">
+								<xsd:complexType>
+									<xsd:sequence dfdl:separator="%#124;">
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="POC" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="ORMSStyleCode" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="StyleDescription" type="xsd:string"/>
+										<xsd:element default="" dfdl:representation="text" dfdl:textStringJustification="center" name="StyleNumber" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="ORMSPackCode" type="xsd:string"/>
+										<xsd:element default="" dfdl:representation="text" dfdl:textStringJustification="center" name="PackGTIN" type="xsd:string"/>
+										<xsd:element default="" dfdl:representation="text" dfdl:textStringJustification="center" name="SuperSKUPrefix" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="ORMSSKUCode" type="xsd:string"/>
+										<xsd:element default="" dfdl:representation="text" dfdl:textStringJustification="center" name="ColourSizeCode" type="xsd:string"/>
+										<xsd:element default="" name="ORMSColourCode" type="xsd:string"/>
+										<xsd:element name="ColourDescription" type="xsd:string"/>
+										<xsd:element default="" name="ORMSSizeCode" type="xsd:string"/>
+										<xsd:element name="SizeDescription" type="xsd:string"/>
+										<xsd:element name="QuantityOfPacks" type="xsd:string"/>
+										<xsd:element name="QuantityOfSKU" type="xsd:string"/>
+										<xsd:element name="QuantityPerPack" type="xsd:string"/>
+										<xsd:element name="CustomsFriendlyDescription" type="xsd:string"/>
+										<xsd:element name="NumberOfPieces" type="xsd:string"/>
+										<xsd:element name="UnitCostPrice" type="xsd:string"/>
+										<xsd:element default="" name="PackDepth" type="xsd:string"/>
+										<xsd:element default="" name="PackWidth" type="xsd:string"/>
+										<xsd:element default="" name="PackHeight" type="xsd:string"/>
+										<xsd:element default="" name="PackDWHUOM" type="xsd:string"/>
+										<xsd:element default="" name="PackGrossWeight" type="xsd:string"/>
+										<xsd:element default="" name="PackNetWeight" type="xsd:string"/>
+										<xsd:element default="" name="PackWeightUOM" type="xsd:string"/>
+										<xsd:element default="" name="Hazardous" type="xsd:string"/>
+										<xsd:element default="" name="ProductType" type="xsd:string"/>
+										<xsd:element default="" name="ItemAttr1" type="xsd:string"/>
+										<xsd:element default="" name="ItemAttr2" type="xsd:string"/>
+										<xsd:element default="" name="ItemAttr3" type="xsd:string"/>
+										<xsd:element default="" name="ItemAttr4" type="xsd:string"/>
+										<xsd:element default="" name="ItemAttr5" type="xsd:string"/>
+										<xsd:element default="" name="ItemAttr6" type="xsd:string"/>
+										<xsd:element default="" name="ItemAttr7" type="xsd:string"/>
+										<xsd:element default="" name="ItemAttr8" type="xsd:string"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element dfdl:initiator="FilTrl|" maxOccurs="1" name="FileTrailer">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="%#124;">
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="RecordType1" type="xsd:string"/>
+							<xsd:element name="RecordCount1" type="xsd:string"/>
+							<xsd:element name="RecordType2" type="xsd:string"/>
+							<xsd:element name="RecordCount2" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

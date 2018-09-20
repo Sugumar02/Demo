@@ -1,0 +1,39 @@
+BROKER SCHEMA pib.esb.common
+
+CREATE DATABASE MODULE ESB_FailureHandler_SF_CreateFailureMessage
+	CREATE FUNCTION Main() RETURNS BOOLEAN	
+	BEGIN
+		DECLARE rootRef, MQMDRef, MQRFH2Ref REFERENCE TO Root;
+
+		-- Delete any existing HTTP Headers.
+		SET rootRef.HTTPRequestHeader	= NULL;
+		SET rootRef.HTTPResponseHeader	= NULL;
+
+		-- Check if MQMD Header is there, if not create it.
+		IF CARDINALITY(rootRef.MQMD[]) = 0 THEN
+			CREATE NEXTSIBLING OF rootRef.Properties AS MQMDRef DOMAIN 'MQMD';
+		ELSE
+			MOVE MQMDRef TO rootRef.MQMD;
+		END IF;
+
+		-- Ensure we are using RF Header version 2
+    	SET MQMDRef.Format		= MQFMT_RF_HEADER_2;
+		SET MQMDRef.MsgType		= MQMT_DATAGRAM;
+
+		-- Check if MQRFH2 Header is there, if not create it.
+		IF CARDINALITY(rootRef.MQRFH2[]) = 0 THEN
+			CREATE NEXTSIBLING OF rootRef.MQMD AS MQRFH2Ref DOMAIN 'MQRFH2';
+		ELSE
+			MOVE MQRFH2Ref TO rootRef.MQRFH2;
+		END IF;
+
+		-- Add MQRFH2Ref usr folder to have Service Info, Status Info and the ExceptionList
+		SET MQRFH2Ref.usr.Timestamp				= CURRENT_TIMESTAMP;
+		SET MQRFH2Ref.usr.MessageFlow			= MessageFlowLabel;
+		IF CARDINALITY(ExceptionList.*[]) > 0 THEN
+			SET MQRFH2Ref.usr.ExceptionListDump = ExceptionList;
+		END IF;
+
+		RETURN TRUE;
+	END;
+END MODULE;

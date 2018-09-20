@@ -1,0 +1,423 @@
+BROKER SCHEMA pib.wms.asn
+PATH pib.rms.api.nbasn, pib.esb.common, pib.rms.api.nbtsf;
+
+/* --------------------------------------------------------------------------------------------------
+		Program Details:
+		----------------
+		This Interface will read the message which is subscribed to the topic,transforms the message 
+		from CDM format	and insert the data to the database.
+		----------------------------------------------------------------------------------------------------
+		Version:     		Initials:   Date:       	Description:
+		--------     		---------   -----      		------------
+		Revision  1.0  		RBH     	16/01/2018     	Initial version of the file.
+
+		----------------------------------------------------------------------------------------------------*/
+
+CREATE COMPUTE MODULE ESB_RPDHL_ASN_1235_CMF_CaptureBusinessData
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+
+		DECLARE envRef 	REFERENCE TO Environment;
+		DECLARE inRef 	REFERENCE TO InputRoot.XMLNSC;
+
+		CREATE FIELD Environment.Variables AS envRef;
+		
+		-- Storing the Input message in Environment for reference.  
+		SET envRef.inOrgMsg = inRef;
+
+		SET envRef.MessageId 	= inRef.ASN.FileName;
+		SET envRef.AuditName 	= 'CDM Subscriber Request';
+
+		-- Used when inserting to the DB
+		SET envRef.publishTime	= CAST(inRef.ASN.publishTime AS CHARACTER FORMAT 'yyyyMMddHHmmsss');
+		
+		-- Audit the message
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_RPDHL_ASN_1235_CMF_Build_ASNInfo_getTsf_Req
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE inRef,inRefDetail	REFERENCE TO InputRoot.XMLNSC;
+		DECLARE envRef				REFERENCE TO Environment.Variables;
+
+		-- Storing the Input message in Environment for reference.  
+		SET envRef.inOrgMsg = inRef;
+		
+		MOVE inRefDetail TO inRef.ASN.ASNOutDesc.ASNOutDistro;
+		
+		WHILE(LASTMOVE(inRefDetail)) DO
+			
+			SET envRef.DetOrdStatus = 'InProgress';
+			SET envRef.Temp.Detail_POCID = inRefDetail.distro_nbr;
+
+			-- Based on the order type appropriate procedure will be called.
+			IF (UPPER(inRefDetail.ASNOutCtn.ASNOutItem.ASNDetail.OrderType) = 'O') THEN
+				CALL GetASNInfoRequest();
+			ELSEIF(UPPER(inRefDetail.ASNOutCtn.ASNOutItem.ASNDetail.OrderType) = 'T') THEN
+				CALL GetTsfRequest();
+			END IF;	
+			
+			-- Move to the next detailed record.
+			MOVE inRefDetail NEXTSIBLING REPEAT TYPE NAME;
+		END WHILE;
+		
+		SET envRef.DetOrdStatus = 'Completed';
+		DELETE FIELD envRef.Temp;
+		 
+		-- Copy the properties from Input to Output 
+		SET OutputRoot.Properties = InputRoot.Properties;
+		PROPAGATE TO TERMINAL 'out3' DELETE NONE;
+		
+		RETURN FALSE;
+	END;
+	
+	CREATE PROCEDURE GetASNInfoRequest() 
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE envRef					REFERENCE TO Environment.Variables;
+		DECLARE outRef,outBody			REFERENCE TO OutputRoot;
+		DECLARE outLocalEnvRef			REFERENCE TO OutputLocalEnvironment;
+	
+		-- SOAP NameSpace declaration
+		DECLARE	nsNBASNService			NAMESPACE ESB_GetNamespaceNBASNService();
+		DECLARE	nsNBExtOfNBPORef		NAMESPACE ESB_GetNamespaceNBPORef();
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		-- Building the SOAP Request message for getPOInfo operation (ASN).
+		CREATE LASTCHILD OF outRef AS outRef DOMAIN 'SOAP';
+		
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBASNService;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBExtOfNBPORef;
+	
+		CREATE LASTCHILD OF outRef AS outBody NAME 'Body';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBASNService NAME 'getASNInfo';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBExtOfNBPORef NAME 'ExtOfNBPORef';
+		
+		SET outBody.{nsNBExtOfNBPORef}:order_no 				= envRef.Temp.Detail_POCID;
+		
+		SET outLocalEnvRef.Destination.SOAP.Request.Operation	= 'getASNInfo';
+		
+		-- Audit the message 
+	 	SET envRef.AuditName 		= 'RMS API Request';
+	 	SET envRef.KeyIdentifier	= 'getASNInfo';
+	 	
+	 	PROPAGATE TO LABEL 'Logger' DELETE NONE;
+	 		
+	 	--Service with operation type - getASNInfo
+		PROPAGATE TO TERMINAL 'out';
+	END;
+	
+	CREATE PROCEDURE GetTsfRequest() 
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE envRef				 	REFERENCE TO Environment.Variables;
+		DECLARE outLocalEnvRef			REFERENCE TO OutputLocalEnvironment;
+		DECLARE outRef 					REFERENCE TO OutputRoot;
+		
+		-- SOAP Name Spaces declaration
+		DECLARE nsNBTsfSvc 			NAMESPACE ESB_GetNamespaceNBTsfService();
+		DECLARE nsNBTsfRef			NAMESPACE ESB_GetNamespaceNBTsfRef();
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		-- Build the SOAP request to RMS (for getTsf operation).
+		CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'SOAP';
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBTsfSvc;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBTsfRef;
+			
+		SET outRef.Body.{nsNBTsfSvc}:getTsf.{nsNBTsfRef}:ExtOfNBTsfRef.{nsNBTsfRef}:tsf_no 	= envRef.Temp.Detail_POCID;
+		
+		SET outLocalEnvRef.Destination.SOAP.Request.Operation 								= 'getTsf';
+
+		-- Audit the message 
+		SET envRef.AuditName 		= 'RMS API Request';
+		SET envRef.KeyIdentifier	= 'getTsf';
+		
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+				
+		-- Service with operation type - getTsf
+		PROPAGATE TO TERMINAL 'out2';
+	END;		
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_RPDHL_ASN_1235_CMF_Build_GetDepo_Req
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Variable and Reference declarations.
+		/*DECLARE inRef							REFERENCE TO InputRoot.SOAP.Body;
+		DECLARE envRef,envDataRef,envHeaderRef,
+		envRespInfo								REFERENCE TO Environment.Variables;
+		DECLARE outRef,outBody					REFERENCE TO OutputRoot;
+		DECLARE outLocalEnvRef					REFERENCE TO OutputLocalEnvironment;
+	    
+		-- SOAP NameSpace declaration
+		DECLARE	nsNBWHService			NAMESPACE ESB_GetNamespaceNBWHService();
+		DECLARE	nsNBWHRef				NAMESPACE ESB_GetNamespaceNBWHRef();
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		IF(envRef.DetOrdStatus = 'InProgress') THEN
+			-- Storing the GetASNInfo/GetTsf Response message elements in Environment.
+			CREATE LASTCHILD OF envRef AS envDataRef NAME 'envRespInfo';
+			
+			IF(EXISTS(inRef.*:getASNInfoResponse[])) THEN
+				SET envDataRef.dept		= inRef.*:getASNInfoResponse.*:ExtOfNBASNInfoDesc.*:dept;
+				SET envDataRef.subclass = inRef.*:getASNInfoResponse.*:ExtOfNBASNInfoDesc.*:subclass;
+			ELSEIF(EXISTS(inRef.*:getTsfResponse[])) THEN 
+				SET envDataRef.dept		= inRef.*:getTsfResponse.*:ExtOfNBTsfDesc.*:ExtOfNBTsfDtl.*:dept;
+				SET envDataRef.subclass = inRef.*:getTsfResponse.*:ExtOfNBTsfDesc.*:ExtOfNBTsfDtl.*:subclass;
+			END IF;
+			
+			-- Audit the message 
+	 		--SET envRef.AuditName = 'RMS API Response';
+	 		--SET envRef.SessionCode = 'getTsf';
+	 	
+		 	--PROPAGATE TO LABEL 'Logger' DELETE NONE;
+				
+			RETURN FALSE;
+		END IF;
+		 
+		MOVE envHeaderRef TO envRef.inOrgMsg.ASN;
+		-- Building the SOAP Request message for getPOInfo operation (ASN).
+		CREATE LASTCHILD OF outRef AS outRef DOMAIN 'SOAP';
+		
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBWHService;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBWHRef;
+	
+		CREATE LASTCHILD OF outRef AS outBody NAME 'Body';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBWHService NAME 'getDepotsByCostZone';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBWHRef NAME 'ExtOfNBWHRef';
+		
+		SET outBody.{nsNBWHRef}:wh 						= envHeaderRef.ToPhysicalLocation;
+		
+		SET outLocalEnvRef.Destination.SOAP.Request.Operation	= 'getDepotsByCostZone';
+		
+		-- Audit the message 
+	 	SET envRef.AuditName 		= 'RMS API Request';
+	 	SET envRef.KeyIdentifier	= 'getDepotsByCostZone';
+	 	
+	 	PROPAGATE TO LABEL 'Logger' DELETE NONE;
+	 		
+	 	--Service with operation type - getDepotsByCostZone
+		RETURN TRUE;*/
+	END;
+
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_RPDHL_ASN_1235_CMF_TransformCDMToTarget
+	DECLARE WhDepotsList 		SHARED ROW; 	
+
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+		DECLARE inRef,inDepotRef							REFERENCE TO InputRoot.SOAP.Body;
+		DECLARE envRef,envHeaderRef,envDetailRef,
+				envProcDepo,envDataRef						REFERENCE TO Environment.Variables;		
+		DECLARE envDepotsRef 								REFERENCE TO Environment;
+		DECLARE outRef,outTruckRef							REFERENCE TO OutputRoot;
+		DECLARE intDetailCnt								INTEGER 1;
+		DECLARE inProDepot,intDBDepot						INTEGER 0;
+		
+		-- SOAP NameSpace declaration
+		--DECLARE	nsNBWHService			NAMESPACE ESB_GetNamespaceNBWHService(); 
+		--DECLARE	nsNBWHDesc				NAMESPACE ESB_GetNamespaceNBWHDesc();
+		--DECLARE	nsNBColWHDesc			NAMESPACE ESB_GetNamespaceNBColWHDesc();
+		
+		--MOVE inDepotRef TO inRef.{nsNBWHService}:getDepotsByCostZoneResponse.{nsNBColWHDesc}:ExtOfNBColWHDesc.{nsNBWHDesc}:ExtOfNBWHDesc[1];
+		MOVE envHeaderRef TO envRef.inOrgMsg.ASN;
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		IF(envRef.DetOrdStatus = 'InProgress') THEN
+			-- Storing the GetASNInfo/GetTsf Response message elements in Environment.
+			CREATE LASTCHILD OF envRef AS envDataRef NAME 'envRespInfo';
+			
+			IF(EXISTS(inRef.*:getASNInfoResponse[])) THEN
+				SET envDataRef.dept		= inRef.*:getASNInfoResponse.*:ExtOfNBASNInfoDesc.*:dept;
+				SET envDataRef.subclass = inRef.*:getASNInfoResponse.*:ExtOfNBASNInfoDesc.*:subclass;
+				SET envRef.SessionCode = 'getASNInfo';
+			ELSEIF(EXISTS(inRef.*:getTsfResponse[])) THEN 
+				SET envDataRef.dept		= inRef.*:getTsfResponse.*:ExtOfNBTsfDesc.*:ExtOfNBTsfDtl.*:dept;
+				SET envDataRef.subclass = inRef.*:getTsfResponse.*:ExtOfNBTsfDesc.*:ExtOfNBTsfDtl.*:subclass;
+				SET envRef.SessionCode = 'getTsf';
+			END IF;
+			
+			-- Copying the Entire message
+			CALL CopyEntireMessage();
+				
+			-- Audit the message 
+	 		SET envRef.AuditName = 'RMS API Response';
+	 	
+		 	PROPAGATE TO LABEL 'Logger' DELETE NONE;
+				
+			RETURN FALSE;
+		END IF;
+			
+		-- Retrives all the RPDHL_DEPOTS id values from Database. 
+		IF CARDINALITY(WhDepotsList.Data[]) = 0 THEN
+   			SET WhDepotsList.Data[] = SELECT T.VALUE FROM Database.dbo.ESB_OBJ_XREF_VALUES AS T 
+								 	  WHERE T.ID 	= 'RPDHL_DEPOTS' 
+								 	  AND T.OBJECT 	= 'Red Prarie DHL Depots' 
+								 	  AND T.TYPE 	= 'List';
+		END IF;
+		
+		-- Parses the list received from the database.
+		CALL ParseTokenList(WhDepotsList.Data.VALUE, envDepotsRef);
+		
+		-- For each depot received from getDepotsByCostZone
+		--WHILE (LASTMOVE(inDepotRef)) DO
+			-- Retrieve the processed Depot.
+			--SET inProDepot = SELECT COUNT(*) FROM envRef.DepotProcessed.Depots[] AS PI WHERE PI.DepotID = inDepotRef.{nsNBWHDesc}:physical_wh;
+			
+			-- Check for the Depot id NOT already processed.
+			--IF (inProDepot = 0) THEN
+				-- Check for that Depot id exists Cross reference list of Depots.
+				--SET intDBDepot =  SELECT COUNT(*) FROM envDepotsRef.Variables.Record.Token[] AS DP WHERE DP = inDepotRef.{nsNBWHDesc}:physical_wh;  
+				--IF(intDBDepot > 0) THEN
+					CALL CopyMessageHeaders();
+					--DELETE FIELD OutputRoot.HTTPResponseHeader;
+					
+					MOVE envDetailRef TO envRef.inOrgMsg.ASN.ASNOutDesc.ASNOutDistro;
+					
+					CREATE LASTCHILD OF outRef AS outRef DOMAIN 'XMLNSC';
+					CREATE LASTCHILD OF outRef AS outRef NAME 'CTRL_SEG';
+					
+					SET outRef.TRNNAM 			= 'RCPT_TRAN';
+					SET outRef.TRNVER 			= '2006.1';
+					SET outRef.WHSE_ID 			=  COALESCE(envHeaderRef.ToPhysicalLocation,'');
+					
+					SET outRef.RCPT_TRLR_SEG.SEGNAM 	= 'RECEIPT TRAILER';
+					SET outRef.RCPT_TRLR_SEG.TRNTYP 	= 'A';
+					SET outRef.RCPT_TRLR_SEG.TRLR_NUM 	= COALESCE(envHeaderRef.ContainerNumber,'');
+					SET outRef.RCPT_TRLR_SEG.CARCOD 	= COALESCE(envHeaderRef.ASNOutDesc.Carrier_code,'');
+					SET outRef.RCPT_TRLR_SEG.TRLR_SEAL1 = COALESCE(envHeaderRef.SealNumber,'');
+					
+					SET intDetailCnt 					= 1;
+					-- For each details record received in the Input message
+					WHILE(LASTMOVE(envDetailRef)) DO
+						CREATE LASTCHILD OF outRef AS outTruckRef NAME 'RCPT_TRUCK_SEG';
+	
+						SET outTruckRef.SEGNAM 						= 'RECEIPT TRUCK';
+						SET outTruckRef.TRNTYP 						= 'A';
+						SET outTruckRef.TRKNUM 						= COALESCE(envHeaderRef.ContainerNumber,'');
+						SET outTruckRef.NUMCAS 						= COALESCE(envHeaderRef.UnitsShipped,'');
+						SET outTruckRef.RCPT_INVOICE_SEG.SEGNAM 	= 'RECEIPT INVOICE';
+						SET outTruckRef.RCPT_INVOICE_SEG.TRNTYP 	= 'A';
+						SET outTruckRef.RCPT_INVOICE_SEG.INVNUM 	= COALESCE(envDetailRef.distro_nbr,'');
+						SET outTruckRef.RCPT_INVOICE_SEG.SUPNUM 	= COALESCE(envDetailRef.ASNOutCtn.ASNOutItem.ASNDetail.SupplierCode,'');
+						SET outTruckRef.RCPT_INVOICE_SEG.CLIENT_ID 	= '----';
+					
+						IF (UPPER(envDetailRef.ASNOutCtn.ASNOutItem.ASNDetail.OrderType)= 'O') THEN
+							SET outTruckRef.RCPT_INVOICE_SEG.INVTYP = 'P';
+						ELSEIF (UPPER(envDetailRef.ASNOutCtn.ASNOutItem.ASNDetail.OrderType)= 'T') THEN
+							SET outTruckRef.RCPT_INVOICE_SEG.INVTYP = 'WW';
+						END IF;		
+					
+						--1652
+						IF(LENGTH(CAST(envRef.envRespInfo[intDetailCnt].dept AS CHAR)) = 1)  THEN
+							SET outTruckRef.RCPT_INVOICE_SEG.SADNUM 			=  '0'||CAST(envRef.envRespInfo[intDetailCnt].dept AS CHAR);
+						ELSE
+							SET outTruckRef.RCPT_INVOICE_SEG.SADNUM 			=  CAST(envRef.envRespInfo[intDetailCnt].dept AS CHAR);
+						END IF;	
+						
+						SET outTruckRef.RCPT_INVOICE_SEG.WAYBIL 				=  COALESCE(envHeaderRef.ASNOutDesc.asn_nbr,'');
+						
+						--1652
+						IF(LENGTH(CAST(envRef.envRespInfo[intDetailCnt].subclass AS CHAR)) = 1)  THEN
+							SET outTruckRef.RCPT_INVOICE_SEG.ORGREF		=  '00'||CAST(envRef.envRespInfo[intDetailCnt].subclass AS CHAR);
+						ELSEIF(LENGTH(CAST(envRef.envRespInfo[intDetailCnt].subclass AS CHAR)) = 2) THEN
+							SET outTruckRef.RCPT_INVOICE_SEG.ORGREF 	=  '0'||CAST(envRef.envRespInfo[intDetailCnt].subclass AS CHAR);
+						ELSE	
+							SET outTruckRef.RCPT_INVOICE_SEG.ORGREF 	=  CAST(envRef.envRespInfo[intDetailCnt].subclass AS CHAR);
+						END IF;	
+				
+						SET outTruckRef.RCPT_INVOICE_SEG.SHIP_ID 				=  COALESCE(envHeaderRef.ASNOutDesc.asn_nbr,'');
+						SET outTruckRef.RCPT_INVOICE_SEG.UC_INVNUM 			  	=  COALESCE(envDetailRef.ASNOutCtn.ASNOutItem.ASNDetail.ASNID,'');
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.SEGNAM 	= 'RECEIPT LINE';
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.TRNTYP 	= 'A';
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.INVLIN 	= intDetailCnt; 
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.INVSLN 	= '0000';
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.EXPQTY 	= envDetailRef.ASNOutCtn.ASNOutItem.unit_qty;
+						
+						IF NOT EXISTS(outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.EXPQTY[]) THEN
+							SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.EXPQTY.(XMLNSC.NamespaceDecl)xmlns:xsi = 'http://www.w3.org/2001/XMLSchema-instance';
+							SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.EXPQTY.(XMLNSC.Attribute)"xsi:nil" = 'true';
+						END IF;
+						
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.PRTNUM 	= COALESCE(envDetailRef.ASNOutCtn.ASNOutItem.item_id,'');  
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.ORGCOD 	= '----';
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.REVLVL 	= '----';
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.LOTNUM 	= '----';
+						SET outTruckRef.RCPT_INVOICE_SEG.RCPT_LINE_SEG.RCVSTS 	= 'U';
+				
+						SET intDetailCnt = intDetailCnt +1;
+					 MOVE envDetailRef NEXTSIBLING REPEAT TYPE NAME;
+					END WHILE;
+				
+					--CREATE LASTCHILD OF envRef.DepotProcessed AS envProcDepo NAME 'Depots';
+					--SET envProcDepo.DepotID = inDepotRef.{nsNBWHDesc}:physical_wh;
+					
+					-- Audit the message 
+		 			SET envRef.AuditName = 'Target Depot Message';
+		 			
+		 			PROPAGATE TO LABEL 'Logger' DELETE NONE;
+					
+					PROPAGATE TO TERMINAL 'out';
+				--END IF; 
+			--END IF;	
+			
+			-- Move to the next Depot id  
+			--MOVE inDepotRef NEXTSIBLING REPEAT TYPE NAME;
+				
+		--END WHILE;
+	
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+	
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+	
+END MODULE;
+
+
+CREATE DATABASE MODULE ESB_RPDHL_ASN_1235_CMF_InsertToDB
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN ATOMIC
+		DECLARE envRef 	REFERENCE TO Environment.Variables;
+		DECLARE inRef	REFERENCE TO Root.XMLNSC.CTRL_SEG;
+		DECLARE msgBlob BLOB;
+		DECLARE msgChar CHARACTER;
+
+		SET msgBlob = ASBITSTREAM(Body);
+		SET msgChar = CAST(msgBlob AS CHARACTER CCSID Root.Properties.CodedCharSetId ENCODING Root.Properties.Encoding);
+
+		PASSTHRU ('INSERT INTO dbo.ESB_AGGREGATION_LOGGER (INTERFACE_ID,FLOWNAME,UNIQUE_ID,MESSAGE,STATUS_FLAG,TIME_STAMP,MESSAGE_ID) VALUES(?,?,?,?,?,?,?)','1235',
+		        MessageFlowLabel, inRef.WHSE_ID, msgChar, 'N', CAST(envRef.publishTime AS TIMESTAMP FORMAT 'yyyyMMddHHmmss'), envRef.MessageId);
+		
+		SET envRef.AuditName = 'DB Aggregation Insert';
+
+		RETURN TRUE;
+	END;
+END MODULE;

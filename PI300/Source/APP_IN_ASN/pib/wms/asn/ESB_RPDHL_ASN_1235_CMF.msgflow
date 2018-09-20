@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmDatabase.msgnode="ComIbmDatabase.msgnode" xmlns:ComIbmMQInput.msgnode="ComIbmMQInput.msgnode" xmlns:ComIbmSOAPRequest.msgnode="ComIbmSOAPRequest.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:pib_esb_common_audit_AUDITLOGGER_SF.subflow="pib/esb/common/audit/AUDITLOGGER_SF.subflow" xmlns:pib_esb_common_error_ERRORHANDLER_SF.subflow="pib/esb/common/error/ERRORHANDLER_SF.subflow"
+    xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF.msgflow" nsPrefix="pib_wms_asn_ESB_RPDHL_ASN_1235_CMF.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.ProjectName" name="ProjectName" lowerBound="1" defaultValueLiteral="Oracle Retail">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.InterfaceName" name="InterfaceName" lowerBound="1" defaultValueLiteral="PI300 - ASN Outbound">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.InterfaceId" name="InterfaceId" lowerBound="1" defaultValueLiteral="1235">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.SourceAppln" name="SourceAppln" lowerBound="1" defaultValueLiteral="SIV">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.TargetAppln" name="TargetAppln" lowerBound="1" defaultValueLiteral="WMS(Red Prairie DHL)">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.LoggingType" name="LoggingType" lowerBound="1" defaultValueLiteral="DATABASE">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Emailcc" name="Emailcc" defaultValueLiteral="imathy@primark.co.uk,suraja@primark.co.uk,vravisankar@primark.co.uk">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.EmailErrorMessageString" name="EmailErrorMessageString" lowerBound="1" defaultValueLiteral="EmailErrorMessageString">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.EmailFrom" name="EmailFrom" lowerBound="1" defaultValueLiteral="admin@primark.co.uk">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.EmailToIf_DBDown" name="EmailToIf_DBDown" lowerBound="1" defaultValueLiteral="kmanivannan@primark.co.uk">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.FailedMessageRequired" name="FailedMessageRequired" lowerBound="1" defaultValueLiteral="Y">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Severity" name="Severity" lowerBound="1" defaultValueLiteral="3">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="ESB_RPDHL_ASN_1235_CMF" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/APP_IN_ASN/icons/full/obj16/ESB_RPDHL_ASN_1235_CMF.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/APP_IN_ASN/icons/full/obj30/ESB_RPDHL_ASN_1235_CMF.gif"/>
+    <composition>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="150,175" computeExpression="esql://routine/pib.wms.asn#ESB_RPDHL_ASN_1235_CMF_CaptureBusinessData.Main" computeMode="all">
+        <translation xmi:type="utility:ConstantString" string="CaptureBusinessData"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="30,176" queueName="ESB.RPDHL.ASN.IQ" messageDomainProperty="XMLNSC">
+        <translation xmi:type="utility:ConstantString" string="ESB.RPDHL.ASN.IQ"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="537,177" dataSource="ESBDB" computeExpression="esql://routine/pib.wms.asn#ESB_RPDHL_ASN_1235_CMF_TransformCDMToTarget.Main">
+        <translation xmi:type="utility:ConstantString" string="CDMToTarget"/>
+      </nodes>
+      <nodes xmi:type="ComIbmDatabase.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="681,178" dataSource="ESBDB" statement="esql://routine/pib.wms.asn#ESB_RPDHL_ASN_1235_CMF_InsertToDB.Main">
+        <translation xmi:type="utility:ConstantString" string="Insert To DB"/>
+      </nodes>
+      <nodes xmi:type="ComIbmSOAPRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="396,16" wsdlFileName="NBASNService.wsdl" selectedPortType="NBASNPortType" selectedBinding="NBASNPortBinding" selectedOperation="getTsfWhLeg" selectedPort="NBASNPort" targetNamespace="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1" useHTTPTransport="true" webServiceURL="http://iecwxuvuapp317.primark.local:8403/NBASNBean/NBASNService" sslProtocol="TLS" messageSetProperty="{LIB_RMS_API_NBASNService}">
+        <translation xmi:type="utility:ConstantString" string="SOAPReq_GetASNInfo"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="282,176" computeExpression="esql://routine/pib.wms.asn#ESB_RPDHL_ASN_1235_CMF_Build_ASNInfo_getTsf_Req.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="Build_ASNInfo_GetTsf_Req"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="651,24" computeExpression="esql://routine/pib.esb.common#ESB_HTTPRqRs_HandleSOAPFault.Main">
+        <translation xmi:type="utility:ConstantString" string="Handle_SOAPFault"/>
+      </nodes>
+      <nodes xmi:type="ComIbmSOAPRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_13" location="406,102" wsdlFileName="NBTsfService.wsdl" selectedPortType="NBTsfPortType" selectedBinding="NBTsfPortBinding" selectedOperation="getTsf" selectedPort="NBTsfPort" targetNamespace="http://www.oracle.com/retail/primark/integration/services/NBTsfService/v1" useHTTPTransport="true" webServiceURL="http://iebaluvdapp010.primark.local:7005/NBTsfBean/NBTsfService" sslProtocol="TLS" messageSetProperty="{LIB_RMS_API_NBTsfService}">
+        <translation xmi:type="utility:ConstantString" string="SOAPReq_GetTsf"/>
+      </nodes>
+      <nodes xmi:type="pib_esb_common_audit_AUDITLOGGER_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_4" location="33,275">
+        <translation xmi:type="utility:ConstantString" string="Logger"/>
+      </nodes>
+      <nodes xmi:type="pib_esb_common_error_ERRORHANDLER_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_14" location="119,284">
+        <translation xmi:type="utility:ConstantString" string="Error_Handler"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.fault" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_23" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out2" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_13" sourceTerminalName="OutTerminal.fault" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_14" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.catch" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_13" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out3" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.AuditDetails" configurable="true" userDefined="true" describedAttribute="Property.ProjectName">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.ProjectName" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+        <propertyDescriptor groupName="Group.AuditDetails" configurable="true" userDefined="true" describedAttribute="Property.InterfaceName">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.InterfaceName" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+          <propertyDescriptor groupName="Group.AuditDetails" configurable="true" userDefined="true" describedAttribute="Property.InterfaceId">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.InterfaceId" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+            <propertyDescriptor groupName="Group.AuditDetails" configurable="true" userDefined="true" describedAttribute="Property.SourceAppln">
+              <propertyName xmi:type="utility:TranslatableString" key="Property.SourceAppln" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+              <propertyDescriptor groupName="Group.AuditDetails" configurable="true" userDefined="true" describedAttribute="Property.TargetAppln">
+                <propertyName xmi:type="utility:TranslatableString" key="Property.TargetAppln" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+                <propertyDescriptor groupName="Group.AuditDetails" configurable="true" userDefined="true" describedAttribute="Property.LoggingType">
+                  <propertyName xmi:type="utility:TranslatableString" key="Property.LoggingType" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+                  <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.Emailcc">
+                    <propertyName xmi:type="utility:TranslatableString" key="Property.Emailcc" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+                    <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.EmailErrorMessageString">
+                      <propertyName xmi:type="utility:TranslatableString" key="Property.EmailErrorMessageString" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+                      <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.EmailFrom">
+                        <propertyName xmi:type="utility:TranslatableString" key="Property.EmailFrom" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+                        <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.EmailToIf_DBDown">
+                          <propertyName xmi:type="utility:TranslatableString" key="Property.EmailToIf_DBDown" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+                          <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.FailedMessageRequired">
+                            <propertyName xmi:type="utility:TranslatableString" key="Property.FailedMessageRequired" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+                            <propertyDescriptor groupName="Group.ErrorDetails" configurable="true" userDefined="true" describedAttribute="Property.Severity">
+                              <propertyName xmi:type="utility:TranslatableString" key="Property.Severity" bundleName="pib/wms/asn/ESB_RPDHL_ASN_1235_CMF" pluginId="APP_IN_ASN"/>
+                            </propertyDescriptor>
+                          </propertyDescriptor>
+                        </propertyDescriptor>
+                      </propertyDescriptor>
+                    </propertyDescriptor>
+                  </propertyDescriptor>
+                </propertyDescriptor>
+              </propertyDescriptor>
+            </propertyDescriptor>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <attributeLinks promotedAttribute="Property.ProjectName" overriddenNodes="FCMComposite_1_4">
+      <overriddenAttribute href="pib/esb/common/audit/AUDITLOGGER_SF.subflow#Property.UDP_ProjectName"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.ProjectName" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_ProjectName"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.InterfaceName" overriddenNodes="FCMComposite_1_4">
+      <overriddenAttribute href="pib/esb/common/audit/AUDITLOGGER_SF.subflow#Property.UDP_InterfaceName"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.InterfaceName" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_InterfaceName"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.InterfaceId" overriddenNodes="FCMComposite_1_4">
+      <overriddenAttribute href="pib/esb/common/audit/AUDITLOGGER_SF.subflow#Property.UDP_InterfaceId"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.InterfaceId" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_InterfaceId"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.SourceAppln" overriddenNodes="FCMComposite_1_4">
+      <overriddenAttribute href="pib/esb/common/audit/AUDITLOGGER_SF.subflow#Property.UDP_SourceAppln"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.SourceAppln" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_SourceAppln"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.TargetAppln" overriddenNodes="FCMComposite_1_4">
+      <overriddenAttribute href="pib/esb/common/audit/AUDITLOGGER_SF.subflow#Property.UDP_TargetAppln"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.TargetAppln" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_TargetAppln"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.LoggingType" overriddenNodes="FCMComposite_1_4">
+      <overriddenAttribute href="pib/esb/common/audit/AUDITLOGGER_SF.subflow#Property.UDP_LoggingType"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.LoggingType" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_LoggingType"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.Emailcc" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_Emailcc"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.EmailErrorMessageString" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_EmailErrorMessageString"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.EmailFrom" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_EmailFrom"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.EmailToIf_DBDown" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_EmailToIf_DBDown"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.FailedMessageRequired" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_FailedMessageRequired"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.Severity" overriddenNodes="FCMComposite_1_14">
+      <overriddenAttribute href="pib/esb/common/error/ERRORHANDLER_SF.subflow#Property.UDP_Severity"/>
+    </attributeLinks>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

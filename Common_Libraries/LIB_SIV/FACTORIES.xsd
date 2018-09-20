@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+    <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="IBMdefined/RecordSeparatedFieldFormat.xsd"/>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format encoding="{$dfdl:encoding}" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element ibmSchExtn:docRoot="true" name="Factories">
+        		<xsd:annotation/>
+        <xsd:complexType>
+			<xsd:sequence dfdl:initiatedContent="no" dfdl:separator="%NL;%WSP*;" dfdl:separatorSuppressionPolicy="anyEmpty">
+				<xsd:element dfdl:initiator="FilHdr|" maxOccurs="1" name="FileHeader">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="%#124;">
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Filename" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Date" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Time" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="Detail">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="%#124;">
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="ID" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="Name" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="AddressLine1" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="AddressLine2" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="AddressLine3" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="AddressLine4" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="City" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="State" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="Country" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" name="CountryCode" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+
+				<xsd:element dfdl:initiator="FilTrl|" maxOccurs="1" name="FileTrailer">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="%#124;">
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Description" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ControlTotal" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+
+				</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

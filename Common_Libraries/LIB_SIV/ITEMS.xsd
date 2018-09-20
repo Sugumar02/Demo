@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+	<xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="IBMdefined/RecordSeparatedFieldFormat.xsd"/>
+	<xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format encoding="{$dfdl:encoding}" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:element ibmSchExtn:docRoot="true" name="Items">
+		<xsd:complexType>
+			<xsd:sequence dfdl:separator="%NL;%WSP*;" dfdl:separatorSuppressionPolicy="anyEmpty">
+				<xsd:element dfdl:initiator="FilHdr|" name="FileHeader">
+					<xsd:complexType>
+						<xsd:sequence dfdl:initiatedContent="no" dfdl:separator="%#124;" dfdl:separatorSuppressionPolicy="anyEmpty">
+							<xsd:element default="PMKRMSSIVITM" dfdl:initiator="" ibmDfdlExtn:sampleValue="head_value2" name="FileName" type="xsd:string"/>
+							<xsd:element dfdl:initiator="" dfdl:textNumberPattern="#0" name="Date" type="xsd:string"/>
+							<xsd:element dfdl:initiator="" dfdl:textNumberPattern="#0" name="Time" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="Detail">
+					<xsd:complexType>
+						<xsd:sequence dfdl:initiatedContent="no" dfdl:separator="%#124;">
+							<xsd:element dfdl:initiator="" ibmDfdlExtn:sampleValue="body_value1" name="RecordType">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="6"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element dfdl:initiator="" dfdl:textNumberPattern="#0" name="ORMSSKU" type="xsd:integer"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" ibmDfdlExtn:sampleValue="body_value3" name="Hazardous" type="xsd:string">
+							</xsd:element>
+							<xsd:element dfdl:initiator="" ibmDfdlExtn:sampleValue="body_value4" name="ProductType">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="50"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="Attr1">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="50"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Attr2">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="50"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Attr3">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="50"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Attr4">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="50"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Attr5">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="50"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Attr6">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="50"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Attr7">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="50"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Attr8">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="50"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element dfdl:initiator="FilTrl|" name="FileTrailer">
+					<xsd:complexType>
+						<xsd:sequence dfdl:initiatedContent="no" dfdl:separator="%#124;" dfdl:separatorSuppressionPolicy="anyEmpty">
+							<xsd:element dfdl:initiator="" ibmDfdlExtn:sampleValue="trailer_value2" name="Description" type="xsd:string"/>
+							<xsd:element dfdl:initiator="" dfdl:textNumberPattern="#0" name="ControlTotal" type="xsd:integer"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>

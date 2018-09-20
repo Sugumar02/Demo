@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" name="ASNOutPublishingService" targetNamespace="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <documentation>
+    <appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="ASNOutPublishingService_InlineSchema3.xsd"/>
+        <generatedXSD location="ASNOutPublishingService_InlineSchema5.xsd"/>
+        <generatedXSD location="ASNOutPublishingService_InlineSchema4.xsd"/>
+        <generatedXSD location="ASNOutPublishingService_InlineSchema1.xsd"/>
+        <generatedXSD location="ASNOutPublishingService_InlineSchema2.xsd"/>
+        <generatedXSD location="ASNOutPublishingService_InlineSchema6.xsd"/>
+        <binding hasEncoding="false" imported="true" name="ASNOutPublishingPortBinding" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </appinfo>
+  </documentation>
+    <wsp:Policy wsu:Id="ASNOutPublishingPortBinding_Wsaw_Addressing_Policy-ASNOutPublishingPortBinding_WSAM_Addressing_Policy-ASNOutPublishingPortBinding_WSAM_Addressing_Policy" xmlns:wsapw3c="http://www.w3.org/2006/05/addressing/wsdl">
+        <wsapw3c:UsingAddressing wsp:Optional="true"/>
+        <wsam:Addressing wsp:Optional="true">
+            <wsp:Policy/>
+        </wsam:Addressing>
+    </wsp:Policy>
+    <types>
+        
+        
+        
+        
+        
+        
+            <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1" version="1.0" xmlns:Q1="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+<xsd:include schemaLocation="ASNOutPublishingService_InlineSchema3.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:ns1="http://www.oracle.com/retail/integration/base/bo/ASNOutDesc/v1" xmlns:ns2="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1">
+<xs:import namespace="http://www.oracle.com/retail/integration/base/bo/ASNOutDesc/v1" schemaLocation="ASNOutPublishingService_InlineSchema6.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" schemaLocation="ASNOutPublishingService_InlineSchema1.xsd"/>
+<xsd:include schemaLocation="ASNOutPublishingService_InlineSchema5.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/services/exception/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:tns="http://www.oracle.com/retail/integration/services/exception/v1">
+<xsd:include schemaLocation="ASNOutPublishingService_InlineSchema4.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" version="1.0" xmlns:tns="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1">
+<xsd:include schemaLocation="ASNOutPublishingService_InlineSchema1.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:tns="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1">
+<xsd:include schemaLocation="ASNOutPublishingService_InlineSchema2.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/base/bo/ASNOutDesc/v1" version="1.0" xmlns:tns="http://www.oracle.com/retail/integration/base/bo/ASNOutDesc/v1">
+<xsd:include schemaLocation="ASNOutPublishingService_InlineSchema6.xsd"/>
+    </xs:schema>
+    </types>
+    <message name="publishASNOutCreateUsingASNOutDesc">
+        <part element="tns:publishASNOutCreateUsingASNOutDesc" name="parameters"/>
+        <part element="ns3:RoutingInfos" name="RoutingInfos" xmlns:ns3="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1"/>
+        <part element="ns4:BusinessObjectId" name="BusinessObjectId" xmlns:ns4="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+    </message>
+    <message name="publishASNOutCreateUsingASNOutDescResponse">
+        <part element="tns:publishASNOutCreateUsingASNOutDescResponse" name="result"/>
+    </message>
+    <message name="MissingHeaderWSFaultException">
+        <part element="ns7:MissingHeaderWSFaultException" name="fault" xmlns:ns7="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="IllegalStateWSFaultException">
+        <part element="ns6:IllegalStateWSFaultException" name="fault" xmlns:ns6="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="PublishingWSFaultException">
+        <part element="ns5:PublishingWSFaultException" name="fault" xmlns:ns5="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="ValidationWSFaultException">
+        <part element="ns8:ValidationWSFaultException" name="fault" xmlns:ns8="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="publishASNOutModifyUsingASNOutDesc">
+        <part element="tns:publishASNOutModifyUsingASNOutDesc" name="parameters"/>
+        <part element="ns9:RoutingInfos" name="RoutingInfos" xmlns:ns9="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1"/>
+        <part element="ns10:BusinessObjectId" name="BusinessObjectId" xmlns:ns10="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+    </message>
+    <message name="publishASNOutModifyUsingASNOutDescResponse">
+        <part element="tns:publishASNOutModifyUsingASNOutDescResponse" name="result"/>
+    </message>
+    <message name="ping">
+        <part element="tns:ping" name="parameters"/>
+    </message>
+    <message name="pingResponse">
+        <part element="tns:pingResponse" name="parameters"/>
+    </message>
+    <portType name="ASNOutPublishingPortType">
+        <wsdl:documentation>External app publishes ASN msgs that RMS / SIM use to create / modify a shipment record. A RIB TAFR transforms ASNOut to ASNIn message.
+		Pub Topic : etASNOut 
+		Tafr Topics  :etASNInFromRIBToISO,etASNInFromRIBToWH 
+		Sub: ASNOut_sub(RMS),ASNIn_sub (RWMS/SIM)</wsdl:documentation>
+        <operation name="publishASNOutCreateUsingASNOutDesc" parameterOrder="parameters RoutingInfos BusinessObjectId">
+            <wsdl:documentation>This Operation invokes the publishing of "Create" event for the ASN(Outbound).</wsdl:documentation>
+            <input message="tns:publishASNOutCreateUsingASNOutDesc" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutCreateUsingASNOutDescRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutCreateUsingASNOutDescRequest">
+                <wsdl:documentation>ASNOutDesc RBO complies with the XML schema ASNOutDesc.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishASNOutCreateUsingASNOutDescResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutCreateUsingASNOutDescResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:MissingHeaderWSFaultException" name="MissingHeaderWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutCreateUsingASNOutDesc/Fault/MissingHeaderWSFaultException">
+                <wsdl:documentation>Throw this exception when "header" is mandatory and is not provided by the user.</wsdl:documentation>
+            </fault>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutCreateUsingASNOutDesc/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutCreateUsingASNOutDesc/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutCreateUsingASNOutDesc/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="publishASNOutModifyUsingASNOutDesc" parameterOrder="parameters RoutingInfos BusinessObjectId">
+            <wsdl:documentation>This Operation invokes the publishing of "Create" event for the ASN(Outbound).</wsdl:documentation>
+            <input message="tns:publishASNOutModifyUsingASNOutDesc" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutModifyUsingASNOutDescRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutModifyUsingASNOutDescRequest">
+                <wsdl:documentation>ASNOutDesc RBO complies with the XML schema ASNOutDesc.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishASNOutModifyUsingASNOutDescResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutModifyUsingASNOutDescResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:MissingHeaderWSFaultException" name="MissingHeaderWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutModifyUsingASNOutDesc/Fault/MissingHeaderWSFaultException">
+                <wsdl:documentation>Throw this exception when "header" is mandatory and is not provided by the user.</wsdl:documentation>
+            </fault>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutModifyUsingASNOutDesc/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutModifyUsingASNOutDesc/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/publishASNOutModifyUsingASNOutDesc/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="ping">
+            <input message="tns:ping" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/pingRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/pingRequest"/>
+            <output message="tns:pingResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1/ASNOutPublishingPortType/pingResponse"/>
+        </operation>
+    </portType>
+    <binding name="ASNOutPublishingPortBinding" type="tns:ASNOutPublishingPortType">
+        <wsaw:UsingAddressing/>
+        <wsp:PolicyReference URI="#ASNOutPublishingPortBinding_Wsaw_Addressing_Policy-ASNOutPublishingPortBinding_WSAM_Addressing_Policy-ASNOutPublishingPortBinding_WSAM_Addressing_Policy"/>
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="publishASNOutCreateUsingASNOutDesc">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishASNOutCreateUsingASNOutDesc" part="RoutingInfos" use="literal"/>
+                <soap:header message="tns:publishASNOutCreateUsingASNOutDesc" part="BusinessObjectId" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="MissingHeaderWSFaultException">
+                <soap:fault name="MissingHeaderWSFaultException" use="literal"/>
+            </fault>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="publishASNOutModifyUsingASNOutDesc">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishASNOutModifyUsingASNOutDesc" part="RoutingInfos" use="literal"/>
+                <soap:header message="tns:publishASNOutModifyUsingASNOutDesc" part="BusinessObjectId" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="MissingHeaderWSFaultException">
+                <soap:fault name="MissingHeaderWSFaultException" use="literal"/>
+            </fault>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="ping">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="ASNOutPublishingService">
+        <port binding="tns:ASNOutPublishingPortBinding" name="ASNOutPublishingPort">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+        </port>
+    </service>
+</definitions>

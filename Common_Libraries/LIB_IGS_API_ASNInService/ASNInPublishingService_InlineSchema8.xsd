@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1" version="1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:ns2="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1" xmlns:ns3="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInDesc/v1" xmlns:ns4="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" xmlns:ns5="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInRef/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                        <xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInDesc/v1" schemaLocation="ASNInPublishingService_InlineSchema3.xsd"/>
+            <xs:import namespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" schemaLocation="ASNInPublishingService_InlineSchema1.xsd"/>
+            <xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInRef/v1" schemaLocation="ASNInPublishingService_InlineSchema4.xsd"/>
+            <xs:element ibmSchExtn:docRoot="true" name="ping" type="tns:ping"/>
+            <xs:element ibmSchExtn:docRoot="true" name="pingResponse" type="tns:pingResponse"/>
+            <xs:element ibmSchExtn:docRoot="true" name="publishNBASNInCreateUsingExtOfNBASNInDesc" type="tns:publishNBASNInCreateUsingExtOfNBASNInDesc"/>
+            <xs:element ibmSchExtn:docRoot="true" name="publishNBASNInCreateUsingExtOfNBASNInDescResponse" type="tns:publishNBASNInCreateUsingExtOfNBASNInDescResponse"/>
+            <xs:element ibmSchExtn:docRoot="true" name="publishNBASNInDeleteUsingExtOfNBASNInRef" type="tns:publishNBASNInDeleteUsingExtOfNBASNInRef"/>
+            <xs:element ibmSchExtn:docRoot="true" name="publishNBASNInDeleteUsingExtOfNBASNInRefResponse" type="tns:publishNBASNInDeleteUsingExtOfNBASNInRefResponse"/>
+            <xs:element ibmSchExtn:docRoot="true" name="publishNBASNInModifyUsingExtOfNBASNInDesc" type="tns:publishNBASNInModifyUsingExtOfNBASNInDesc"/>
+            <xs:element ibmSchExtn:docRoot="true" name="publishNBASNInModifyUsingExtOfNBASNInDescResponse" type="tns:publishNBASNInModifyUsingExtOfNBASNInDescResponse"/>
+            <xs:complexType name="publishNBASNInCreateUsingExtOfNBASNInDesc">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:ExtOfNBASNInDesc"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="publishNBASNInCreateUsingExtOfNBASNInDescResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns4:ServiceOpStatus"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="publishNBASNInModifyUsingExtOfNBASNInDesc">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:ExtOfNBASNInDesc"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="publishNBASNInModifyUsingExtOfNBASNInDescResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns4:ServiceOpStatus"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="publishNBASNInDeleteUsingExtOfNBASNInRef">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns5:ExtOfNBASNInRef"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="publishNBASNInDeleteUsingExtOfNBASNInRefResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns4:ServiceOpStatus"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ping">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="pingResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>

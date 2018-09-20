@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:pib_esb_common_sequence_ESB_SEQUENCE_ERROR_SF.subflow="pib/esb/common/sequence/ESB_SEQUENCE_ERROR_SF.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="pib/esb/common/ESB_SubscriberInit_SF.subflow" nsPrefix="pib_esb_common_ESB_SubscriberInit_SF.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <translation xmi:type="utility:TranslatableString" key="ESB_SubscriberInit_SF" bundleName="pib/esb/common/ESB_SubscriberInit_SF" pluginId="LIB_ESB_COMMON"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LIB_ESB_COMMON/icons/full/obj16/ESB_SubscriberInit_SF.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LIB_ESB_COMMON/icons/full/obj30/ESB_SubscriberInit_SF.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="15,117">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="pib/esb/common/ESB_SubscriberInit_SF" pluginId="LIB_ESB_COMMON"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="611,123">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="pib/esb/common/ESB_SubscriberInit_SF" pluginId="LIB_ESB_COMMON"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="116,117" computeExpression="esql://routine/pib.esb.common#ESB_SubscriberInit_SF_CaptureBusinessData.Main" computeMode="exception">
+        <translation xmi:type="utility:ConstantString" string="Capture Business Data"/>
+      </nodes>
+      <nodes xmi:type="pib_esb_common_sequence_ESB_SEQUENCE_ERROR_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_2" location="272,122">
+        <translation xmi:type="utility:ConstantString" string="Check for Sequence Error"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="434,122" computeExpression="esql://routine/pib.esb.common#ESB_SubscriberInit_SF_RemoveRFH2Header.Main">
+        <translation xmi:type="utility:ConstantString" string="Remove RFH2 Header"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_1" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer/>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

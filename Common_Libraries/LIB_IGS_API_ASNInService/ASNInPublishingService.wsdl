@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" name="NBASNInPublishingService" targetNamespace="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <documentation>
+    <appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="ASNInPublishingService_InlineSchema4.xsd"/>
+        <generatedXSD location="ASNInPublishingService_InlineSchema8.xsd"/>
+        <generatedXSD location="ASNInPublishingService_InlineSchema7.xsd"/>
+        <generatedXSD location="ASNInPublishingService_InlineSchema3.xsd"/>
+        <generatedXSD location="ASNInPublishingService_InlineSchema1.xsd"/>
+        <generatedXSD location="ASNInPublishingService_InlineSchema6.xsd"/>
+        <generatedXSD location="ASNInPublishingService_InlineSchema5.xsd"/>
+        <generatedXSD location="ASNInPublishingService_InlineSchema2.xsd"/>
+        <binding hasEncoding="false" imported="true" name="NBASNInPublishingPortBinding" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </appinfo>
+  </documentation>
+    <wsp:Policy wsu:Id="NBASNInPublishingPortBinding_Wsaw_Addressing_Policy-NBASNInPublishingPortBinding_WSAM_Addressing_Policy-NBASNInPublishingPortBinding_WSAM_Addressing_Policy" xmlns:wsapw3c="http://www.w3.org/2006/05/addressing/wsdl">
+        <wsapw3c:UsingAddressing wsp:Optional="true"/>
+        <wsam:Addressing wsp:Optional="true">
+            <wsp:Policy/>
+        </wsam:Addressing>
+    </wsp:Policy>
+    <types>
+        
+        
+        
+        
+        
+        
+        
+        
+            <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInRef/v1" version="1.0">
+<xsd:include schemaLocation="ASNInPublishingService_InlineSchema4.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:ns2="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1" xmlns:ns3="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInDesc/v1" xmlns:ns4="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" xmlns:ns5="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInRef/v1">
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInDesc/v1" schemaLocation="ASNInPublishingService_InlineSchema3.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" schemaLocation="ASNInPublishingService_InlineSchema1.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInRef/v1" schemaLocation="ASNInPublishingService_InlineSchema4.xsd"/>
+<xsd:include schemaLocation="ASNInPublishingService_InlineSchema8.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:tns="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1">
+<xsd:include schemaLocation="ASNInPublishingService_InlineSchema7.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInDesc/v1" version="1.0" xmlns:ns1="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1">
+<xs:import namespace="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1" schemaLocation="ASNInPublishingService_InlineSchema2.xsd"/>
+<xsd:include schemaLocation="ASNInPublishingService_InlineSchema3.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" version="1.0" xmlns:tns="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1">
+<xsd:include schemaLocation="ASNInPublishingService_InlineSchema1.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/services/exception/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:tns="http://www.oracle.com/retail/integration/services/exception/v1">
+<xsd:include schemaLocation="ASNInPublishingService_InlineSchema6.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1" version="1.0" xmlns:Q1="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+<xsd:include schemaLocation="ASNInPublishingService_InlineSchema5.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1" version="1.0" xmlns:tns="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1">
+<xsd:include schemaLocation="ASNInPublishingService_InlineSchema2.xsd"/>
+    </xs:schema>
+    </types>
+    <message name="publishNBASNInDeleteUsingExtOfNBASNInRef">
+        <part element="tns:publishNBASNInDeleteUsingExtOfNBASNInRef" name="parameters"/>
+        <part element="ns6:BusinessObjectId" name="BusinessObjectId" xmlns:ns6="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+        <part element="ns7:RoutingInfos" name="RoutingInfos" xmlns:ns7="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1"/>
+    </message>
+    <message name="publishNBASNInDeleteUsingExtOfNBASNInRefResponse">
+        <part element="tns:publishNBASNInDeleteUsingExtOfNBASNInRefResponse" name="result"/>
+    </message>
+    <message name="IllegalStateWSFaultException">
+        <part element="ns9:IllegalStateWSFaultException" name="fault" xmlns:ns9="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="PublishingWSFaultException">
+        <part element="ns8:PublishingWSFaultException" name="fault" xmlns:ns8="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="ValidationWSFaultException">
+        <part element="ns10:ValidationWSFaultException" name="fault" xmlns:ns10="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="publishNBASNInModifyUsingExtOfNBASNInDesc">
+        <part element="tns:publishNBASNInModifyUsingExtOfNBASNInDesc" name="parameters"/>
+        <part element="ns11:BusinessObjectId" name="BusinessObjectId" xmlns:ns11="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+        <part element="ns12:RoutingInfos" name="RoutingInfos" xmlns:ns12="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1"/>
+    </message>
+    <message name="publishNBASNInModifyUsingExtOfNBASNInDescResponse">
+        <part element="tns:publishNBASNInModifyUsingExtOfNBASNInDescResponse" name="result"/>
+    </message>
+    <message name="publishNBASNInCreateUsingExtOfNBASNInDesc">
+        <part element="tns:publishNBASNInCreateUsingExtOfNBASNInDesc" name="parameters"/>
+        <part element="ns13:BusinessObjectId" name="BusinessObjectId" xmlns:ns13="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+        <part element="ns14:RoutingInfos" name="RoutingInfos" xmlns:ns14="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1"/>
+    </message>
+    <message name="publishNBASNInCreateUsingExtOfNBASNInDescResponse">
+        <part element="tns:publishNBASNInCreateUsingExtOfNBASNInDescResponse" name="result"/>
+    </message>
+    <message name="ping">
+        <part element="tns:ping" name="parameters"/>
+    </message>
+    <message name="pingResponse">
+        <part element="tns:pingResponse" name="parameters"/>
+    </message>
+    <portType name="NBASNInPublishingPortType">
+        <wsdl:documentation>NBASNs</wsdl:documentation>
+        <operation name="publishNBASNInDeleteUsingExtOfNBASNInRef" parameterOrder="parameters BusinessObjectId RoutingInfos">
+            <wsdl:documentation>This Operation invokes the publishing of "Delete" event for the NBASN(Inbound).</wsdl:documentation>
+            <input message="tns:publishNBASNInDeleteUsingExtOfNBASNInRef" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInDeleteUsingExtOfNBASNInRefRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInDeleteUsingExtOfNBASNInRefRequest">
+                <wsdl:documentation>ASNInRef RBO complies with the XML schema NBASNInRef.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishNBASNInDeleteUsingExtOfNBASNInRefResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInDeleteUsingExtOfNBASNInRefResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInDeleteUsingExtOfNBASNInRef/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInDeleteUsingExtOfNBASNInRef/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInDeleteUsingExtOfNBASNInRef/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="publishNBASNInModifyUsingExtOfNBASNInDesc" parameterOrder="parameters BusinessObjectId RoutingInfos">
+            <wsdl:documentation>This Operation invokes the publishing of "Modify" event for the NBASN(Inbound).</wsdl:documentation>
+            <input message="tns:publishNBASNInModifyUsingExtOfNBASNInDesc" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInModifyUsingExtOfNBASNInDescRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInModifyUsingExtOfNBASNInDescRequest">
+                <wsdl:documentation>ExtOfNBASNInDesc RBO complies with the XML schema ExtOfNBASNInDesc.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishNBASNInModifyUsingExtOfNBASNInDescResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInModifyUsingExtOfNBASNInDescResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInModifyUsingExtOfNBASNInDesc/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInModifyUsingExtOfNBASNInDesc/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInModifyUsingExtOfNBASNInDesc/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="publishNBASNInCreateUsingExtOfNBASNInDesc" parameterOrder="parameters BusinessObjectId RoutingInfos">
+            <wsdl:documentation>This Operation invokes the publishing of "Create" event for the ASN(Inbound).</wsdl:documentation>
+            <input message="tns:publishNBASNInCreateUsingExtOfNBASNInDesc" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInCreateUsingExtOfNBASNInDescRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInCreateUsingExtOfNBASNInDescRequest">
+                <wsdl:documentation>ExtOfNBASNInDesc RBO complies with the XML schema ExtOfNBASNInDesc.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishNBASNInCreateUsingExtOfNBASNInDescResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInCreateUsingExtOfNBASNInDescResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInCreateUsingExtOfNBASNInDesc/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInCreateUsingExtOfNBASNInDesc/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/publishNBASNInCreateUsingExtOfNBASNInDesc/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="ping">
+            <input message="tns:ping" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/pingRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/pingRequest"/>
+            <output message="tns:pingResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1/NBASNInPublishingPortType/pingResponse"/>
+        </operation>
+    </portType>
+    <binding name="NBASNInPublishingPortBinding" type="tns:NBASNInPublishingPortType">
+        <wsaw:UsingAddressing/>
+        <wsp:PolicyReference URI="#NBASNInPublishingPortBinding_Wsaw_Addressing_Policy-NBASNInPublishingPortBinding_WSAM_Addressing_Policy-NBASNInPublishingPortBinding_WSAM_Addressing_Policy"/>
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="publishNBASNInDeleteUsingExtOfNBASNInRef">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishNBASNInDeleteUsingExtOfNBASNInRef" part="BusinessObjectId" use="literal"/>
+                <soap:header message="tns:publishNBASNInDeleteUsingExtOfNBASNInRef" part="RoutingInfos" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="publishNBASNInModifyUsingExtOfNBASNInDesc">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishNBASNInModifyUsingExtOfNBASNInDesc" part="BusinessObjectId" use="literal"/>
+                <soap:header message="tns:publishNBASNInModifyUsingExtOfNBASNInDesc" part="RoutingInfos" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="publishNBASNInCreateUsingExtOfNBASNInDesc">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishNBASNInCreateUsingExtOfNBASNInDesc" part="BusinessObjectId" use="literal"/>
+                <soap:header message="tns:publishNBASNInCreateUsingExtOfNBASNInDesc" part="RoutingInfos" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="ping">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="NBASNInPublishingService">
+        <port binding="tns:NBASNInPublishingPortBinding" name="NBASNInPublishingPort">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+        </port>
+    </service>
+</definitions>

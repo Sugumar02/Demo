@@ -1,0 +1,1668 @@
+<?xml version="1.0" encoding="UTF-8"?><!--RedPrarie Corp.
+
+W3C XML Schema for IFD [PART_INB_IFD] Version [PRI_V1.0]
+
+Assumptions:
+- Parent Tag []
+- Show ifd tag [T]
+- Envelope IFD [] Version []
+
+IFD Description: Part Inbound Transaction - Before the warehouse system can effectively store, track and manipulate inventory, every product in the facility must be assigned a unique Part Number and its attributes must be defined in the Part Master (PRTMST) table. This transaction is used to create, change or delete the part information from the warehouse system.--><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="PART_INB_IFD">
+<xsd:annotation>
+<xsd:documentation>Part Inbound Transaction - Before the warehouse system can effectively store, track and manipulate inventory, every product in the facility must be assigned a unique Part Number and its attributes must be defined in the Part Master (PRTMST) table. This transaction is used to create, change or delete the part information from the warehouse system.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="CTRL_SEG">
+<xsd:annotation>
+<xsd:documentation>Identifies the transaction, using the transaction name and version as well as the warehouse routing information.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="TRNNAM">
+<xsd:annotation>
+<xsd:documentation>Transaction ID - Identifier for this IFD.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TRNVER">
+<xsd:annotation>
+<xsd:documentation>Transaction version</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WHSE_ID">
+<xsd:annotation>
+<xsd:documentation>Warehouse ID - Identifier for the warehouse system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="PART_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change part information in the Part Master (prtmst) table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TRNTYP">
+<xsd:annotation>
+<xsd:documentation>Transaction Type:  "A" for Add record, "C" for Change record or "D" for Delete record</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTNUM">
+<xsd:annotation>
+<xsd:documentation>Part Number - Unique identifier for this part. Also referred to as item number or SKU.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRT_CLIENT_ID">
+<xsd:annotation>
+<xsd:documentation>Part Client ID - Client to which this part belongs.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="COMCOD">
+<xsd:annotation>
+<xsd:documentation>Commodity Code - User defined code that lets you to group part numbers to produce export documentation and generate reports.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SUBCFG">
+<xsd:annotation>
+<xsd:documentation>Sub-Load Configuration Code - Indicates that a valid subload number identifier for this part will contain this string starting at the Sub-Load Configuration Position. Used optionally when the part is configured for serialized case tracking.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="24"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SCFPOS">
+<xsd:annotation>
+<xsd:documentation>Sub-Load Configuration Position - Starting position for the subload configuration code.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DTLCFG">
+<xsd:annotation>
+<xsd:documentation>Detail Number Configuration Code- Indicates that a valid detail number identifier for this part will contain this string starting at the Detail Number Configuration Position. Used optionally when the part is configured for serialized detail tracking.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="24"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DCFPOS">
+<xsd:annotation>
+<xsd:documentation>Detail Number Configuration Position - Starting position for the Detail Number Configuration Code.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TYPCOD">
+<xsd:annotation>
+<xsd:documentation>Part Type Code - User-defined code that lets you group part numbers for reporting purposes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTFAM">
+<xsd:annotation>
+<xsd:documentation>Part Family - Unique code that is used to group similar parts together when defining facility policies. Typically, all of the parts within a family have the same material handling characteristics.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LODLVL">
+<xsd:annotation>
+<xsd:documentation>Load Identification Level -  Packaging level at which inventory is tracked. Set to L (Load), S (Subload), or D (Detail).  For example, if set to Subload, then product is considered serialized at a case level.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORGFLG">
+<xsd:annotation>
+<xsd:documentation>Origin Code Flag - Determines whether the origin code will be tracked for this part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="REVFLG">
+<xsd:annotation>
+<xsd:documentation>Revision Level Flag - Determines whether the revision level will be tracked for this part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LOTFLG">
+<xsd:annotation>
+<xsd:documentation>Lot Tracking Flag - Determines whether lot numbers will be tracked for this part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTCST" nillable="true">
+<xsd:annotation>
+<xsd:documentation>Unit Standard Cost - Cost of a single unit of this part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="REOQTY">
+<xsd:annotation>
+<xsd:documentation>Re-Order Quantity - The amount of product to re-order should inventory levels fall below re-order point levels. This field is not used for any standard system processing.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="REOPNT">
+<xsd:annotation>
+<xsd:documentation>Re-Order Point - Value that indicated when this part should be reordered. If inventory levels fall below this level, an order should be generated for more inventory.  This field is not used for any standard system processing.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PKGTYP">
+<xsd:annotation>
+<xsd:documentation>Package Type - Defines the relationship between units of measure and which units are tracked for the product. It is optional if the transaction is being used only for TM. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="32"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="STKUOM">
+<xsd:annotation>
+<xsd:documentation>Stocking Unit of Measure - Defines the unit of measure at which this product is typically received and maintained in the facility.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTPAK">
+<xsd:annotation>
+<xsd:documentation>Units per Inner Pack - The quantity of units in the inner pack.  (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PAKUOM">
+<xsd:annotation>
+<xsd:documentation>Inner Pack Unit of Measure - Defines the inner pack level in the package type. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTCAS">
+<xsd:annotation>
+<xsd:documentation>Units per Case - The quantity of units in a case.  (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CASUOM">
+<xsd:annotation>
+<xsd:documentation>Case Unit of Measure - Defines the case level in the package type.  (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTPAL">
+<xsd:annotation>
+<xsd:documentation>Units per Pallet - Quantity of units on a pallet. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PALUOM">
+<xsd:annotation>
+<xsd:documentation>Pallet Unit of Measure - Defines the pallet level in the package type. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTLEN">
+<xsd:annotation>
+<xsd:documentation>Unit Length - Length of a single unit. This value is used in lieu of detailed footprint information by the cartonization process. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PAKLEN">
+<xsd:annotation>
+<xsd:documentation>Inner Pack Length - Length of a single package. This value is used in lieu of detailed footprint information by the cartonization process. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="GRSWGT">
+<xsd:annotation>
+<xsd:documentation>Gross Case Weight - Value that represents the weight of the product plus the weight of the packing materials. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NETWGT">
+<xsd:annotation>
+<xsd:documentation>Net Case Weight - Value that represents the weight of the product without packing materials. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="FTPCOD">
+<xsd:annotation>
+<xsd:documentation>Footprint Code - Code that defines the footprint or dimensional data for the part. It is optional if the transaction is being used only for TM. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ABCCOD">
+<xsd:annotation>
+<xsd:documentation>ABC Code - Code that indicates the relative frequency at which this product should be counted.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="FIFWIN">
+<xsd:annotation>
+<xsd:documentation>FIFO Window - Indicate the time interval in which product should be considered equal for FIFO consideration during product storage.  The unit of measure of the time interval is based on the Time Code field.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="VELZON">
+<xsd:annotation>
+<xsd:documentation>Velocity Zone - Code that identifies the speed at which this part will move in and out of a storage location.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RCVSTS">
+<xsd:annotation>
+<xsd:documentation>Receive Inventory Status - Default inventory status displayed for this product when identified during receiving. It is optional if the transaction is being used only for TM.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RCVUOM">
+<xsd:annotation>
+<xsd:documentation>Receive Unit of Measure - Default unit of measure displayed for this product when identified during receiving.  (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RCVFLG">
+<xsd:annotation>
+<xsd:documentation>Receive Flag - Determines whether this part can be received.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRDFLG">
+<xsd:annotation>
+<xsd:documentation>Production Inventory Flag - Determines whether this is a part that a host system cares about. When tracking supplies and other non-costed items, set this flag to false.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LTLCLS">
+<xsd:annotation>
+<xsd:documentation>LTL Class - Code that identifies the Less Than Truckload classification of the product. The LTL class code is used by third-party shipping programs.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="32"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WIP_PRTFLG">
+<xsd:annotation>
+<xsd:documentation>Work In Process Supply Part - Determines whether this part can be transferred to a WIP supply area.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DTCFLG">
+<xsd:annotation>
+<xsd:documentation>Date Control Flag - Determines whether this part is date-controlled.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="AGE_PFLNAM">
+<xsd:annotation>
+<xsd:documentation>Aging Profile Name - Default aging profile assigned to this part when this part is created.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CATCH_COD">
+<xsd:annotation>
+<xsd:documentation>Catch Unit Code - Determines if and when this part will require catch unit processing. 'R' to capture catch qty at Receiving, 'S' to capture it when Shipping.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CATCH_UNTTYP">
+<xsd:annotation>
+<xsd:documentation>Catch Unit Type - Metric used for the catch unit quantity. Examples: liters, gallons, feet, pounds.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CATCH_UNTWGT">
+<xsd:annotation>
+<xsd:documentation>Catch Unit Weight - Weight of 1 unit of metric.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CATCH_UNTCST">
+<xsd:annotation>
+<xsd:documentation>Catch Unit Cost - Cost of 1 unit of metric.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="MIN_CATCH_QTY">
+<xsd:annotation>
+<xsd:documentation>Minimum Catch Quantity Tolerance - Minimum catch quantity a user may enter per stocking unit of measure.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="MAX_CATCH_QTY">
+<xsd:annotation>
+<xsd:documentation>Maximum Catch Quantity Tolerance - Maximum catch quantity a user may enter per stocking unit of measure.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CNZFLG">
+<xsd:annotation>
+<xsd:documentation>Count Near Zero Flag - Determines whether cycle counts are performed immediately whenever the quantity of this part in a location falls below the count near zero amount during a picking.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CNZAMT">
+<xsd:annotation>
+<xsd:documentation>Count Near Zero Amount - Value used to determine when a Near Zero Count will take place.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TIMCOD">
+<xsd:annotation>
+<xsd:documentation>Time Code - Determines how the FIFO window will be evaluated in the system. Can be in (M) minutes, (H) hours, or (D) days.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="STCCOD">
+<xsd:annotation>
+<xsd:documentation>STCC Code - Typically used by transportation management systems to determine how to rate this part when it is transported by rail.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PARCEL_FLG">
+<xsd:annotation>
+<xsd:documentation>Parcel Flag - Used to determine if the part can be transported via parcel carrier.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="HAZMAT_FLG">
+<xsd:annotation>
+<xsd:documentation>Hazardous Materials Flag - Used to determine if the part is considered hazardous. Currently used by the Fascor interface for shipping validation and pricing.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NSTCLS">
+<xsd:annotation>
+<xsd:documentation>Nesting Class - Indicates what nesting characteristics a part has.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="INSFLG">
+<xsd:annotation>
+<xsd:documentation>Insurance Flag - Indicates whether a part requires insurance.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SER_TYP">
+<xsd:annotation>
+<xsd:documentation>Serialization Type - Serialization Type - Indicates the process flow during which serial numbers will be tracked.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SER_LVL">
+<xsd:annotation>
+<xsd:documentation>Serialization Level - Indicates the inventory level at which serial numbers will be tracked.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WGTCOD">
+<xsd:annotation>
+<xsd:documentation>The weight Code - This is a user defined code for the describing the weight type, usually takes the values HEAVY, MEDIUM or LIGHT.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LOD_TAG_ENCODE">
+<xsd:annotation>
+<xsd:documentation>Load Tagging Encoding - defines the tagging scheme to be used for tagging pallets of the part, such as SGTIN96 or DOD96.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SUB_TAG_ENCODE">
+<xsd:annotation>
+<xsd:documentation>Sub-Load Tagging Encoding - defines the tagging scheme to be used for tagging cartons of the part, such as SGTIN96 or DOD96.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CO_PREFIX_LEN">
+<xsd:annotation>
+<xsd:documentation>Company Prefix Length - defines the length of the company prefix in standard numbering schemes, such as UCC, UPC, or EPC.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TIME_TO_WARN_FOR_EXP">
+<xsd:annotation>
+<xsd:documentation>Time to Warn Before Expiration - The amount of time before the inventory is expected to expire when the system will give a warning message to a user receiving this inventory. The value is evaluated based on the Time Code for this part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTADJFLG">
+<xsd:annotation>
+<xsd:documentation>Supports Inventory Adjustment Flag - If this flag is true, inventory adjustments for this part are allowed. If false, a user will not be allowed to adjust this inventory into or out of the system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CNTBCK_ENA_FLG">
+<xsd:annotation>
+<xsd:documentation>Supports Count Back Flag - If this flag is set, the part supports count back.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CNT_THR_CST">
+<xsd:annotation>
+<xsd:documentation>Count Threshold  - defines monetary threshold where a count will automatically be generated for a location containing this part. Only for counts generated from cancelled picks. Monetary value of part based on Unit Cost of part and qty in location.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CNT_THR_UNIT">
+<xsd:annotation>
+<xsd:documentation>Threshold Unit for Part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTSTYLE">
+<xsd:annotation>
+<xsd:documentation>Style</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTFIT">
+<xsd:annotation>
+<xsd:documentation>Fit</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTCOLOR">
+<xsd:annotation>
+<xsd:documentation>Color</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTSIZE">
+<xsd:annotation>
+<xsd:documentation>Size</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PCK_STEAL_FLG">
+<xsd:annotation>
+<xsd:documentation>Pick steal flag -  Used to determine if the part can be used for pick stealing.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CATCH_UNTWGT_MU">
+<xsd:annotation>
+<xsd:documentation>MU of Catch Unit Weight Measurements.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="76"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="GRSWGT_MU">
+<xsd:annotation>
+<xsd:documentation>MU of Gross Weight Measurements.  (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="76"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NETWGT_MU">
+<xsd:annotation>
+<xsd:documentation>MU of Net Weight Measurements. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="76"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PAKLEN_MU">
+<xsd:annotation>
+<xsd:documentation>MU of Linear Pack Measurements. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="76"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTLEN_MU">
+<xsd:annotation>
+<xsd:documentation>MU of Linear Case Measurements. (obsolete with WMD_2009.1)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CRNCY_CODE">
+<xsd:annotation>
+<xsd:documentation>The Currency Code used to specify the Currency fields of Part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BOX_PCK_FLG">
+<xsd:annotation>
+<xsd:documentation>This field specifies if the part will be picked to box during cartonization.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="AVG_CATCH">
+<xsd:annotation>
+<xsd:documentation>A flag to determine whether this part will use the average catch quantity functionality</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BTO_SUBST_PRTNUM">
+<xsd:annotation>
+<xsd:documentation>BTO Substitute Part Number - Indicates which part is the BTO substitute for the part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BTO_OBSO_FLG">
+<xsd:annotation>
+<xsd:documentation>BTO Obsolete Flag - Indicates that BTO will not use this part any more.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DSPUOM">
+<xsd:annotation>
+<xsd:documentation>Display UOM - The uom that this part used to display. It should be UOM defined in prtftp_dtl.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RPTUOM">
+<xsd:annotation>
+<xsd:documentation>Report UOM - The uom that this part used to report. It should be UOM defined in prtftp_dtl.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="IGNORE_CON_FLG">
+<xsd:annotation>
+<xsd:documentation>When the flag is set to true, it indicates that picks of this part could not be combined.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LOT_FMT_ID">
+<xsd:annotation>
+<xsd:documentation>The Lot Format ID, used for parsing of lot numbers.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ABS_ORDINV_WIN">
+<xsd:annotation>
+<xsd:documentation>Absolute Order Inventory Window.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ABS_ORDINV_CODE">
+<xsd:annotation>
+<xsd:documentation>Absolute Order Inventory Code.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="THRESH_PCK_VAR">
+<xsd:annotation>
+<xsd:documentation>Thresh Pick Variable - This field indicates if user should be warned when picking outside of the threshold variance percentage. It's range should from 0 to 100.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="3"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_STR1">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_STR2">
+<xsd:annotation>
+<xsd:documentation>Carton or Set</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_STR3">
+<xsd:annotation>
+<xsd:documentation>Pack Type 'C' for Solid Colour, 'S' for Solid Size, 'A' for Assorted and 'K' for Kimball By Size</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_STR4">
+<xsd:annotation>
+<xsd:documentation>RMS department that the item belongs to</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_STR5">
+<xsd:annotation>
+<xsd:documentation>Attribute String 5</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_STR6">
+<xsd:annotation>
+<xsd:documentation>Attribute String 6</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_STR7">
+<xsd:annotation>
+<xsd:documentation>Colour code of sellable item</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_INT1">
+<xsd:annotation>
+<xsd:documentation>New Line Flag</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_INT2">
+<xsd:annotation>
+<xsd:documentation>XMAS Flag</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UC_ATTR_INT3">
+<xsd:annotation>
+<xsd:documentation>Bags Flag</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="PART_DESCRIPTION_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change part description information in the Part Description (prtdsc) table for the Part Number defined in the PART segment. Multiple part descriptions may be downloaded for each part number, allowing for integration with multi-locale systems. For example, one part can have an English, French, and Spanish version of the part description.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name -  Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LNGDSC">
+<xsd:annotation>
+<xsd:documentation>Long Description - More detailed description of the part number. Users typically see the part description rather than the part number.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="1000"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SHORT_DSC">
+<xsd:annotation>
+<xsd:documentation>Short Description (OPTIONAL) - Shorter form of the part description. Used for display purposes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LOCALE_ID">
+<xsd:annotation>
+<xsd:documentation>Locale ID - Unique identifier for a collection of attributes (for example, date and time formats) related to a particular language and territory. The locale ID determines which attributes appear in the user interface.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="REPACK_CLASS_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change part repack class in the Part Repack Class (prtrpk) table for the Part Number defined in the PART segment. Only one repack class may be downloaded for a part number.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name -  Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RPKCLS">
+<xsd:annotation>
+<xsd:documentation>Part Repack Class - Limits what parts will be shipped together in the same cartons. For example: You would never want to ship bricks and eggs together in the same carton. Therefore, bricks would have a different repack class than eggs.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SRTSEQ">
+<xsd:annotation>
+<xsd:documentation>Precedence - the order of precedence for the repack classes, when multiples are defined.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="SER_NUM_TYP_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change a Serial Number Type</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier of this IFD Segment</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SER_NUM_TYP_ID">
+<xsd:annotation>
+<xsd:documentation>Serial Number Type ID- The ID created by the user to specify a type of serial number.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SER_MSK">
+<xsd:annotation>
+<xsd:documentation>Serial Mask- Indicates the format that the serial number should be scanned or typed in.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RPT_TO_HOST_FLG">
+<xsd:annotation>
+<xsd:documentation>Report to Host Flag- Indicates whether serial numbers need to be sent to host system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SRTSEQ">
+<xsd:annotation>
+<xsd:documentation>Sort Sequence- Indicates the sort order of serial number types.  This facilitates the ease of displaying serial numbers in RF forms.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="PART_ALT_PRTNUM_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to allow the user to download an alternate identifier for a part/client combination.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier of this IFD Segment</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ALT_PRT_TYP">
+<xsd:annotation>
+<xsd:documentation>Alternate Part Type - Categorizes alternate part number. Ex: UPC CODE.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ALT_PRTNUM">
+<xsd:annotation>
+<xsd:documentation>Alternate Part Number - an attribute for a part/prt_client_id combination and can be used in the system any place where a prtnum is entered.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UOMCOD">
+<xsd:annotation>
+<xsd:documentation>Unit of Measure Code - Defines the level (pallet, carton, each) to apply alternate part number.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RFID_FILTER_VAL_COD">
+<xsd:annotation>
+<xsd:documentation>RFID Filter Value code - defines the code to be used for generating the RFID filter value, such as PALLET, CASE, UNIT-CASE, UNIT</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="PART_FOOTPRINT_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change part footprint information in the Part Footprint (prtftp) table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name -  Identifier for Part Footprint.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="FTPCOD">
+<xsd:annotation>
+<xsd:documentation>Footprint Code</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LNGDSC">
+<xsd:annotation>
+<xsd:documentation>Long Description - More detailed description of the part number. Users typically see the part description rather than the part number.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="1000"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SHORT_DSC">
+<xsd:annotation>
+<xsd:documentation>Short Description (OPTIONAL) - Shorter form of the part description. Used for display purposes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LOCALE_ID">
+<xsd:annotation>
+<xsd:documentation>Locale ID - Unique identifier for a collection of attributes (for example, date and time formats) related to a particular language and territory. The locale ID determines which attributes appear in the user interface.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CASLVL">
+<xsd:annotation>
+<xsd:documentation>Cases per Level - Number of cases on each tier of a pallet load for product that uses this Footprint Code.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NSTLEN">
+<xsd:annotation>
+<xsd:documentation>Nesting Length</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NSTLEN_MU">
+<xsd:annotation>
+<xsd:documentation>MU of Linear Nested Measurements.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NSTWID">
+<xsd:annotation>
+<xsd:documentation>Nesting Width</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NSTHGT">
+<xsd:annotation>
+<xsd:documentation>Nesting Height</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PAL_STCK_HGT">
+<xsd:annotation>
+<xsd:documentation>Pallet Stack Height-Allows the user to define the Pallet Stack Height for the footprint.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DEF_ASSET_TYP">
+<xsd:annotation>
+<xsd:documentation>Default Asset Type</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DEFFTP_FLG">
+<xsd:annotation>
+<xsd:documentation>Default Part Footprint Flag - which indicates current ftpcod is default ftpcod for the part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="PART_FOOTPRINT_DTL_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change part footprint information in the Part Footprint Detail(prtftp_dtl) table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name -  Identifier for Part Footprint Detail.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UOMCOD">
+<xsd:annotation>
+<xsd:documentation>UOM Code</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UOMLVL">
+<xsd:annotation>
+<xsd:documentation>UOM level - a number which is manipulated by system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LEN">
+<xsd:annotation>
+<xsd:documentation>UOM Length</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WID">
+<xsd:annotation>
+<xsd:documentation>UOM Width</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="HGT">
+<xsd:annotation>
+<xsd:documentation>UOM Height</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="GRSWGT">
+<xsd:annotation>
+<xsd:documentation>UOM gross weight which is weight with package</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="23"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NETWGT">
+<xsd:annotation>
+<xsd:documentation>UOM net weight which weight without package</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="23"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PAL_FLG">
+<xsd:annotation>
+<xsd:documentation>Pallet UOM flag, which indicates if current UOM is a pallet UOM.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CAS_FLG">
+<xsd:annotation>
+<xsd:documentation>Case UOM flag, which indicates if current UOM is case UOM.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PAK_FLG">
+<xsd:annotation>
+<xsd:documentation>Package UOM flag, which indicates if current UOM is package uom.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="STK_FLG">
+<xsd:annotation>
+<xsd:documentation>Unit UOM flag, which indicates if current UOM is unit UOM.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RCV_FLG">
+<xsd:annotation>
+<xsd:documentation>Receive UOM Flag, which indicates if current uom is the default UOM when receiving.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTQTY">
+<xsd:annotation>
+<xsd:documentation>Quantity of Stocking Units contained within this UOM.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LEN_MU">
+<xsd:annotation>
+<xsd:documentation>MU of LEN Measurements.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WID_MU">
+<xsd:annotation>
+<xsd:documentation>MU of WID Measurements.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="HGT_MU">
+<xsd:annotation>
+<xsd:documentation>MU of HGT Measurements.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="GRSWGT_MU">
+<xsd:annotation>
+<xsd:documentation>MU of Gross Weight Measurements.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NETWGT_MU">
+<xsd:annotation>
+<xsd:documentation>MU of Net Weight Measurements.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CTN_FLG">
+<xsd:annotation>
+<xsd:documentation>This flag will indicate if this uom can be cartonized.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="THRESH_PCT">
+<xsd:annotation>
+<xsd:documentation>Threshold Percentage.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="UC_KIMBALL_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create kimball details for part.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Value as "VC_KIMBALL"</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="KIMBALL_CODE">
+<xsd:annotation>
+<xsd:documentation>Kimball Code</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="36"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTQTY">
+<xsd:annotation>
+<xsd:documentation>Unit quantity of Sellable item</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORIN">
+<xsd:annotation>
+<xsd:documentation>9 digit ORIN code in R3</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="36"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>

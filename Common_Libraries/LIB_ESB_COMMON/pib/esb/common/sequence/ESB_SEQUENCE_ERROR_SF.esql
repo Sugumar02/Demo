@@ -1,0 +1,185 @@
+BROKER SCHEMA pib.esb.common.sequence
+PATH pib.esb.common;
+
+CREATE COMPUTE MODULE ESB_SEQUENCE_ERROR_SF_CheckMessage
+	DECLARE CheckSequence SHARED CHARACTER '';
+
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE envRef 		REFERENCE TO Environment.Variables;
+		DECLARE envSeqRef 	REFERENCE TO envRef.SequenceInfo;
+		DECLARE interfaceId	CHARACTER;
+		DECLARE errorCount	INTEGER;
+
+		-- If Environment Tree contains a ribMessage structure, it indicates this is the Publisher service as the Remove RIB Envelope persists the Rib Message in the
+		-- Environment tree, so interface Id is generic 'Publisher', as Publisher service is for all Subsribers Interface Ids.
+		-- Else, it is the Subscriber service and the Interface Id can be the specific one. This allows that only the Subscriber that had an exception blocks messages, 
+		-- not the other Subscribers. 
+		IF EXISTS(envRef.ribMessage[]) THEN
+			SET interfaceId = 'Publisher';
+		ELSE
+			SET interfaceId = envRef.InterfaceId;
+		END IF;
+
+		IF COALESCE(CheckSequence, '') ='' THEN
+			-- We do not want to keep checking the DB in case there is no entry for this Interface Id, so set value to N if no value returned.
+			SET CheckSequence = COALESCE(THE(SELECT ITEM T.SEQUENCECHECK FROM Database.dbo.ESB_SEQUENCE_CONFIG AS T WHERE T.FAMILY = envSeqRef.Family AND T.INTERFACE_ID = interfaceId), 'N');
+		END IF;
+
+		IF CheckSequence = 'Y' THEN
+
+			-- Check if this Entity Id has an entry already in the table for this service that is not part of a replay. 	
+			SET errorCount = SELECT COUNT(T.ID) FROM Database.dbo.ESB_SEQUENCE_LOGGER AS T WHERE 
+				T.INTERFACE_ID = interfaceId AND T.ID = envSeqRef.Id AND T.FAMILY = envSeqRef.Family AND T.REPLAYSTATUS = 'N';
+
+			IF errorCount > 0 THEN 			
+				-- It has an error for this Id and Entity type in the Sequence table.
+
+				-- Create an Audit Point indicating the message has been blocked.
+				SET envRef.AuditName = 'Message Blocked by Sequencer';
+				PROPAGATE TO LABEL 'Logger' DELETE NONE;
+
+				PROPAGATE TO TERMINAL 'out1';
+
+				RETURN FALSE;
+
+			ELSE		
+				-- No error matching details of this Id and Entity type, so allow through.
+
+				-- Check if this message is part of replay, and if so, update the GLOBALALTRANSACTION_ID in the Sequence table, as it can't be updated the by Sequence Error Replay service
+				-- as the value is the MQMD MsgId, which the Replay service can't know when it replays the message.
+				SET errorCount = SELECT COUNT(T.RIBMESSAGEID) FROM Database.dbo.ESB_SEQUENCE_LOGGER AS T WHERE 
+					T.INTERFACE_ID = interfaceId AND T.RIBMESSAGEID = envSeqRef.RibMessageID AND T.ID = envSeqRef.Id AND T.FAMILY = envSeqRef.Family AND T.REPLAYSTATUS = 'Y';
+
+				IF errorCount > 0 THEN
+
+					UPDATE Database.dbo.ESB_SEQUENCE_LOGGER AS T SET GLOBALTRANSACTIONID = envSeqRef.GlobalTransactionId WHERE
+						T.INTERFACE_ID = interfaceId AND T.RIBMESSAGEID = envSeqRef.RibMessageID AND T.ID = envSeqRef.Id AND T.FAMILY = envSeqRef.Family AND T.REPLAYSTATUS = 'Y';
+
+					COMMIT;
+
+				END IF;
+
+			END IF;
+
+		END IF;
+
+		RETURN TRUE;
+
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE ESB_SEQUENCE_ERROR_SF_InsertSequenceErrorMessage
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+  		CALL CopyMessageHeaders();
+
+		DECLARE envRef, envMsgRef	REFERENCE TO Environment.Variables;
+		DECLARE envSeqRef 			REFERENCE TO envRef.SequenceInfo;
+		DECLARE outRef 				REFERENCE TO OutputRoot;
+		DECLARE msgBlob 			BLOB;
+		DECLARE msgClob				CHARACTER;
+		DECLARE interfaceId			CHARACTER;
+		DECLARE errorCount			INTEGER;
+
+		-- If Environment Tree contains a ribMessage structure, it indicates this is the Publisher service as the Remove RIB Envelope persists the Rib Message in the
+		-- Environment tree, so interface Id is generic 'Publisher', as Publisher service is for all Subsribers Interface Ids.
+		-- Else, it is the Subscriber service and the Interface Id can be the specific one. 
+		IF EXISTS(envRef.ribMessage[]) THEN
+			SET interfaceId = 'Publisher';
+		ELSE
+			SET interfaceId = envRef.InterfaceId;
+		END IF;
+
+		-- Check if it's part of a Replay Action, if so, do an Update instead of an Insert.
+		SET errorCount = SELECT COUNT(T.ID) FROM Database.dbo.ESB_SEQUENCE_LOGGER AS T WHERE 
+				T.INTERFACE_ID = interfaceId AND T.RIBMESSAGEID = envSeqRef.RibMessageID AND T.ID = envSeqRef.Id AND T.FAMILY = envSeqRef.Family AND T.REPLAYSTATUS = 'Y';
+
+		IF errorCount = 0 THEN
+			MOVE envMsgRef TO envRef.SequenceInfo.XMLNSC;
+			MOVE envMsgRef FIRSTCHILD;
+
+			SET msgBlob = ASBITSTREAM(envMsgRef OPTIONS FolderBitStream CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+			SET msgClob = CAST(msgBlob AS CHARACTER CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+
+			PASSTHRU ('INSERT INTO dbo.ESB_SEQUENCE_LOGGER (INTERFACE_ID, RIBMESSAGEID, ID, FAMILY, GLOBALTRANSACTIONID, 
+															 PUBLISHTIME, FLOWNAME, REPLAYACTION, REPLAYSTATUS, REPLAYCOUNT, REPLAYQUEUENAME, MESSAGEDATA, EXCEPTIONMESSAGEIND)
+						VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',  interfaceId, envSeqRef.RibMessageID, envSeqRef.Id, envSeqRef.Family, envSeqRef.GlobalTransactionId, 
+															 envSeqRef.PublishTime, MessageFlowLabel, 'N', 'N', 0, envRef.SourceQueue, msgClob, 'N');
+		ELSE
+			-- Update the value of REPLAYSTATUS to 'N' indicating the Replay has not been successful, also update EXCEPTIONMESSAGEIND to 'N' indicating this message was not the cause of the exception.
+
+			-- We use INTERFACE_ID here because, the message may have been replayed from Publisher which was sucessful, but needed to be blocked in the Subscriber, so we
+			-- only want to update the Sequence Error entry for the Subscriber, not just globally for Id and Family.
+			UPDATE Database.dbo.ESB_SEQUENCE_LOGGER AS T SET GLOBALTRANSACTIONID = envSeqRef.GlobalTransactionId, REPLAYSTATUS = 'N', EXCEPTIONMESSAGEIND = 'N' WHERE
+				T.INTERFACE_ID = interfaceId AND T.RIBMESSAGEID = envSeqRef.RibMessageID AND T.ID = envSeqRef.Id AND T.FAMILY = envSeqRef.Family AND T.REPLAYSTATUS = 'Y';
+
+		END IF;
+
+		RETURN TRUE;
+
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE ESB_SEQUENCE_ERROR_SF_InsertErrorMessage
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE MQRFH2Ref			REFERENCE TO InputRoot.MQRFH2;
+		DECLARE envRef, envSeqRef	REFERENCE TO Environment.Variables;
+		DECLARE msgBlob	 			BLOB ASBITSTREAM(InputBody CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+		DECLARE msgClob 			CHARACTER CAST(msgBlob AS CHARACTER CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+		DECLARE interfaceId			CHARACTER;
+		DECLARE errorCount			INTEGER;
+
+		-- Sequence info is in Environment tree for Publisher and in MQRFH2 usr folder for Subscriber.
+		IF EXISTS(envRef.SequenceInfo[]) THEN
+			MOVE envSeqRef TO envRef.SequenceInfo;
+		ELSEIF EXISTS(MQRFH2Ref.usr.SequenceInfo[]) THEN
+			MOVE envSeqRef TO MQRFH2Ref.usr.SequenceInfo;
+		END IF;
+
+		-- If Environment Tree contains a ribMessage structure, it indicates this is the Publisher service as the Remove RIB Envelope persists the Rib Message in the
+		-- Environment tree, so interface Id is generic 'Publisher', as Publisher service is for all Subsribers Interface Ids.
+		-- Else, it is the Subscriber service and the Interface Id can be the specific one. 
+		IF EXISTS(envRef.ribMessage[]) THEN
+			SET interfaceId = 'Publisher';
+		ELSE
+			SET interfaceId = envRef.InterfaceId;
+		END IF;
+
+		-- Check if it's part of a Replay Action, if so, do an Update instead of an Insert.
+		SET errorCount = SELECT COUNT(T.ID) FROM Database.dbo.ESB_SEQUENCE_LOGGER AS T WHERE 
+				T.RIBMESSAGEID = envSeqRef.RibMessageID AND T.ID = envSeqRef.Id AND T.FAMILY = envSeqRef.Family AND T.REPLAYSTATUS = 'Y';
+
+		IF errorCount = 0 THEN
+			PASSTHRU ('INSERT INTO dbo.ESB_SEQUENCE_LOGGER (INTERFACE_ID, RIBMESSAGEID, ID, FAMILY, GLOBALTRANSACTIONID, 
+															PUBLISHTIME, FLOWNAME, REPLAYACTION, REPLAYSTATUS, REPLAYCOUNT, REPLAYQUEUENAME, MESSAGEDATA, EXCEPTIONMESSAGEIND)
+						VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', interfaceId, envSeqRef.RibMessageID, envSeqRef.Id, envSeqRef.Family, envSeqRef.GlobalTransactionId, 
+															envSeqRef.PublishTime, MessageFlowLabel, 'N', 'N', 0, envRef.SourceQueue, msgClob, 'Y');
+		ELSE
+
+			-- Update the value of REPLAYSTATUS to 'N' indicating the Replay has not been successful, also update EXCEPTIONMESSAGEIND to 'Y' indicating this message was the cause of the exception.
+			UPDATE Database.dbo.ESB_SEQUENCE_LOGGER AS T SET GLOBALTRANSACTIONID = envSeqRef.GlobalTransactionId, REPLAYSTATUS = 'N', EXCEPTIONMESSAGEIND = 'Y' WHERE
+				T.RIBMESSAGEID = envSeqRef.RibMessageID AND T.ID = envSeqRef.Id AND T.FAMILY = envSeqRef.Family AND T.REPLAYSTATUS = 'Y';
+
+		END IF;
+
+		-- Perform a Commit because a Throw is executed later by Error Handler to perform an MQ Backout.
+		COMMIT;
+
+		RETURN TRUE;
+	END;
+END MODULE;

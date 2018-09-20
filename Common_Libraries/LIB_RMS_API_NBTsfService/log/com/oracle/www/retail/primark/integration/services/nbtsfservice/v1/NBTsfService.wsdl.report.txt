@@ -1,0 +1,54 @@
+
+
+Importing file: H:\vijay\PSM\WSDL\NBTsfService.wsdl
+
+
+The following is a list of WS-I warning messages found when importing:
+XSD: There is no xmlns declaration for namespace 'http://www.oracle.com/retail/integration/services/exception/v1', Line: 9, Column: 1
+XSD: The location 'http://iecwxuvdapp783.primark.local:8403/NBTsfBean/NBTsfService?xsd=3' has not been resolved because the import is unused, Line: 15, Column: 1
+XSD: There is no xmlns declaration for namespace 'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfRef/v1', Line: 15, Column: 1
+XSD: The location 'http://iecwxuvdapp783.primark.local:8403/NBTsfBean/NBTsfService?xsd=4' has not been resolved because the import is unused, Line: 18, Column: 1
+XSD: There is no xmlns declaration for namespace 'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBVarcharDesc/v1', Line: 18, Column: 1
+XSD: The location 'http://iecwxuvdapp783.primark.local:8403/NBTsfBean/NBTsfService?xsd=5' has not been resolved because the import is unused, Line: 21, Column: 1
+XSD: There is no xmlns declaration for namespace 'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfDesc/v1', Line: 21, Column: 1
+
+
+The WSDL import will proceed with bindings NBTsfPortBinding.
+Creating wsdl schema document for file:///H:/vijay/PSM/WSDL/NBTsfService.wsdl.
+Parsing wsdl binding {http://www.oracle.com/retail/primark/integration/services/NBTsfService/v1}NBTsfPortBinding.
+Parsing wsdl binding input getTsf.
+Parsing wsdl binding output getTsf.
+Parsing wsdl binding fault IllegalArgumentWSFaultException.
+Parsing wsdl binding fault EntityNotFoundWSFaultException.
+Parsing wsdl binding fault IllegalStateWSFaultException.
+Parsing wsdl binding fault ValidationWSFaultException.
+Parsing wsdl binding input getTsfCategory.
+Parsing wsdl binding output getTsfCategory.
+Parsing wsdl binding fault IllegalArgumentWSFaultException.
+Parsing wsdl binding fault EntityNotFoundWSFaultException.
+Parsing wsdl binding fault IllegalStateWSFaultException.
+Parsing wsdl binding fault ValidationWSFaultException.
+Parsing wsdl binding input ping.
+Parsing wsdl binding output ping.
+Processing doc style for operation getTsf.
+Processing doc style for operation getTsfCategory.
+Processing doc style for operation ping.
+Populating WSDL schema NBTsfService.xsd.
+Removing unnecessary import statement with namespace http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfRef/v1 from schema NBTsfService_InlineSchema3.xsd.  This statement was not resolved and is never used.
+Removing unnecessary import statement with namespace http://www.oracle.com/retail/integration/custom/bo/ExtOfNBVarcharDesc/v1 from schema NBTsfService_InlineSchema4.xsd.  This statement was not resolved and is never used.
+Removing unnecessary import statement with namespace http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfDesc/v1 from schema NBTsfService_InlineSchema5.xsd.  This statement was not resolved and is never used.
+Creating file NBTsfService.xsd in the workspace.
+Creating file /LIB_RMS_API_NBTsfService/xsd_1.xsd in the workspace.
+Creating file /LIB_RMS_API_NBTsfService/xsd_2.xsd in the workspace.
+Creating file /LIB_RMS_API_NBTsfService/xsd_3.xsd in the workspace.
+Creating file /LIB_RMS_API_NBTsfService/xsd_5.xsd in the workspace.
+Creating file /LIB_RMS_API_NBTsfService/xsd_4.xsd in the workspace.
+Copying source WSDL NBTsfService.wsdl to NBTsfService.wsdl.
+
+Elapsed time processing this message definition file: 1.16 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

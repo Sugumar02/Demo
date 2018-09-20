@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" name="NBASNService" targetNamespace="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <documentation>
+    <appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="NBASNService_InlineSchema5.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema6.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema8.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema4.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema3.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema2.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema7.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema11.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema10.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema1.xsd"/>
+        <generatedXSD location="NBASNService_InlineSchema9.xsd"/>
+        <binding hasEncoding="false" imported="true" name="NBASNPortBinding" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </appinfo>
+  </documentation>
+    <wsp:Policy wsu:Id="NBASNPortBinding_Wsaw_Addressing_Policy-NBASNPortBinding_WSAM_Addressing_Policy-NBASNPortBinding_WSAM_Addressing_Policy" xmlns:wsapw3c="http://www.w3.org/2006/05/addressing/wsdl">
+        <wsapw3c:UsingAddressing wsp:Optional="true"/>
+        <wsam:Addressing wsp:Optional="true">
+            <wsp:Policy/>
+        </wsam:Addressing>
+    </wsp:Policy>
+    <types>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInfoDesc/v1" version="1.0" xmlns:ns10="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBLocDesc/v1">
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBLocDesc/v1" schemaLocation="NBASNService_InlineSchema9.xsd"/>
+<xsd:include schemaLocation="NBASNService_InlineSchema5.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoRef/v1" version="1.0">
+<xsd:include schemaLocation="NBASNService_InlineSchema6.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegDesc/v1" version="1.0">
+<xsd:include schemaLocation="NBASNService_InlineSchema8.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoDesc/v1" version="1.0" xmlns:ns9="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1">
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1" schemaLocation="NBASNService_InlineSchema10.xsd"/>
+<xsd:include schemaLocation="NBASNService_InlineSchema4.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1" version="1.0">
+<xsd:include schemaLocation="NBASNService_InlineSchema3.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:ns1="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPORef/v1" xmlns:ns2="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBLocDesc/v1" xmlns:ns3="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInfoDesc/v1" xmlns:ns4="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegRef/v1" xmlns:ns5="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegDesc/v1" xmlns:ns6="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoRef/v1" xmlns:ns7="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1" xmlns:ns8="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoDesc/v1">
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPORef/v1" schemaLocation="NBASNService_InlineSchema11.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInfoDesc/v1" schemaLocation="NBASNService_InlineSchema5.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegRef/v1" schemaLocation="NBASNService_InlineSchema7.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegDesc/v1" schemaLocation="NBASNService_InlineSchema8.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoRef/v1" schemaLocation="NBASNService_InlineSchema6.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoDesc/v1" schemaLocation="NBASNService_InlineSchema4.xsd"/>
+<xsd:include schemaLocation="NBASNService_InlineSchema2.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegRef/v1" version="1.0">
+<xsd:include schemaLocation="NBASNService_InlineSchema7.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPORef/v1" version="1.0">
+<xsd:include schemaLocation="NBASNService_InlineSchema11.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1" version="1.0" xmlns:ns11="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1" xmlns:tns="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1">
+<xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1" schemaLocation="NBASNService_InlineSchema3.xsd"/>
+<xsd:include schemaLocation="NBASNService_InlineSchema10.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/services/exception/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:tns="http://www.oracle.com/retail/integration/services/exception/v1">
+<xsd:include schemaLocation="NBASNService_InlineSchema1.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBLocDesc/v1" version="1.0">
+<xsd:include schemaLocation="NBASNService_InlineSchema9.xsd"/>
+    </xs:schema>
+    </types>
+    <message name="getTsfWhLeg">
+        <part element="tns:getTsfWhLeg" name="parameters"/>
+    </message>
+    <message name="getTsfWhLegResponse">
+        <part element="tns:getTsfWhLegResponse" name="parameters"/>
+    </message>
+    <message name="IllegalArgumentWSFaultException">
+        <part element="ns12:IllegalArgumentWSFaultException" name="fault" xmlns:ns12="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="IllegalStateWSFaultException">
+        <part element="ns13:IllegalStateWSFaultException" name="fault" xmlns:ns13="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="ValidationWSFaultException">
+        <part element="ns14:ValidationWSFaultException" name="fault" xmlns:ns14="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="getASNInfo">
+        <part element="tns:getASNInfo" name="parameters"/>
+    </message>
+    <message name="getASNInfoResponse">
+        <part element="tns:getASNInfoResponse" name="parameters"/>
+    </message>
+    <message name="EntityNotFoundWSFaultException">
+        <part element="ns15:EntityNotFoundWSFaultException" name="fault" xmlns:ns15="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="getPOInfo">
+        <part element="tns:getPOInfo" name="parameters"/>
+    </message>
+    <message name="getPOInfoResponse">
+        <part element="tns:getPOInfoResponse" name="parameters"/>
+    </message>
+    <message name="ping">
+        <part element="tns:ping" name="parameters"/>
+    </message>
+    <message name="pingResponse">
+        <part element="tns:pingResponse" name="parameters"/>
+    </message>
+    <portType name="NBASNPortType">
+        <wsdl:documentation/>
+        <operation name="getTsfWhLeg">
+            <input message="tns:getTsfWhLeg" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getTsfWhLegRequest" wsaw:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getTsfWhLegRequest"/>
+            <output message="tns:getTsfWhLegResponse" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getTsfWhLegResponse"/>
+            <fault message="tns:IllegalArgumentWSFaultException" name="IllegalArgumentWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getTsfWhLeg/Fault/IllegalArgumentWSFaultException"/>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getTsfWhLeg/Fault/IllegalStateWSFaultException"/>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getTsfWhLeg/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="getASNInfo">
+            <input message="tns:getASNInfo" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getASNInfoRequest" wsaw:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getASNInfoRequest"/>
+            <output message="tns:getASNInfoResponse" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getASNInfoResponse"/>
+            <fault message="tns:IllegalArgumentWSFaultException" name="IllegalArgumentWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getASNInfo/Fault/IllegalArgumentWSFaultException"/>
+            <fault message="tns:EntityNotFoundWSFaultException" name="EntityNotFoundWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getASNInfo/Fault/EntityNotFoundWSFaultException"/>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getASNInfo/Fault/IllegalStateWSFaultException"/>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getASNInfo/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="getPOInfo">
+            <input message="tns:getPOInfo" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getPOInfoRequest" wsaw:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getPOInfoRequest"/>
+            <output message="tns:getPOInfoResponse" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getPOInfoResponse"/>
+            <fault message="tns:IllegalArgumentWSFaultException" name="IllegalArgumentWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getPOInfo/Fault/IllegalArgumentWSFaultException"/>
+            <fault message="tns:EntityNotFoundWSFaultException" name="EntityNotFoundWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getPOInfo/Fault/EntityNotFoundWSFaultException"/>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getPOInfo/Fault/IllegalStateWSFaultException"/>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/getPOInfo/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="ping">
+            <input message="tns:ping" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/pingRequest" wsaw:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/pingRequest"/>
+            <output message="tns:pingResponse" wsam:Action="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1/NBASNPortType/pingResponse"/>
+        </operation>
+    </portType>
+    <binding name="NBASNPortBinding" type="tns:NBASNPortType">
+        <wsaw:UsingAddressing/>
+        <wsp:PolicyReference URI="#NBASNPortBinding_Wsaw_Addressing_Policy-NBASNPortBinding_WSAM_Addressing_Policy-NBASNPortBinding_WSAM_Addressing_Policy"/>
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getTsfWhLeg">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalArgumentWSFaultException">
+                <soap:fault name="IllegalArgumentWSFaultException" use="literal"/>
+            </fault>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getASNInfo">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalArgumentWSFaultException">
+                <soap:fault name="IllegalArgumentWSFaultException" use="literal"/>
+            </fault>
+            <fault name="EntityNotFoundWSFaultException">
+                <soap:fault name="EntityNotFoundWSFaultException" use="literal"/>
+            </fault>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getPOInfo">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalArgumentWSFaultException">
+                <soap:fault name="IllegalArgumentWSFaultException" use="literal"/>
+            </fault>
+            <fault name="EntityNotFoundWSFaultException">
+                <soap:fault name="EntityNotFoundWSFaultException" use="literal"/>
+            </fault>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="ping">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="NBASNService">
+        <port binding="tns:NBASNPortBinding" name="NBASNPort">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+        </port>
+    </service>
+</definitions>

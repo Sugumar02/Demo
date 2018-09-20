@@ -1,0 +1,1707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--RedPrarie Corp.
+
+W3C XML Schema for IFD [ORDER_INB_IFD] Version [PRI_V1.0]
+
+Assumptions:
+- Parent Tag []
+- Show ifd tag [T]
+- Envelope IFD [] Version []
+
+IFD Description: This transaction is used to create, change or delete order information from the warehouse system.-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="ORDER_INB_IFD">
+<xsd:annotation>
+<xsd:documentation>This transaction is used to create, change or delete order information from the warehouse system.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="CTRL_SEG">
+<xsd:annotation>
+<xsd:documentation>Identifies the transaction, using the transaction name and version as well as the warehouse routing information.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="TRNNAM">
+<xsd:annotation>
+<xsd:documentation>Transaction ID - Identifier of this IFD.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TRNVER">
+<xsd:annotation>
+<xsd:documentation>Transaction Version</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WHSE_ID">
+<xsd:annotation>
+<xsd:documentation>Warehouse ID - Identifier for the warehouse system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="ORDER_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change general information about the order in the Order (ORD) table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TRNTYP">
+<xsd:annotation>
+<xsd:documentation>Transaction Type - &quot;A&quot; for Add record, &quot;C&quot; for Change record, &quot;R&quot; for Refresh, or &quot;D&quot; for Delete record.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CLIENT_ID">
+<xsd:annotation>
+<xsd:documentation>Client ID - The client to which this order belongs.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDNUM">
+<xsd:annotation>
+<xsd:documentation>Order Number - Unique identifier for the order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="140"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDTYP">
+<xsd:annotation>
+<xsd:documentation>Order Type - Category into which the order will be grouped. Order types are used to identify orders for wave (Warehouse Management controlled) allocation, and to direct orders to specific destination areas.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ENTDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Entered Date - Date on which the order was entered into the host system.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="STCUST">
+<xsd:annotation>
+<xsd:documentation>Ship to Customer - Identifier for the customer that will ultimately receive this order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ST_HOST_ADR_ID">
+<xsd:annotation>
+<xsd:documentation>Ship To Address - The address of the Ship To Customer.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RTCUST">
+<xsd:annotation>
+<xsd:documentation>Route To Customer - The customer to which the shipment will be sent initially. The Route To Customer is responsible for ensuring that the shipment reaches the Ship to Customer.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RT_HOST_ADR_ID">
+<xsd:annotation>
+<xsd:documentation>Route To Address - The address of the Route To Customer.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BTCUST">
+<xsd:annotation>
+<xsd:documentation>Bill to Customer - Identifier for the customer responsible for the payment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BT_HOST_ADR_ID">
+<xsd:annotation>
+<xsd:documentation>Bill to address - The address of the Bill To Customer.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CPONUM">
+<xsd:annotation>
+<xsd:documentation>Customer PO Number - Number that identifies the customer&apos;s purchase order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CPODTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Customer PO Date - Date on which the customer&apos;s purchase order was created.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="CPOTYP">
+<xsd:annotation>
+<xsd:documentation>Customer PO Type - Type of order sent from the customer to acquire product.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PAYTRM">
+<xsd:annotation>
+<xsd:documentation>Payment Term - Tells the parcel manifesting system the payment term for the package. Typically it is a one character value such as 1 or 2, etc. which maps to a Code Master value in the Discrete data. Required if manifesting.(obsolete with WMD_2009.2)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CARFLG">
+<xsd:annotation>
+<xsd:documentation>Change Carrier Flag - Indicates that the ability to change a carrier prior to shipping will be available. When you select this option, you can add an order without defining a carrier.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SHIPBY">
+<xsd:annotation>
+<xsd:documentation>Create Shipment By - Method used to allocate multiple orders. Related to manual or Warehouse Management generated allocation, and can be used to combine orders for the same customer.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RRLFLG">
+<xsd:annotation>
+<xsd:documentation>Release Remaining Lines Flag -  When some of the component lines for the order are specified for cross docking, this flag determines if the rest of the lines are released, or held until the cross docked inventory arrives.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WAVE_FLG">
+<xsd:annotation>
+<xsd:documentation>Wave Flag - The wave flag is used to indicate if this is a wave-able order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="REQUIR_TMS_FLG">
+<xsd:annotation>
+<xsd:documentation>Require TMS Flag - Used to determine if this order should be sent to the TM system to be planned.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="COD_FLG">
+<xsd:annotation>
+<xsd:documentation>COD Flag - Is this a COD order? - obsolete with WMD_2007.2</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORD_FRTRTE">
+<xsd:annotation>
+<xsd:documentation>Order Freight Rate - The freight amount for this order</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BCO_FLG">
+<xsd:annotation>
+<xsd:documentation>Bill Consignee Flag - This field tells the parcel manifesting
+system the consignee is to be billed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SIG_REQ_FLG">
+<xsd:annotation>
+<xsd:documentation>Signature Required - This field tells the parcel manifesting system a signature is required upon delivery of the shipment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BILL_FREIGHT_FLG">
+<xsd:annotation>
+<xsd:documentation>Bill Freight Flag - if true (1), and this is for a COD shipment, the freight charge will be added to the COD amount before it is passed to the manifest system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="COD_PAYMENT_TYPE">
+<xsd:annotation>
+<xsd:documentation>COD Payment Type - This field tells the parcel manifesting system the COD payment type for the package. Typically this is a one character value such as 1 or 2 or 3, etc. which maps to a codmst value. Required if manifesting and cod_flg is true.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PAYMENT_TYPE">
+<xsd:annotation>
+<xsd:documentation>Payment Type - Conditions under which payment for product will be received.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RMANUM">
+<xsd:annotation>
+<xsd:documentation>Returns Materials Authorization Number - used to identify the returned inventory should the inventory for this order be required to return to the facility.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BRCUST">
+<xsd:annotation>
+<xsd:documentation>Broker Customer - Identifier for the customer responsible for importing the international parcel.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BR_HOST_ADR_ID">
+<xsd:annotation>
+<xsd:documentation>Broker address - The address of the Broker Customer.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="COD_IND_TYPE">
+<xsd:annotation>
+<xsd:documentation>COD Indicator Type - Determines what type of COD will be used with the parcel.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CUSTOMS_CLR_FLG">
+<xsd:annotation>
+<xsd:documentation>Customs Clearance Flag - Expedites an international parcel through customs.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SRV_TYPE">
+<xsd:annotation>
+<xsd:documentation>Carrier Service Type - Defines the type of service that will be used by the carrier for the parcel on an international parcel.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CRNCY_CODE">
+<xsd:annotation>
+<xsd:documentation>The Currency Code used to specify the Currency fields in an Order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BTO_SEQNUM">
+<xsd:annotation>
+<xsd:documentation>BTO Sequence - This field represents the sequence that the line will be picked as determined by the Build to Order system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SLOT">
+<xsd:annotation>
+<xsd:documentation>BTO Slot - When using BTO, the user is directed to place the inventory for this order line into this slot. The slot is determined by the Build to Order system</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="50"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RUSH_FLG">
+<xsd:annotation>
+<xsd:documentation>BTO Rush Flag - If Rush Flag = true, the order is &apos;&apos;Rush&apos;&apos;. otherwise, the order is &apos;&apos;Normal&apos;&apos;. This field can be used for all orders.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DEPTNO">
+<xsd:annotation>
+<xsd:documentation>Customer Department Number for Wal-Mart BOL</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DEST_NUM">
+<xsd:annotation>
+<xsd:documentation>Customer Destination Number for Wal-Mart BOL</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="ORDER_NOTE_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change order notes for this order in the Order Note (ORD_NOTE] table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDNUM">
+<xsd:annotation>
+<xsd:documentation>Order Number - Unique number that identifies an order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="140"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTLIN">
+<xsd:annotation>
+<xsd:documentation>Note Line - Used to distinguish multiple lines of notes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTTXT">
+<xsd:annotation>
+<xsd:documentation>Note Text - Text of the note associated to the order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTTYP">
+<xsd:annotation>
+<xsd:documentation>Note Type (GENERIC,EDI)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="ORDER_LINE_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change an order line information for an order line in the Order Line (ORD_LINE) table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDNUM">
+<xsd:annotation>
+<xsd:documentation>Order Number - Unique number that identifies an order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="140"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDLIN">
+<xsd:annotation>
+<xsd:documentation>Order Line Number - Used to identify multiple order lines for the order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDSLN">
+<xsd:annotation>
+<xsd:documentation>Order Sub Line - Can be used to tie lines together on a single order line to ensure that the inventory for the lines allocate as sets of inventory or as complete groups of inventory.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SALES_ORDNUM">
+<xsd:annotation>
+<xsd:documentation>Sales Order Number - Customer&apos;s order number. This may differ from the order number if the host system assigns its own order numbers, or if it consolidates customer orders into warehouse orders.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SALES_ORDLIN">
+<xsd:annotation>
+<xsd:documentation>Sales Order Line - Customer&apos;s order line number. This may differ from the order line number if the host system assigns its own order numbers, or if it consolidates customer orders into warehouse orders.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ENTDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Entered Date - Date on which the order was entered into the host system.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTNUM">
+<xsd:annotation>
+<xsd:documentation>Part Number - Also referred to as item number or SKU.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRT_CLIENT_ID">
+<xsd:annotation>
+<xsd:documentation>Item Client ID - The client to which this item belongs.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORGCOD">
+<xsd:annotation>
+<xsd:documentation>Origin Code - Identifies place of origin required when allocating this part number for this order line. If not defined, system will advocate for any origin code.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="REVLVL">
+<xsd:annotation>
+<xsd:documentation>Revision Level - Identifies the revision level required when allocating this part number for this order line. If not defined, system will allocate for any revision level.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LOTNUM">
+<xsd:annotation>
+<xsd:documentation>Lot Number - Identifies the lot number required when allocating this part number for this order line. If not defined, system will allocate for any lot number.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="INVSTS">
+<xsd:annotation>
+<xsd:documentation>Inventory Status - Obsolete with 6.0</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDQTY">
+<xsd:annotation>
+<xsd:documentation>Ordered Quantity - Amount of product that the customer ordered.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="MARCOD">
+<xsd:annotation>
+<xsd:documentation>Married Code - Code that is used to ensure that an order line will ship complete, or that inventory will ship as complete sets. This option is only available when using the reservation manager.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRCPRI">
+<xsd:annotation>
+<xsd:documentation>Process Priority - Code that identifies the priority at which the order will be allocated. Orders with the highest priority codes are allocated first. Processing priority codes range from 1 to 9 with 1 being the highest priority.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="OVAFLG">
+<xsd:annotation>
+<xsd:documentation>Override Allocation Flag - Obsolete in 6.0</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="OVPFLG">
+<xsd:annotation>
+<xsd:documentation>Override Processing Flag - Obsolete in 6.0</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RPQFLG">
+<xsd:annotation>
+<xsd:documentation>Round Up Pick Quantity Flag - This flag indicates that allocation should automatically round up pick quantities in order to get the next highest material handling unit of product.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="OVRCOD">
+<xsd:annotation>
+<xsd:documentation>Over Allocation Code - Code that identifies how over-allocation is performed. Percent is the percentage of the original quantity required for the order. Quantity is a specific quantity of the part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="OVRAMT">
+<xsd:annotation>
+<xsd:documentation>Over Allocation Amount - The total amount of inventory that can be allocated when the allocation code is quantity or percentage of inventory that can be allocated when the allocation code is percentage.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="STDFLG">
+<xsd:annotation>
+<xsd:documentation>Standard Case Flag - Indicates that the customer requires that the quantity in the case match the standard case quantity defined in the footprint code for this part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PARFLG">
+<xsd:annotation>
+<xsd:documentation>Partial Flag - Indicates that the order line can be shipped with less than the required amount of inventory. If this option is not selected, the order line must be shipped complete.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BCKFLG">
+<xsd:annotation>
+<xsd:documentation>Back Order Flag - Indicates that an order line, which was shipped incomplete, will be back ordered.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CARCOD">
+<xsd:annotation>
+<xsd:documentation>Carrier Code - Code that identifies the carrier who is expected to transport the order to the customer.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CARGRP">
+<xsd:annotation>
+<xsd:documentation>Carrier Group - Code that identifies a group of carriers, one of whom is expected to transport an order or a shipment to the customer.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SRVLVL">
+<xsd:annotation>
+<xsd:documentation>Service Level - Code that identifies the expected service level provided by the carrier who will transport an order or a shipment to the customer.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SDDFLG">
+<xsd:annotation>
+<xsd:documentation>Saturday Delivery Flag - Indicates that the carrier will deliver a shipment on Saturday, if required.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="FRTCOD">
+<xsd:annotation>
+<xsd:documentation>Freight Code - Code that is used in shipping paperwork to determine who takes financial responsibility for the shipment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="24"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="COOINC">
+<xsd:annotation>
+<xsd:documentation>COO Include/Exclude - Obsolete in 6.0</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="COOLST">
+<xsd:annotation>
+<xsd:documentation>COO List - Obsolete in 6.0</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="96"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ACCNUM">
+<xsd:annotation>
+<xsd:documentation>Account Number - Customer information that can be maintained in Warehouse Management and used in custom reports or labels.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRJNUM">
+<xsd:annotation>
+<xsd:documentation>Project Number - Customer information that can be maintained in Warehouse Management and used in custom reports or labels.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CSTPRT">
+<xsd:annotation>
+<xsd:documentation>Customer Part Number - Customer&apos;s identifier for a part number.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="MANFID">
+<xsd:annotation>
+<xsd:documentation>Manufacture ID - Name of the organization that manufactures the product supplied to a customer, or the part number identified on an order line.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DEPTNO">
+<xsd:annotation>
+<xsd:documentation>Department Number - Number that identifies a department within the customer&apos;s facility. The department number can be used to consolidate inventory, or can be printed on customer specific labels.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTPAK">
+<xsd:annotation>
+<xsd:documentation>Units per Inner Pack - The required quantity of units in the inner pack. If the quantity is 0, the system will allocate for any available inner pack quantity.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTPAL">
+<xsd:annotation>
+<xsd:documentation>Unit per pallet - The required quantity of units on a pallet. If the quantity is 0, the system will allocate for any available Pallet quantity.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTCAS">
+<xsd:annotation>
+<xsd:documentation>Units per Case - The required quantity of units in a case. If the quantity is 0, the system will allocate for any available Case quantity.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="EARLY_SHPDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Early Ship Date - First day of the shipment range. The shipment range identifies a series of dates on which an order line must be shipped. Warehouse Management uses both delivery and shipment dates to consolidate order lines into shipments.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="EARLY_DLVDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Early Delivery Date - First day of the delivery range. The delivery range identifies a series of expected delivery dates for the order line. Warehouse Management uses both delivery and shipment dates to consolidate order lines into a shipment.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="LATE_SHPDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Late Ship Date - Last day of the shipment range. To define a single shipment date, enter the first day of the shipment range.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="LATE_DLVDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Late Delivery Date - Last day of the delivery range. To define a single delivery date, enter the first day of the delivery range.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="SRC_HOST_ADR_ID">
+<xsd:annotation>
+<xsd:documentation>Host Address ID - Obsolete with 6.0</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RSVPRI">
+<xsd:annotation>
+<xsd:documentation>Reservation Priority - Used to determine which orders receive inventory when there is not enough inventory in the warehouse to satisfy all orders for a part number. This option applies only when the order reservation process is used.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RSVQTY">
+<xsd:annotation>
+<xsd:documentation>Reservation quantity - The quantity to reserve for an order when the reservation process is used.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PCKGR1">
+<xsd:annotation>
+<xsd:documentation>Pick group - Used to identify orders that are grouped together for automatic allocation. Warehouse Management selects orders with the same Pick Group 1 value to automatically allocate as a group.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PCKGR2">
+<xsd:annotation>
+<xsd:documentation>Pick group - Optional code that can be used for customized processes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PCKGR3">
+<xsd:annotation>
+<xsd:documentation>Pick group - Optional code that can be used for customized processes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PCKGR4">
+<xsd:annotation>
+<xsd:documentation>Pick group - Optional code that can be used for customized processes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DSTARE">
+<xsd:annotation>
+<xsd:documentation>Destination Area - Final destination point for the picked inventory. Typically, this is a ship staging area.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DSTLOC">
+<xsd:annotation>
+<xsd:documentation>Destination Location - Final location to which inventory for orders will be sent. Typically this is a location in a ship staying area.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="XDKFLG">
+<xsd:annotation>
+<xsd:documentation>Crossdock Flag - Indicates that when the work order is allocated, this component will not be allocated from inventory, but will instead be cross docked to the production line when it is received.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRT_DL_TYP">
+<xsd:annotation>
+<xsd:documentation>Part Download Type -  If set to &quot;N&quot; (Normal), the order line is treated as a standard order line. If set to &quot;K&quot; (Kit), the order line is treated as an &quot;Order Explosion&quot; line, and exploded into the components associated with a BOM for this part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ATOFLG">
+<xsd:annotation>
+<xsd:documentation>Assemble to Order Flag - If selected, the order is for a top-level part, which means component parts are routed through consolidation. The components are shipped as individual parts and not assembled to make the top-level part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="HOST_ORDQTY">
+<xsd:annotation>
+<xsd:documentation>Host Original Ordered Quantity - The order line quantity for just that source to a warehouse.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="HSTSTS">
+<xsd:annotation>
+<xsd:documentation>Host Status - Host status of the part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SPLFLG">
+<xsd:annotation>
+<xsd:documentation>Split Case Flag - Indicates that the customer allows the system to split a case to satisfy the order line, if necessary.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="INVSTS_PRG">
+<xsd:annotation>
+<xsd:documentation>Inventory Status Progression - The identifier for a list of valid inventory statuses required when allocating this part for this order line.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="FRSFLG">
+<xsd:annotation>
+<xsd:documentation>Freshness Date Flag - This flag is set if this order line requires freshness processing - that is, that the oldest product shipped is newer than the newest product previously shipped.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="MIN_SHELF_HRS">
+<xsd:annotation>
+<xsd:documentation>Minimum Shelf Life (hours) - If set, only inventory with an expiration date that is at least this many hours away from expiring will be allocated for this order line.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDINV">
+<xsd:annotation>
+<xsd:documentation>Order Inventory - Method of selecting product to meet order requirements.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NON_ALC_FLG">
+<xsd:annotation>
+<xsd:documentation>Non Allocatable Order Line Flag - When this order line is planned into a shipment, this flag prevents this line from allocating when the shipment is allocated.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNT_PRICE">
+<xsd:annotation>
+<xsd:documentation>Unit Price - Price for the part on the order line</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WAVE_SET">
+<xsd:annotation>
+<xsd:documentation>Wave Set - The wave set value is used during wave processing to group order lines containing the same wave set value into a single wave.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CRNCY_NAME">
+<xsd:annotation>
+<xsd:documentation>Currency Name - This is currently stored as a 3 character ISO currency code.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="12"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TOT_PLN_MISC_QTY">
+<xsd:annotation>
+<xsd:documentation>Total Plan Misc Quantity - Total miscellaneous quantity for the order line. This value is to be used only for transportation planning purposes and only in systems that are interfacing with a TM system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TOT_PLN_MISC2_QTY">
+<xsd:annotation>
+<xsd:documentation>Total Plan Misc Two Quantity -  Total miscellaneous quantity for the order line. This value is to be used only for transportation planning purposes and only in systems that are interfacing with a TM system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ALC_SEARCH_PATH">
+<xsd:annotation>
+<xsd:documentation>Allocation Search Path</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SUPNUM">
+<xsd:annotation>
+<xsd:documentation>Supplier Number - Identifies the supplier number.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CRNCY_CODE">
+<xsd:annotation>
+<xsd:documentation>The Currency Code used to specify the Currency fields in an Order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BTO_COMCOD">
+<xsd:annotation>
+<xsd:documentation>BTO Commodity Code - Build to order provides commodity codes for parts which represent a group of parts that the part will be in.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BTO_DLV_SEQ">
+<xsd:annotation>
+<xsd:documentation>BTO Delivery Sequence</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BTO_STATION">
+<xsd:annotation>
+<xsd:documentation>BTO Station</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BTO_SIDE">
+<xsd:annotation>
+<xsd:documentation>BTO Side</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BTO_BAY">
+<xsd:annotation>
+<xsd:documentation>BTO Bay</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="FTPCOD">
+<xsd:annotation>
+<xsd:documentation>Footprint Code</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ABS_ORDINV_WIN">
+<xsd:annotation>
+<xsd:documentation>Absolute Order Inventory Window.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ABS_ORDINV_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PAYTRM">
+<xsd:annotation>
+<xsd:documentation>Payment Terms</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SED_EXPORT_TYP">
+<xsd:annotation>
+<xsd:documentation>SED Export Type - Domestic Exports, Foreign Exports, Foreign Military Sales</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="COONUM">
+<xsd:annotation>
+<xsd:documentation>Certificate of Origin Number - 	 A unique number assigned to the Certificate of Origin.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="COOTYP">
+<xsd:annotation>
+<xsd:documentation>Certificate of Origin Type - US or NAFTA</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ECCN">
+<xsd:annotation>
+<xsd:documentation>Export Commodity Control Number - identify items for export control purposes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="EXPLICEXCPT">
+<xsd:annotation>
+<xsd:documentation>Export License Exception - the reason an export license was not required for this export.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="EXPLICEXPDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>EXPLICEXPDTE - The date the export license will expire.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="EXPLICNUM">
+<xsd:annotation>
+<xsd:documentation>Export License Number - a document permits the license holder to export specific goods to certain destinations.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="IMPLICEXCPT">
+<xsd:annotation>
+<xsd:documentation>Import License Exception - the reason an import license was not required for this import.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="IMPLICEXPDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Import License Expiration Date - The date the import license will expire.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="IMPLICNUM">
+<xsd:annotation>
+<xsd:documentation>Import License Number - help get the shipment through customs in the destination country.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="MARKSNUMBERS">
+<xsd:annotation>
+<xsd:documentation>Marks and Numbers - Identifying symbols and numbers placed by the shipper on each piece of cargo in a shipment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="400"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NAFTABEGDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>NAFTA Blanket Period Begin Date - the date upon which Certificate becomes applicable to the good covered by the blanket Certificate.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="NAFTAENDDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>NAFTA Blanket Period End Date - the date upon which the blanket period expires.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="NAFTA_PREF_CRIT">
+<xsd:annotation>
+<xsd:documentation>NAFTA Preference Criterion - A, B, C, D, E, F</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NAFTA_PRODUCER">
+<xsd:annotation>
+<xsd:documentation>NAFTA Producer - Specifies if the shipper is the producer of the commodity on the NAFTA COO.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="12"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SEDFLG">
+<xsd:annotation>
+<xsd:documentation>SED Indicator - indicates whether the part should be listed on the SED</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TRADEAGREETYP">
+<xsd:annotation>
+<xsd:documentation>Trade Agreement Type - specify a trade agreement other than NAFTA.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="EXPORT_TYP">
+<xsd:annotation>
+<xsd:documentation>Export Type</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="ORDER_LINE_NOTE_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change order line notes for this order line in the [ORD_LINE_NOTE] table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDNUM">
+<xsd:annotation>
+<xsd:documentation>Order Number - Unique number that identifies an order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="140"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDLIN">
+<xsd:annotation>
+<xsd:documentation>Order Line Number - The line number for the order to which the note is assigned.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDSLN">
+<xsd:annotation>
+<xsd:documentation>Order Sub Line - The sub line number for the order line to which the note is assigned.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTLIN">
+<xsd:annotation>
+<xsd:documentation>Note Line - Used to distinguish multiple lines of notes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTTXT">
+<xsd:annotation>
+<xsd:documentation>Note Text - Text of the note associated with the order line.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTTYP">
+<xsd:annotation>
+<xsd:documentation>Note Type (GENERIC,EDI)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="ORDER_LINE_DEF_SERV_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change order line notes for this order line in the [ORD_LINE_NOTE] table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_RATE_ID">
+<xsd:annotation>
+<xsd:documentation>Service Rate ID</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_REQ_FLG">
+<xsd:annotation>
+<xsd:documentation>Service Required Flag - indicates whether the user is required to perform this service before proceeding.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_ID">
+<xsd:annotation>
+<xsd:documentation>Service ID - identifier that uniquely identifies the service to be performed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="ORDER_LINE_CAR_SERV_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change order line carrier service options for this order line in the [ord_line_serv_opt] table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="OPT_ID">
+<xsd:annotation>
+<xsd:documentation>Carrier Service ID</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="ORDER_LINE_CAR_SERV_VAL_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change the order line carrier service option parameters for [serv_opt_param] table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PARM_NAM">
+<xsd:annotation>
+<xsd:documentation>Carrier Service Parameter Name</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="400"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PARM_VAL">
+<xsd:annotation>
+<xsd:documentation>Carrier Service Parameter Value</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="1000"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="ORDER_DEF_SERV_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change the default service information.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_RATE_ID">
+<xsd:annotation>
+<xsd:documentation>Service Rate ID</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_REQ_FLG">
+<xsd:annotation>
+<xsd:documentation>Service Required Flag - indicates whether the user is required to perform this service before proceeding.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_ID">
+<xsd:annotation>
+<xsd:documentation>Service ID - identifier that uniquely identifies the service to be performed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>

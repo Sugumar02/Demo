@@ -1,0 +1,56 @@
+/*
+ *
+ * File name: ESB_Definitions.esql
+ *
+ * Purpose:   Common Definitions for ESB
+ *
+ * Authors:   Brian McGinty
+ *                 
+ * Date:      December 2017
+ *                 
+ * Version:   1.0
+ *
+ */
+BROKER SCHEMA pib.esb.common
+
+DECLARE SoapEnvNS 			NAMESPACE 'http://schemas.xmlsoap.org/soap/envelope/'; 
+DECLARE RibMessagesNS		NAMESPACE 'http://www.oracle.com/retail/integration/rib/RibMessages';
+DECLARE BusinessObjectIdNS	NAMESPACE 'http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1';
+DECLARE ServiceOpStatusNS	NAMESPACE 'http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1';
+DECLARE RoutingInfosNS		NAMESPACE 'http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1';
+
+
+CREATE FUNCTION ESB_GetNamespaceSoapEnv() RETURNS CHARACTER
+BEGIN
+
+	RETURN SoapEnvNS;
+
+END;
+
+CREATE FUNCTION ESB_GetNamespaceRibMessages() RETURNS CHARACTER
+BEGIN
+
+	RETURN RibMessagesNS;
+
+END;
+
+CREATE FUNCTION ESB_GetNamespaceBusinessObjectId() RETURNS CHARACTER
+BEGIN
+
+	RETURN BusinessObjectIdNS;
+
+END;
+
+CREATE FUNCTION ESB_GetNamespaceServiceOpStatus() RETURNS CHARACTER
+BEGIN
+
+	RETURN ServiceOpStatusNS;
+
+END; 
+
+CREATE FUNCTION ESB_GetNamespaceRoutingInfos() RETURNS CHARACTER
+BEGIN
+
+	RETURN RoutingInfosNS;
+
+END; 

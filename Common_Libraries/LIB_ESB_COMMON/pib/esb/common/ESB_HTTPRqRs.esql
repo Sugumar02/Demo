@@ -1,0 +1,84 @@
+/*
+ *
+ * File name: ESB_HTTPRqRs.esql
+ *
+ * Purpose:   Common Definitions for ESB SOAP and HTTP
+ *
+ * Authors:   Brian McGinty
+ *                 
+ * Date:      January 2018
+ *                 
+ * Version:   1.0
+ *
+ */
+
+BROKER SCHEMA pib.esb.common
+
+CREATE COMPUTE MODULE ESB_HTTPRqRs_HandleSOAPFault
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE nsSoapEnv	NAMESPACE ESB_GetNamespaceSoapEnv();
+
+		DECLARE inRef REFERENCE TO InputRoot.SOAP.Body.{nsSoapEnv}:Fault;
+		DECLARE dtlChar, faultTxt 	CHARACTER;
+		DECLARE dtlBlob	 			BLOB;
+
+		-- SOAP 1.1 contains a different Fault structure to SOAP 1.2. We should handle both.
+		-- SOAP 1.1 has a mandatory element faultcode, SOAP 1.2 has a mandatory element Code
+		IF EXISTS(inRef.faultcode[]) THEN
+
+			-- It's a SOAP 1.1 Fault
+
+			IF EXISTS(inRef.detail[]) THEN
+				SET dtlBlob = ASBITSTREAM(inRef.detail OPTIONS FolderBitStream CCSID COALESCE(InputRoot.Properties.CodedCharSetId, PCC_GetUTF8CCSID()) ENCODING InputRoot.Properties.Encoding);
+				SET dtlChar = CAST(dtlBlob AS CHARACTER CCSID COALESCE(InputRoot.Properties.CodedCharSetId, PCC_GetUTF8CCSID()) ENCODING InputRoot.Properties.Encoding);
+			END IF;
+
+			SET faultTxt = 'FaultCode : '   || '''' || inRef.faultcode   				|| ''', ' ||
+						   'FaultString : ' || '''' || inRef.faultstring 				|| ''', ' ||
+						   'FaultActor : '  || '''' || COALESCE(inRef.faultactor, '')	|| ''', ' ||
+						   'Detail : ' 		|| '''' || COALESCE(dtlChar, '') 			|| '''';
+
+		ELSEIF EXISTS(inRef.{nsSoapEnv}:Code[]) THEN
+
+			-- It's a SOAP 1.2 Fault
+
+			IF EXISTS(inRef.{nsSoapEnv}:Detail[]) THEN
+				SET dtlBlob = ASBITSTREAM(inRef.{nsSoapEnv}:Detail OPTIONS FolderBitStream CCSID COALESCE(InputRoot.Properties.CodedCharSetId, PCC_GetUTF8CCSID()) ENCODING InputRoot.Properties.Encoding);
+				SET dtlChar = CAST(dtlBlob AS CHARACTER CCSID COALESCE(InputRoot.Properties.CodedCharSetId, PCC_GetUTF8CCSID()) ENCODING InputRoot.Properties.Encoding);
+			END IF;
+
+			SET faultTxt = 'Code : '   || '''' || inRef.{nsSoapEnv}:Code.{nsSoapEnv}:Value  || ''', ' ||
+						   'Reason : ' || '''' || inRef.{nsSoapEnv}:Reason.{nsSoapEnv}:Text || ''', ' ||
+						   'Node : '   || '''' || COALESCE(inRef.{nsSoapEnv}:Node, '')  	|| ''', ' ||
+						   'Role : '   || '''' || COALESCE(inRef.{nsSoapEnv}:Role, '')  	|| ''', ' ||
+						   'Detail : ' || '''' || COALESCE(dtlChar, '') 					|| '''';
+
+		END IF;
+
+		THROW USER EXCEPTION VALUES(faultTxt);
+		
+		RETURN TRUE;
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_HTTPRqRs_HandleHTTPError
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE HTTPErrorRef	REFERENCE TO Environment.HTTPRequest.Error;
+		DECLARE rootRef			REFERENCE TO InputRoot;
+
+		DECLARE httpErrorCodeChar CHAR CAST(HTTPErrorRef.BLOB AS CHAR 
+											CCSID rootRef.Properties.CodedCharSetId 
+											ENCODING rootRef.Properties.Encoding);
+
+		-- Delete HTTP Headers
+		SET rootRef.HTTPRequestHeader = NULL;
+		SET rootRef.HTTPResponseHeader = NULL;
+
+		THROW USER EXCEPTION VALUES(COALESCE(httpErrorCodeChar, 'Environment.HTTPRequest.Error.BLOB is empty.'));
+		
+		RETURN TRUE;
+	END;
+END MODULE;
+

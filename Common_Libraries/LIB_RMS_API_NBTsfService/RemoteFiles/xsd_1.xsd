@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/services/exception/v1" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:ns0="http://www.oracle.com/retail/integration/services/exception/v1">
+  <xsd:element ibmSchExtn:docRoot="true" name="IllegalArgumentWSFaultException" nillable="true">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="shortErrorMessage" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="errorDescription" type="xsd:string"/>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns0:BusinessProblemDetail"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element ibmSchExtn:docRoot="true" name="EntityNotFoundWSFaultException" nillable="true">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="shortErrorMessage" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="errorDescription" type="xsd:string"/>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns0:BusinessProblemDetail"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ServiceOpFaultReason">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="shortErrorMessage" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="errorDescription" type="xsd:string"/>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns0:BusinessProblemDetail"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element ibmSchExtn:docRoot="true" name="IllegalStateWSFaultException" nillable="true">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="shortErrorMessage" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="errorDescription" type="xsd:string"/>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns0:BusinessProblemDetail"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element ibmSchExtn:docRoot="true" name="ValidationWSFaultException" nillable="true">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="shortErrorMessage" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="errorDescription" type="xsd:string"/>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns0:BusinessProblemDetail"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ProblemDetailEntry">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="name" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="value" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="BusinessProblemDetail">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element maxOccurs="unbounded" name="problemDescription" type="xsd:string"/>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns0:ProblemDetailEntry"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

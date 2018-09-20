@@ -1,0 +1,59 @@
+BROKER SCHEMA pib.psm.asn
+
+/* 
+ * Filename : PSM_ESB_ASNOUT_PMF.esql
+ * @author : Wipro Technologies.
+ * © Copyright 2010 by Wipro.  
+ * This Program is the property of Wipro COE and may not be used in 
+ * whole, or in part without express permission of Wipro COE
+ * 
+   ------------------------------Description---------------------------
+  Program Details:
+  ----------------
+  This Interface will reads the message from the Subscribed Topic and filters the message as per the messageType.
+  It creates the JSON Message for the REST API.
+  The REST API performs the required implementations in PSM.
+  It logs the Message as when required 
+  ---------------------------------------------------------------------------------
+  Version:       Initials:   		Date:        Description:
+  --------       ---------   		-----        ------------
+  1.0    		 Sruthy Narayan    30/04/2018    Initial version of the file.
+ --------------------------------------------------------------------------------- */
+
+CREATE COMPUTE MODULE PSM_ESB_ASNOUT_PMF_GetPSMASNOUTData
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+		
+		DECLARE renvRef 					REFERENCE TO Environment;
+		DECLARE routRef 					REFERENCE TO OutputRoot;
+		DECLARE responseData, family, type 	CHARACTER;
+		DECLARE jsonBlob 					BLOB;
+		
+		CREATE FIELD Environment.Variables AS renvRef;
+		
+		-- Call Stored Procedure
+		CALL CallGetNextMessage(family, responseData, type) IN Database.{'PSM_INTG'};
+		IF COALESCE(responseData,'') <> '' THEN
+	        SET jsonBlob = CAST(responseData AS BLOB CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+			CREATE LASTCHILD OF routRef DOMAIN 'JSON' PARSE(jsonBlob);
+
+			-- Set message type
+			SET renvRef.MsgType = type;
+		ELSE
+			RETURN FALSE;
+        END IF;
+        
+		SET renvRef.AuditName = 'PSM Stored Procedure Response';
+   		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+
+	CREATE PROCEDURE CallGetNextMessage (OUT O_FAMILY CHARACTER,OUT O_MESSAGE_DATA CHARACTER,OUT O_TYPE CHARACTER)
+	LANGUAGE DATABASE
+	EXTERNAL NAME "PSM_INTG.INTG_ASNOUT.GETNEXTMESSAGE";
+END MODULE;

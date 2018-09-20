@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfRef/v1" xmlns:ns0="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfRef/v1">
+  <xsd:element name="ExtOfNBTsfRef">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="tsf_no" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

@@ -1,0 +1,27 @@
+BROKER SCHEMA pib.igs.api.asnin
+
+
+DECLARE ASNInPublishingServiceNS	NAMESPACE	'http://www.oracle.com/retail/igs/integration/services/ASNInPublishingService/v1';
+DECLARE ASNInDescNS					NAMESPACE	'http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1';
+DECLARE ASNInRefNS					NAMESPACE	'http://www.oracle.com/retail/integration/base/bo/ASNInRef/v1';
+
+CREATE FUNCTION ESB_GetNamespaceASNInPublishingService() RETURNS CHARACTER
+BEGIN
+      
+	RETURN ASNInPublishingServiceNS;
+
+END;
+
+CREATE FUNCTION ESB_GetNamespaceASNInDesc() RETURNS CHARACTER
+BEGIN
+
+	RETURN ASNInDescNS;
+
+END;
+
+CREATE FUNCTION ESB_GetNamespaceASNInRef() RETURNS CHARACTER
+BEGIN
+
+	RETURN ASNInRefNS;
+
+END;

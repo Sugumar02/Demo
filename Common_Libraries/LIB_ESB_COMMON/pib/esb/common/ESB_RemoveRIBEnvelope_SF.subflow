@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmResetContentDescriptor.msgnode="ComIbmResetContentDescriptor.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:pib_esb_common_sequence_ESB_SEQUENCE_ERROR_SF.subflow="pib/esb/common/sequence/ESB_SEQUENCE_ERROR_SF.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="pib/esb/common/ESB_RemoveRIBEnvelope_SF.subflow" nsPrefix="pib_esb_common_ESB_RemoveRIBEnvelope_SF.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <translation xmi:type="utility:TranslatableString" key="ESB_RemoveRIBEnvelope_SF" bundleName="pib/esb/common/ESB_RemoveRIBEnvelope_SF" pluginId="LIB_ESB_COMMON"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LIB_ESB_COMMON/icons/full/obj16/ESB_RemoveRIBEnvelope_SF.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LIB_ESB_COMMON/icons/full/obj30/ESB_RemoveRIBEnvelope_SF.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="71,162">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="pib/esb/common/ESB_RemoveRIBEnvelope_SF" pluginId="LIB_ESB_COMMON"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="850,172">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="pib/esb/common/ESB_RemoveRIBEnvelope_SF" pluginId="LIB_ESB_COMMON"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="335,163" dataSource="ESBDB" computeExpression="esql://routine/pib.esb.common#ESB_RemoveRIBEnvelope_SF_RemoveRIBEnvelope.Main">
+        <translation xmi:type="utility:ConstantString" string="Remove RIB Envelope"/>
+      </nodes>
+      <nodes xmi:type="ComIbmResetContentDescriptor.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="493,164" messageDomain="XMLNSC" resetMessageDomain="true" resetMessageFormat="true">
+        <translation xmi:type="utility:ConstantString" string="Reset MessageData To XML"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="191,162" computeExpression="esql://routine/pib.esb.common#ESB_RemoveRIBEnvelope_SF_LogRIBMessage.Main">
+        <translation xmi:type="utility:ConstantString" string="Log RIB Message"/>
+      </nodes>
+      <nodes xmi:type="pib_esb_common_sequence_ESB_SEQUENCE_ERROR_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_5" location="665,172">
+        <translation xmi:type="utility:ConstantString" string="Check for Seqeunce Error"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_3" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+    </composition>
+    <propertyOrganizer/>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

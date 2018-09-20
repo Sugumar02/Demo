@@ -1,0 +1,51 @@
+BROKER SCHEMA pib.rms.api.nbasn
+
+DECLARE NBASNServiceNS	NAMESPACE	'http://www.oracle.com/retail/primark/integration/services/NBASNService/v1';
+DECLARE NBPODescNS		NAMESPACE	'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1';
+DECLARE NBAddrDescNS	NAMESPACE	'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1';
+DECLARE	NBPOInfoDescNS	NAMESPACE	'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoDesc/v1';
+DECLARE NBPOInfoRefNS	NAMESPACE	'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoRef/v1';
+DECLARE NBPORefNS		NAMESPACE	'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPORef/v1';
+
+												
+CREATE FUNCTION ESB_GetNamespaceNBASNService() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBASNServiceNS;
+
+END; 
+
+CREATE FUNCTION ESB_GetNamespaceNBPODesc() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBPODescNS;
+
+END;
+
+CREATE FUNCTION ESB_GetNamespaceNBAddrDesc() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBAddrDescNS;
+
+END;
+
+CREATE FUNCTION ESB_GetNamespaceNBPOInfoDesc() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBPOInfoDescNS;
+
+END; 
+
+CREATE FUNCTION ESB_GetNamespaceNBPOInfoRef() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBPOInfoRefNS;
+
+END; 
+
+CREATE FUNCTION ESB_GetNamespaceNBPORef() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBPORefNS;
+
+END;

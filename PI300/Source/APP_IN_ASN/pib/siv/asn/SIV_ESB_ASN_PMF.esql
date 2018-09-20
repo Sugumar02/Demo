@@ -1,0 +1,139 @@
+BROKER SCHEMA pib.siv.asn
+PATH pib.esb.common;
+
+/* --------------------------------------------------------------------------------------------------
+		Program Details:
+		----------------
+		This Interface will read the message ASN File from SIV ,transforms the message to CDM format 
+		and publish the message to the specific topic.
+		----------------------------------------------------------------------------------------------------
+		Version:     		Initials:   Date:       	Description:
+		--------     		---------   -----      		------------
+		Revision  1.0  		RBH     	16/01/2018     	Initial version of the file.
+		----------------------------------------------------------------------------------------------------*/
+
+
+CREATE COMPUTE MODULE SIV_ESB_ASN_PMF_CaptureBusinessData
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE envRef 			REFERENCE TO Environment;
+		DECLARE localEnvRef		REFERENCE TO InputLocalEnvironment;
+		
+		CALL CopyEntireMessage();
+		
+		CREATE FIELD Environment.Variables AS envRef;
+	
+		--SET envRef.BussinessInfo.MessageId 	= localEnvRef.File.Name;
+		SET envRef.MessageId				= localEnvRef.File.Name; 
+		SET envRef.AuditName 				= 'File Received';
+		SET envRef.KeyIdentifier 			= localEnvRef.File.Name;
+		
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+		
+	    RETURN TRUE;
+		
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE SIV_ESB_ASN_PMF_TransformtoCDM
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		-- Variable and reference declarations.
+		DECLARE inRef,inASNRef,inASNDetail		REFERENCE TO InputRoot.DFDL;
+		DECLARE outRef,outASNDesc,outASNDistro,
+				outASNCtn,outASNItem			REFERENCE TO OutputRoot;
+		DECLARE envRef							REFERENCE TO Environment.Variables;
+		DECLARE localEnvRef						REFERENCE TO InputLocalEnvironment;
+		
+		-- Copy the properties from InputRoot
+		SET OutputRoot.Properties = InputRoot.Properties;
+
+		MOVE inASNRef TO inRef.SIVASNs.ASNRecord;
+		
+		-- Creating the CDM Message
+		CREATE LASTCHILD OF outRef AS outRef DOMAIN 'XMLNSC';
+		CREATE LASTCHILD OF outRef AS outRef NAME 'ASN';
+		
+		/*WHILE (LASTMOVE(inASNRef)) DO
+			SET outRef = inASNRef;
+			
+			SET outRef.FileName = localEnvRef.File.Name;
+			SET outRef.publishTime = SUBSTRING(localEnvRef.File.Name FROM 13 FOR 14);
+			
+			SET envRef.AuditName = 'CDM Publisher Request';
+			-- Audit the message 
+			PROPAGATE TO LABEL 'Logger' DELETE NONE;
+			
+			-- Publishes the message to topic
+			PROPAGATE TO TERMINAL 'out'  DELETE NONE;
+			
+			MOVE inASNRef NEXTSIBLING REPEAT TYPE NAME;
+		END WHILE;*/ 
+		
+		WHILE (LASTMOVE(inASNRef)) DO
+		
+			SET outRef.UnitsShipped 				= inASNRef.ASNHeader.UnitsShipped;
+			SET outRef.ToPhysicalLocation 			= inASNRef.ASNHeader.ToPhysicalLocation;
+			SET outRef.DischargePort 				= inASNRef.ASNHeader.DischargePort;
+			SET outRef.DischargeCountryID 			= inASNRef.ASNHeader.DischargeCountryID;
+			SET outRef.ContainerNumber 				= inASNRef.ASNHeader.ContainerNumber;
+			SET outRef.ContainerType 				= inASNRef.ASNHeader.ContainerType;
+			SET outRef.SealNumber 					= inASNRef.ASNHeader.SealNumber;
+			SET outRef.Haulier 						= inASNRef.ASNHeader.Haulier;
+			SET outRef.FactoryLoad 					= inASNRef.ASNHeader.FactoryLoad;
+			SET outRef.ManufacturingDate 			= inASNRef.ASNHeader.ManufacturingDate;
+			SET outRef.StatusCode 					= inASNRef.ASNHeader.StatusCode;
+			SET outRef.ASNOutDesc.asn_nbr 			= inASNRef.ASNHeader.ASNID;
+			SET outRef.ASNOutDesc.bol_nbr 			= inASNRef.ASNHeader.BOL;
+			SET outRef.ASNOutDesc.shipment_date 	= inASNRef.ASNHeader.ShippedDate;
+			SET outRef.ASNOutDesc.est_arr_date		= inASNRef.ASNHeader.ArrivalDate;
+			SET outRef.ASNOutDesc.Comments 			= inASNRef.ASNHeader.Comments;
+			SET outRef.ASNOutDesc.Carrier_code 		= inASNRef.ASNHeader.Carrier;
+			
+			SET outRef.FileName 					= localEnvRef.File.Name;
+			SET outRef.publishTime 					= SUBSTRING(localEnvRef.File.Name FROM 13 FOR 14);
+			
+			MOVE inASNDetail TO inASNRef.ASNDetail;
+			
+			WHILE(LASTMOVE(inASNDetail)) DO
+				CREATE LASTCHILD OF outRef.ASNOutDesc AS outASNDistro NAME 'ASNOutDistro';
+				SET outASNDistro.distro_nbr 					= inASNDetail.POCID;
+				
+				CREATE LASTCHILD OF outASNDistro AS outASNCtn NAME 'ASNOutCtn';
+				CREATE LASTCHILD OF outASNCtn AS outASNItem NAME 'ASNOutItem';
+				
+				SET outASNItem.item_id 							= inASNDetail.PackID;
+				SET outASNItem.unit_qty 						= inASNDetail.Quantity;
+				SET outASNItem.ASNDetail.ASNID 					= inASNDetail.ASNID;
+				SET outASNItem.ASNDetail.ASNLineID 				= inASNDetail.ASNLineID;
+				SET outASNItem.ASNDetail.SourceSystem 			= inASNDetail.SourceSystem;
+				SET outASNItem.ASNDetail.OrderType 				= inASNDetail.OrderType;
+				SET outASNItem.ASNDetail.SupplierCode 			= inASNDetail.SupplierCode;
+				SET outASNItem.ASNDetail.PackGTIN 				= inASNDetail.PackGTIN;
+				SET outASNItem.ASNDetail.CartonsOrSets 			= inASNDetail.CartonsOrSets;
+				SET outASNItem.ASNDetail.WarehouseTransferFlag 	= inASNDetail.WarehouseTransferFlag;
+				SET outASNItem.ASNDetail.ToFinalLocation 		= inASNDetail.ToFinalLocation;
+				SET outASNItem.ASNDetail.TransferValue 			= inASNDetail.TransferValue;
+				
+				MOVE inASNDetail NEXTSIBLING REPEAT TYPE NAME;
+			END WHILE;
+
+			SET envRef.AuditName = 'CDM Publisher Request';
+			-- Audit the message 
+			PROPAGATE TO LABEL 'Logger' DELETE NONE;
+			
+			-- Publishes the message to topic
+			PROPAGATE TO TERMINAL 'out'  DELETE NONE;
+			
+			MOVE inASNRef NEXTSIBLING REPEAT TYPE NAME;
+		END WHILE; 
+		
+		RETURN FALSE;
+	END;
+END MODULE;

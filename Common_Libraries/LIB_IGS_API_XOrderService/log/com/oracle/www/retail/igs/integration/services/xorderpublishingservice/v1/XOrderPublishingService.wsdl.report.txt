@@ -1,0 +1,63 @@
+
+
+Importing file: C:\Ram\Project docs\Work_Interface\P2\1161\IGS_WSDL\XOrderPublishingService.wsdl
+
+The WSDL import will proceed with bindings XOrderPublishingPortBinding.
+Creating wsdl schema document for file:///C:/Ram/Project docs/Work_Interface/P2/1161/IGS_WSDL/XOrderPublishingService.wsdl.
+Parsing wsdl binding {http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1}XOrderPublishingPortBinding.
+Parsing wsdl binding input publishXOrderDeleteUsingXOrderRef.
+Parsing wsdl binding output publishXOrderDeleteUsingXOrderRef.
+Parsing wsdl binding fault IllegalStateWSFaultException.
+Parsing wsdl binding fault PublishingWSFaultException.
+Parsing wsdl binding fault ValidationWSFaultException.
+Parsing wsdl binding input publishXOrderDtlCreateUsingXOrderDesc.
+Parsing wsdl binding output publishXOrderDtlCreateUsingXOrderDesc.
+Parsing wsdl binding fault IllegalStateWSFaultException.
+Parsing wsdl binding fault PublishingWSFaultException.
+Parsing wsdl binding fault ValidationWSFaultException.
+Parsing wsdl binding input publishXOrderDtlDeleteUsingXOrderRef.
+Parsing wsdl binding output publishXOrderDtlDeleteUsingXOrderRef.
+Parsing wsdl binding fault IllegalStateWSFaultException.
+Parsing wsdl binding fault PublishingWSFaultException.
+Parsing wsdl binding fault ValidationWSFaultException.
+Parsing wsdl binding input publishXOrderDtlModifyUsingXOrderDesc.
+Parsing wsdl binding output publishXOrderDtlModifyUsingXOrderDesc.
+Parsing wsdl binding fault IllegalStateWSFaultException.
+Parsing wsdl binding fault PublishingWSFaultException.
+Parsing wsdl binding fault ValidationWSFaultException.
+Parsing wsdl binding input publishXOrderModifyUsingXOrderDesc.
+Parsing wsdl binding output publishXOrderModifyUsingXOrderDesc.
+Parsing wsdl binding fault IllegalStateWSFaultException.
+Parsing wsdl binding fault PublishingWSFaultException.
+Parsing wsdl binding fault ValidationWSFaultException.
+Parsing wsdl binding input publishXOrderCreateUsingXOrderDesc.
+Parsing wsdl binding output publishXOrderCreateUsingXOrderDesc.
+Parsing wsdl binding fault IllegalStateWSFaultException.
+Parsing wsdl binding fault PublishingWSFaultException.
+Parsing wsdl binding fault ValidationWSFaultException.
+Parsing wsdl binding input ping.
+Parsing wsdl binding output ping.
+Processing doc style for operation publishXOrderDeleteUsingXOrderRef.
+Processing doc style for operation publishXOrderDtlCreateUsingXOrderDesc.
+Processing doc style for operation publishXOrderDtlDeleteUsingXOrderRef.
+Processing doc style for operation publishXOrderDtlModifyUsingXOrderDesc.
+Processing doc style for operation publishXOrderModifyUsingXOrderDesc.
+Processing doc style for operation publishXOrderCreateUsingXOrderDesc.
+Processing doc style for operation ping.
+Populating WSDL schema XOrderPublishingService.xsd.
+Creating file XOrderPublishingService.xsd in the workspace.
+Creating file /LIB_RMS_RECEIPTS_API_XOrder/XOrderPublishingService_InlineSchema1.xsd in the workspace.
+Creating file /LIB_RMS_RECEIPTS_API_XOrder/XOrderPublishingService_InlineSchema2.xsd in the workspace.
+Creating file /LIB_RMS_RECEIPTS_API_XOrder/XOrderPublishingService_InlineSchema3.xsd in the workspace.
+Creating file XOrderPublishingService_InlineSchema4.xsd in the workspace.
+Creating file /LIB_RMS_RECEIPTS_API_XOrder/XOrderPublishingService_InlineSchema5.xsd in the workspace.
+Creating file /LIB_RMS_RECEIPTS_API_XOrder/XOrderPublishingService_InlineSchema6.xsd in the workspace.
+Copying source WSDL XOrderPublishingService.wsdl to XOrderPublishingService.wsdl.
+
+Elapsed time processing this message definition file: 1.431 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

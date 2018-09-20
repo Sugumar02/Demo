@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/primark/integration/services/NBTsfService/v1" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:ns0="http://www.oracle.com/retail/primark/integration/services/NBTsfService/v1" xmlns:ns1="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfRef/v1" xmlns:ns2="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfDesc/v1" xmlns:ns3="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBVarcharDesc/v1">
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfRef/v1" schemaLocation="xsd_3.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfDesc/v1" schemaLocation="xsd_5.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBVarcharDesc/v1" schemaLocation="xsd_4.xsd"/>
+  <xsd:complexType name="getTsfResponse">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" ref="ns2:ExtOfNBTsfDesc"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="getTsfCategory">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" ref="ns1:ExtOfNBTsfRef"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="getTsf">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" ref="ns1:ExtOfNBTsfRef"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ping">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="arg0" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="getTsfCategoryResponse">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" ref="ns3:ExtOfNBVarcharDesc"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="pingResponse">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="return" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element ibmSchExtn:docRoot="true" name="getTsfResponse" type="ns0:getTsfResponse"/>
+  <xsd:element ibmSchExtn:docRoot="true" name="getTsfCategory" type="ns0:getTsfCategory"/>
+  <xsd:element ibmSchExtn:docRoot="true" name="getTsf" type="ns0:getTsf"/>
+  <xsd:element ibmSchExtn:docRoot="true" name="ping" type="ns0:ping"/>
+  <xsd:element ibmSchExtn:docRoot="true" name="getTsfCategoryResponse" type="ns0:getTsfCategoryResponse"/>
+  <xsd:element ibmSchExtn:docRoot="true" name="pingResponse" type="ns0:pingResponse"/>
+</xsd:schema>

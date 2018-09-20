@@ -1,0 +1,129 @@
+BROKER SCHEMA pib.esb.common
+
+CREATE COMPUTE MODULE ESB_RemoveRIBEnvelope_SF_LogRIBMessage
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+  		CALL CopyEntireMessage();
+
+		DECLARE nsRibMessages 	NAMESPACE 'http://www.oracle.com/retail/integration/rib/RibMessages';
+
+  		DECLARE envRef			REFERENCE TO Environment;
+		DECLARE inRef			REFERENCE TO InputRoot.XMLNSC.nsRibMessages:RibMessages;
+		DECLARE ribMsgRef 		REFERENCE TO inRef.nsRibMessages:ribMessage;
+
+		IF NOT EXISTS(Environment.Variables[]) THEN
+			CREATE FIELD Environment.Variables AS envRef;
+		END IF;
+
+		-- Remove the MQRFH2 Header sent by RIB.
+		SET OutputRoot.MQRFH2 = NULL;
+
+		-- Store the RIB Message as it may have details in the Envelope we require later.
+		SET envRef.ribMessage = ribMsgRef;
+
+		-- Store the RIB Message type separately which is used throughout the service.
+		SET envRef.ribMsgType = LOWER(envRef.ribMessage.nsRibMessages:type);
+
+		-- Store the RIB Message Id separately which is used in the Aggregataion service as a reference to the RIB Message  
+		SET envRef.ribMsgId = LOWER(envRef.ribMessage.nsRibMessages:ribmessageID);
+
+		-- Store the Business Id separately which is used in the logging.  
+		SET envRef.id = LOWER(envRef.ribMessage.nsRibMessages:id);
+			
+		-- Logging Information for MESSAGEID and KEYIDENTIFIER fields.
+		SET envRef.MessageId 		= envRef.ribMsgId;
+		SET envRef.KeyIdentifier	= envRef.ribMessage.nsRibMessages:id;
+
+		SET envRef.AuditName = 'RIB Consumer Request';
+
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+
+		RETURN TRUE;
+	END;
+	
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE ESB_RemoveRIBEnvelope_SF_RemoveRIBEnvelope
+	DECLARE CheckSequence SHARED CHARACTER;
+
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE nsRibMessages 	NAMESPACE 'http://www.oracle.com/retail/integration/rib/RibMessages';
+  
+  		CALL CopyMessageHeaders();
+
+		DECLARE envRef, envSeqRef	REFERENCE TO Environment.Variables;
+		DECLARE inRef				REFERENCE TO InputRoot.XMLNSC.nsRibMessages:RibMessages;
+		DECLARE ribMsgRef 			REFERENCE TO inRef.nsRibMessages:ribMessage;
+		DECLARE outRef				REFERENCE TO OutputRoot;
+		DECLARE messageDataBlob 	BLOB;
+		DECLARE interfaceId, idChar	CHARACTER;
+
+		-- Sequence Error service data.
+		-- Need to first check if this Interface requires Sequence Error Handing based on configuration in ESB XRef DB. 
+
+		IF COALESCE(CheckSequence, '') = '' THEN
+
+			-- If Environment Tree contains a ribMessage structure, it indicates this is the Publisher service as the Remove RIB Envelope persists the Rib Message in the
+			-- Environment tree, so interface Id is generic 'Publisher', as Publisher service is for all Subsribers Interface Ids.
+			-- Else, it is the Subscriber service and the Interface Id can be the specific one. This allows that only the Subscriber that had an exception blocks messages, 
+			-- not the other Subscribers. 
+			IF EXISTS(envRef.ribMessage[]) THEN
+				SET interfaceId = 'Publisher';
+			ELSE
+				SET interfaceId = envRef.InterfaceId;
+			END IF;
+
+			-- We do not want to keep checking the DB in case there is no entry for this Interface Id, so set value to N if no value returned.
+			SET CheckSequence = COALESCE(THE(SELECT ITEM T.SEQUENCECHECK FROM Database.dbo.ESB_SEQUENCE_CONFIG AS T WHERE T.FAMILY = envRef.ribMessage.{nsRibMessages}:family AND T.INTERFACE_ID = interfaceId), 'N');
+		END IF;
+
+		CREATE FIELD envRef.SequenceInfo AS envSeqRef;
+		IF CheckSequence = 'Y' THEN
+			-- Copy the complete RIB message to Environment tree, so can be inserted later to Sequence table if blocking occurs. This is because
+			-- we need to persist the entire RIB message in case of sequence error, what's sent from this node is just the embedded Message Data.
+			-- This is only done when sequence checking is on as it takes up memory and processing time so no need to do it if sequence checking is
+			-- switched off. The rest of the SequenceInfo tree is always populated by default.
+			CREATE LASTCHILD OF envSeqRef DOMAIN 'XMLNSC';
+			SET envSeqRef.XMLNSC = InputRoot.XMLNSC;
+		END IF;
+
+		SET envSeqRef.RibMessageID 			= envRef.ribMessage.{nsRibMessages}:ribmessageID;
+		SET envSeqRef.Id 					= envRef.ribMessage.nsRibMessages:id;
+		SET envSeqRef.Family 				= envRef.ribMessage.{nsRibMessages}:family;
+
+		-- RIB publishTime is of format 'yyyy-MM-dd hh:mm:ss.SSS GMT', need to remove the GMT part so it can be inserted to DB correctly.
+		SET envSeqRef.PublishTime			= SUBSTRING(envRef.ribMessage.{nsRibMessages}:publishTime FROM 1 FOR 23);
+		SET envSeqRef.GlobalTransactionId	= envRef.GlobalTransactionId; 
+
+		-- Put the message body which is a scalar character value into a Blob so it can be parsed and validated by following RCD node.
+		SET messageDataBlob = CAST(ribMsgRef.nsRibMessages:messageData AS BLOB CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+
+		-- Copy the message body without the RIB envelop to the new outbound message.
+		CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'BLOB';
+		SET outRef.BLOB = messageDataBlob;
+
+		-- Log the individual RIB message.
+		SET envRef.AuditName = 'Consumer Request';
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+
+		PROPAGATE TO TERMINAL 'out';
+			
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+END MODULE;

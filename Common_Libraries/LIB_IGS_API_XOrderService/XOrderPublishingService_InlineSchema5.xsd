@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/base/bo/XOrderDesc/v1" version="1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/integration/base/bo/XOrderDesc/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="XOrderDesc">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="order_no" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The unique identifier for the order.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supplier" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The identifier of the supplier from which the order will be sourced.  This cannot be modified if details exist for the PO.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="currency_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The code of the order's currency.  If not populated, the supplier's currency will be used.  This field can be modified if the order status is worksheet or approved and the order has not been shipped.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="terms" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The sales terms of the order.  If not populated on the create message, will default to the supplier's terms.  This can be modified in worksheet or approved status.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="not_before_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>The first date that delivery will be accepted.  This can be modified in worksheet or approved status.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="not_after_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>The last date that delivery will be accepted.  This can be modified in worksheet or approved status.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="otb_eow_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>The end of week date of the OTB bucket used.  This can be modified in worksheet or approved status.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="dept" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>The department in which are all the items on the order.  This field is required if the system enforces single department ordering.  This cannot be modified if details exist for the PO.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="status" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The code for the status of the order.  Valid values are 'W' worksheet and 'A' approved for PO creation.  It is also possible to modify the status to 'C' closed.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="exchange_rate" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>The rate of exchange for the PO used between the order and primary currencies.  This field can be modified if the order status is worksheet or approved and the order has not been shipped..</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="include_on_ord_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates if the order should be included in on-order calculations.  This can be modified in worksheet or approved status.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="written_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>The date the order was created.  If this field is not populated on the message it will default to the time of creation in RMS.  It cannot be modified.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:XOrderDtl">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="orig_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates where the order originated. Valid values include: 2 - Manual, 6 - AIP generated order, 7 , 8.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="edi_po_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates whether or not the order will be transmitted to the supplier via an Electronic Data Exchange transaction. Valid values are: Y = Submit via EDI, N = Do not use EDI.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="pre_mark_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field indicated whether or not a supplier has agreed to break an order into separate boxes so that the boxes can be sent directly to stores.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="user_id" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates where the order was approved. It will be the user ID of the person approving the order.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="comment_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Any comments pertaining to the order.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attempt_rms_load" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field indicates if the order will be created in RMS or the staging tables. Valid values are RMS or STG. If not defined, the default is STG.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="XOrderDtl">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="item" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>An approved, transaction level item.  If a pack, it must be an orderable pack (with an order_as_type of 'P').  This is required if the ref_item field is not populated.An item/location may be added to the order in worksheet or approved status.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="location" type="xs:long">
+                            <xs:annotation>
+                                <xs:documentation>An active store or warehouse.  If multichannel is on, and a warehouse is being order to, a virtual warehouse is expected.  An item/location may be added to the order in worksheet or approved status.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="unit_cost" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>The cost of the item from the supplier in the order's currency.  This can be modified if the status is worksheet or approved, but not if any portion of the item's order quantity is in transit or has been received.  If it is not specified on the message, it will default from the item supplier cost for this location.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ref_item" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The id of a reference item which can be used instead of using the item field.  If the item field is not populated this field is required.  A ref item/location may be added to the order in worksheet or approved status.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="origin_country_id" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The identifier of the country from which the item is being sourced.  This field cannot be modified.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supp_pack_size" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>The supplier pack size for the item on the order.  This may be updated in worksheet or approved status.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="qty_ordered" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>The quantity ordered of item.  This can be updated in worksheet or approved status to adjust the quantity of an item/location or cancel an item/location from the order.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="location_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The location type of the location.  Valid values are 'S' store and 'W' warehouse.  This field cannot be modified.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="cancel_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates if the detail record's quantity should be cancelled.  Valid values are 'Y'es and 'N'o.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="reinstate_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates if a detail record which was previously cancelled should be reinstated.  This will reinstate in the order quantity the amount in the cancelled bucket.  Valid values are 'Y'es and 'N'o.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="delivery_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>The date by which goods are to be delivered.  There can be multiple item-locations on the order with different delivery dates.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>

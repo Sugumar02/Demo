@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1" version="1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="ExtOfNBAddrDesc">
+                <xs:annotation>
+                    <xs:documentation>This is root element of this document which contains name space definitions for the document elements.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="country_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the Country Name. For e.g Brazil,United States</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="addr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field holds the unique address ID from the source system. 
+						For addresses that are interfaced into RMS, it will hold the external system's address ID. 
+						For addresses published out of RMS, it will hold RMS's address ID.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="addr_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the type for the 
+						address. Valid values (e.g. 01-business, 02-postal) 
+						are in the add_type table.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="primary_addr_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates whether this address is the primary address for this address type</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="add_1" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the first line of the address</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="add_2" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the second line of the address.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="add_3" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the thirdline of the address.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="city" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the city that is associated with the address.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="state" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the postal abbreviation for the state in which the warehouse is located.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="country_id" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the country where the address exists.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="country_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the country.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="post" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the zip code for the address.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="contact_phone" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the phone number of the contact person at this address.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="contact_fax" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the fax number of the contact person at this address.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="contact_email" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the email address of the partner or suppliers representative contact.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="contact_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This column contains the name of the contact for the supplier at this address.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfDesc/v1" xmlns:ns0="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfDesc/v1">
+  <xsd:element name="Extofnbsku">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="orin_sku" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="style" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="style_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="kimball7" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="colour_code" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="colour_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="size_code" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="size_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="quantity" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="selling_price" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="dept" type="xsd:int"/>
+        <xsd:element minOccurs="0" name="dept_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="class" type="xsd:int"/>
+        <xsd:element minOccurs="0" name="class_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="subclass" type="xsd:int"/>
+        <xsd:element minOccurs="0" name="subclass_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="customs_desc" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ExtOfSecLegTsfDesc">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="tsf_no" type="xsd:long"/>
+        <xsd:element minOccurs="0" name="to_loc" type="xsd:long"/>
+        <xsd:element minOccurs="0" name="to_loc_type" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="dest_country_code" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ExtOfNBTsfDesc">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="tsf_no" type="xsd:long"/>
+        <xsd:element name="tsf_type" type="xsd:string"/>
+        <xsd:element minOccurs="0" ref="ns0:ExtOfParentTsfDesc"/>
+        <xsd:element minOccurs="0" ref="ns0:ExtOfSecLegTsfDesc"/>
+        <xsd:element minOccurs="0" name="dest_country_code" type="xsd:string"/>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns0:ExtOfNBTsfDtl"/>
+        <xsd:element minOccurs="0" name="from_loc" type="xsd:long"/>
+        <xsd:element minOccurs="0" name="from_loc_type" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="virtual_from_loc" type="xsd:long"/>
+        <xsd:element minOccurs="0" name="from_loc_finisher_ind" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="to_loc" type="xsd:long"/>
+        <xsd:element minOccurs="0" name="to_loc_type" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="virtual_to_loc" type="xsd:long"/>
+        <xsd:element minOccurs="0" name="to_loc_finisher_ind" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="ship_method" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="buyer_name" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="order_date" type="xsd:dateTime"/>
+        <xsd:element minOccurs="0" name="handover_date" type="xsd:dateTime"/>
+        <xsd:element minOccurs="0" name="delivery_date" type="xsd:dateTime"/>
+        <xsd:element minOccurs="0" name="lading_code" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="lading_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="mrt_number" type="xsd:long"/>
+        <xsd:element minOccurs="0" name="supp_code" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="supp_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="supp_add_1" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="supp_add_2" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="supp_add_3" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="supp_city" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="supp_state" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="supp_country_code" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="supp_country_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="supp_post" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="factory_code" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="factory_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="fact_add_1" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="fact_add_2" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="fact_add_3" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="fact_city" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="fact_state" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="fact_country_code" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="fact_country_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="fact_post" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="total_packs" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="certificate_issued" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="certificate_date" type="xsd:dateTime"/>
+        <xsd:element minOccurs="0" name="sender_curr_code" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="dest_curr_code" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="approval_date" type="xsd:dateTime"/>
+        <xsd:element minOccurs="0" name="initial_approval_date" type="xsd:dateTime"/>
+        <xsd:element minOccurs="0" name="status" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="total_tsf_price" type="xsd:decimal"/>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" name="unreceived_asns" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="selling_season_year" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="priority" type="xsd:int"/>
+        <xsd:element minOccurs="0" name="create_date" type="xsd:dateTime"/>
+        <xsd:element minOccurs="0" name="freight_code" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ExtOfNBTsfDtl">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="orin_pack" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="super_sku" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="gtin" type="xsd:string"/>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ns0:Extofnbsku"/>
+        <xsd:element minOccurs="0" name="quantity" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="num_pieces" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="depth" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="width" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="height" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="weight_uom" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="dwh_uom" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="gross_weight" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="net_weight" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="product_type" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="packing_method" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="pack_type" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="new_line_ind" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="selling_price" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="unit_retail" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="tsf_price" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="dept" type="xsd:int"/>
+        <xsd:element minOccurs="0" name="dept_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="class" type="xsd:int"/>
+        <xsd:element minOccurs="0" name="class_desc" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="subclass" type="xsd:int"/>
+        <xsd:element minOccurs="0" name="item_hazardous" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="kimball5" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="tsf_qty" type="xsd:decimal"/>
+        <xsd:element minOccurs="0" name="ras_ind" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="core_line_ind" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ExtOfParentTsfDesc">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="tsf_no" type="xsd:long"/>
+        <xsd:element minOccurs="0" name="from_loc" type="xsd:long"/>
+        <xsd:element minOccurs="0" name="from_loc_type" type="xsd:string"/>
+        <xsd:element minOccurs="0" name="from_loc_finisher_ind" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

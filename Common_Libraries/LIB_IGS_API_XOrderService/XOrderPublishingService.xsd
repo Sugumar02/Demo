@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1" xmlns:ns1="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1" xmlns:ns2="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" xmlns:ns3="http://www.oracle.com/retail/integration/services/exception/v1" xmlns:ns4="http://www.oracle.com/retail/integration/base/bo/XOrderDesc/v1" xmlns:ns5="http://www.oracle.com/retail/integration/base/bo/XOrderRef/v1" xmlns:tns="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <xsd:import namespace="http://www.oracle.com/retail/integration/base/bo/XOrderRef/v1" schemaLocation="XOrderPublishingService_InlineSchema6.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/base/bo/XOrderDesc/v1" schemaLocation="XOrderPublishingService_InlineSchema5.xsd"/>
+  <xsd:include schemaLocation="XOrderPublishingService_InlineSchema4.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/services/exception/v1" schemaLocation="XOrderPublishingService_InlineSchema3.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" schemaLocation="XOrderPublishingService_InlineSchema2.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1" schemaLocation="XOrderPublishingService_InlineSchema1.xsd"/>
+
+<!-- BEGIN Global group petaining to all wsdl:message definitions -->
+<!-- END Global group -->
+
+
+<!-- BEGIN Message Definitions for the wsdl:operations  -->
+<!-- END Message Definitions -->
+
+
+</xsd:schema>

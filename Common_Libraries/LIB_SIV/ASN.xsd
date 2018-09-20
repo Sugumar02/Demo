@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+	<xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="IBMdefined/RecordSeparatedFieldFormat.xsd"/>
+	<xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format encoding="{$dfdl:encoding}" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element ibmSchExtn:docRoot="true" name="SIVASNs">
+		<xsd:complexType>
+			<xsd:sequence dfdl:separator="">
+				<xsd:element dfdl:initiator="FilHdr|" dfdl:terminator="%NL;%WSP*;" name="FileHeader">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="%#124;">
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Filename" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Date" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Time" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element maxOccurs="unbounded" name="ASNRecord">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="">
+							<xsd:element dfdl:emptyValueDelimiterPolicy="none" dfdl:initiator="Header|" dfdl:terminator="%NL;%WSP*;" name="ASNHeader">
+								<xsd:complexType>
+									<xsd:sequence dfdl:separator="%#124;">
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ASNID" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="BOL" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="UnitsShipped" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ToPhysicalLocation" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="DischargePort" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="DischargeCountryID" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ContainerNumber" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ContainerType" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="SealNumber" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Carrier" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Haulier" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="FactoryLoad" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ShippedDate" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ArrivalDate" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ManufacturingDate" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="StatusCode" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Comments" type="xsd:string"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element dfdl:initiator="Detail|" dfdl:terminator="%NL;%WSP*;" maxOccurs="unbounded" minOccurs="0" name="ASNDetail">
+								<xsd:complexType>
+									<xsd:sequence dfdl:separator="%#124;">
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ASNID" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ASNLineID" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="POCID" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="SourceSystem" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="OrderType" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="SupplierCode" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="PackID" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="PackGTIN" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="CartonsOrSets" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Quantity" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="WarehouseTransferFlag" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ToFinalLocation" type="xsd:string"/>
+										<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="TransferValue" type="xsd:string"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element dfdl:initiator="FilTrl|" dfdl:terminator="" name="FileTrailer">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="%#124;">
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Description" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ControlTotal" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="Description1" type="xsd:string"/>
+							<xsd:element dfdl:representation="text" dfdl:textStringJustification="center" minOccurs="0" name="ControlTotal1" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

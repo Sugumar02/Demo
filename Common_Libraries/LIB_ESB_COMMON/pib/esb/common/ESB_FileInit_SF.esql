@@ -1,0 +1,48 @@
+BROKER SCHEMA pib.esb.common
+
+CREATE COMPUTE MODULE ESB_FileInit_SF_ConvertFileToUTF8
+	DECLARE UTF8CharPairingList SHARED CHARACTER;
+	
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+
+		DECLARE localEnvRef	REFERENCE TO OutputLocalEnvironment;
+		DECLARE rootRef		REFERENCE TO OutputRoot;
+
+		-- File is sometimes containing multibyte UTF-8 characters which are causing length exceptions when inserting to RMS DB since the RMS DB has its columns defined as
+		-- length in bytes and not characters. So, a 20 character field in file may actually be longer in bytes if it has multibyte characters and hence the RMS DB exception
+		-- when trying to insert this data. Since RMS DB column data types cannot be change as it is Vanilla, the fix is being provided in ESB Layer by replacing multibyte 
+		-- UTF-8 characters with standard single byte ASCII character.
+
+	   	-- Perform a lookup in the XRef table to get the list of UTF-8 Chars to be replaced and the corresponding ASCII value. List so far is:
+		-- 'NO-BREAK SPACE' (U+00A0)			-> ''
+		-- 'EN DASH' (U+2013)					-> '-'
+		-- 'FULLWIDTH NUMBER SIGN' (U+FF03)		-> '#'
+		-- 'FULLWIDTH SEMICOLON' (U+FF1B) 		-> ';'
+		-- 'FULLWIDTH COMMA' (U+FF0C) 			-> ','
+		-- 'EM DASH' (U+2014) 					-> '-'
+		-- 'FULLWIDTH HYPHEN-MINUS' (U+FF0D)	-> '-'
+		-- 'HYPHEN' (U+2010) 					-> '-'
+		IF COALESCE(UTF8CharPairingList, '') = '' THEN
+			SET UTF8CharPairingList = TRIM(THE(SELECT ITEM T.VALUE
+											FROM Database.dbo.ESB_OBJ_XREF_VALUES AS T 
+					 						WHERE T.ID = 'UTF8_MULTIBYTE_LIST' AND
+					 	  	  			  		  T.OBJECT = 'UTF8' AND
+					 		  			  		  T.TYPE = 'List'));
+		END IF;
+
+		SET localEnvRef.UTF8CharPairingList = UTF8CharPairingList;
+
+		-- Convert input file stream to UTF-8 since this is the encoding we want to ues.
+		CALL ConvertFileToUTF8(rootRef, localEnvRef);            
+
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+
+	    RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

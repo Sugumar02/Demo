@@ -1,0 +1,19 @@
+BROKER SCHEMA pib.igs.api.asnout
+
+
+DECLARE ASNOutPublishingServiceNS	NAMESPACE	'http://www.oracle.com/retail/igs/integration/services/ASNOutPublishingService/v1';
+DECLARE ASNOutDescNS				NAMESPACE	'http://www.oracle.com/retail/integration/base/bo/ASNOutDesc/v1';
+
+CREATE FUNCTION ESB_GetNamespaceASNOutPublishingService() RETURNS CHARACTER
+BEGIN
+
+	RETURN ASNOutPublishingServiceNS;
+
+END;
+
+CREATE FUNCTION ESB_GetNamespaceASNOutDesc() RETURNS CHARACTER
+BEGIN
+
+	RETURN ASNOutDescNS;
+
+END;

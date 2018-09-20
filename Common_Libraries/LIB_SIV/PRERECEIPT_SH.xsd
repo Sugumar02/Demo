@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:csv="http://www.ibm.com/dfdl/CommaSeparatedFormat" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+	<xsd:import namespace="http://www.ibm.com/dfdl/CommaSeparatedFormat" schemaLocation="IBMdefined/CommaSeparatedFormat.xsd"/>
+	<xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format documentFinalTerminatorCanBeMissing="yes" encoding="{$dfdl:encoding}" escapeSchemeRef="csv:CSVEscapeScheme" ref="csv:CommaSeparatedFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:element ibmSchExtn:docRoot="true" name="PreReceiptSh">
+		<xsd:complexType>
+			<xsd:sequence dfdl:separator="">
+				<xsd:element dfdl:terminator="%NL;%WSP*;" minOccurs="0" name="FileHeader">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="|">
+							<xsd:element maxOccurs="1" minOccurs="1" name="RecordType">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="6"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element maxOccurs="1" minOccurs="1" name="Filename">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="40"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element maxOccurs="1" minOccurs="1" name="Date">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element maxOccurs="1" minOccurs="1" name="Time">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9]"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="Body">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="">
+							<xsd:element minOccurs="0" name="ShipmentHeader">
+								<xsd:complexType>
+									<xsd:sequence dfdl:separator="|" dfdl:separatorSuppressionPolicy="trailingEmpty" dfdl:terminator="%NL;">
+										<xsd:element maxOccurs="1" minOccurs="1" name="RecordType">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="8"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="1" name="ShipmentID">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="30"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" name="ShipmentStatus">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="10"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="MasterReference">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="30"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="HousebillNumber">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="30"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="HousebillStatus">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="10"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+
+										<xsd:element maxOccurs="1" minOccurs="0" name="VesselName">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="30"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="1" name="ShipperCountryCode">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="2"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="ShipperCountry">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="1" name="ShipperID">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="ShipperName">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="1" name="OriginCountryCode">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="2"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="OriginCountry">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="1" name="OriginCode">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="5"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="Origin">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="DestinationCountryCode">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="2"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="DestinationCountry">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="DestinationCode">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="5"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="Destination">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="DeliveryCountryCode">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="2"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="DeliveryCountry">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" name="DeliveryCode">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="20"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="DeliveryName">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="#E0" maxOccurs="1" minOccurs="0" name="EstimatedDepartureDate">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="#E0" maxOccurs="1" minOccurs="0" name="EstimatedArrivalDate">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="####################.####" maxOccurs="1" minOccurs="0" name="GrossWeight">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:fractionDigits value="4"/>
+													<xsd:totalDigits value="24"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="####################.####" maxOccurs="1" minOccurs="0" name="Cube">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:fractionDigits value="4"/>
+													<xsd:totalDigits value="24"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="####################.####" maxOccurs="1" minOccurs="0" name="NetWeight">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:fractionDigits value="4"/>
+													<xsd:totalDigits value="24"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="####################.####" maxOccurs="1" minOccurs="0" name="ChargeableWeight">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:fractionDigits value="4"/>
+													<xsd:totalDigits value="24"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="#E0" maxOccurs="1" name="ShipmentDateCreated">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="#E0" maxOccurs="1" minOccurs="0" name="ItineraryDateCreated">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="MasterReferenceAir">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="HouseReferenceAir">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="ShipmentDetail">
+								<xsd:complexType>
+									<xsd:sequence dfdl:separator="|" dfdl:terminator="%NL;">
+										<xsd:element maxOccurs="1" minOccurs="1" name="RecordType">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="8"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="1" name="ShipmentID">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="30"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="##################" maxOccurs="1" minOccurs="1" name="ShipmentLineID">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:fractionDigits value="0"/>
+													<xsd:totalDigits value="18"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="#E0" maxOccurs="1" minOccurs="1" name="POCID">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="[0-9]*"/>
+													<xsd:maxLength value="12"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="#E0" maxOccurs="1" minOccurs="1" name="PhysicalLocation">
+                                            																					<xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="10"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                                        </xsd:element>
+										<xsd:element dfdl:textNumberPattern="#########" maxOccurs="1" minOccurs="1" name="ORMSPackCode">
+                                                                                        																					                                        <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="25"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                                        </xsd:element>
+										<xsd:element dfdl:textNumberPattern="####################.####" maxOccurs="1" minOccurs="1" name="QuantityofPacks">
+                                            																					<xsd:simpleType>
+                        <xsd:restriction base="xsd:decimal">
+                          <xsd:totalDigits value="24"/>
+                          <xsd:fractionDigits value="4"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                                        </xsd:element>
+										<xsd:element dfdl:textNumberPattern="############.####" maxOccurs="1" minOccurs="0" name="PackDepth">
+                                            																					<xsd:simpleType>
+                        <xsd:restriction base="xsd:decimal">
+                          <xsd:totalDigits value="16"/>
+                          <xsd:fractionDigits value="4"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                                        </xsd:element>	
+										<xsd:element dfdl:textNumberPattern="############.####" maxOccurs="1" minOccurs="0" name="PackWidth">
+                                            																					<xsd:simpleType>
+                        <xsd:restriction base="xsd:decimal">
+                          <xsd:totalDigits value="16"/>
+                          <xsd:fractionDigits value="4"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                                        </xsd:element>	
+										<xsd:element dfdl:textNumberPattern="############.####" maxOccurs="1" minOccurs="0" name="PackHeight">
+                                            																					<xsd:simpleType>
+                        <xsd:restriction base="xsd:decimal">
+                          <xsd:totalDigits value="16"/>
+                          <xsd:fractionDigits value="4"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                                        </xsd:element>	
+										<xsd:element dfdl:textNumberPattern="#0.###" maxOccurs="1" minOccurs="0" name="PackDWHUOM">
+                                            																					                                        <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:maxLength value="4"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                                        </xsd:element>
+										<xsd:element dfdl:textNumberPattern="############.####" maxOccurs="1" minOccurs="0" name="PackGrossWeight">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:fractionDigits value="4"/>
+													<xsd:totalDigits value="16"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="############.####" maxOccurs="1" minOccurs="0" name="PackNetWeight">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:fractionDigits value="4"/>
+													<xsd:totalDigits value="16"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="PackWeightUOM">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="4"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="ContainerNumber">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="30"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="ContainerType">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="20"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="SealNumber">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="20"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="##########" maxOccurs="1" name="DeliveryPhysicalLocation">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:fractionDigits value="0"/>
+													<xsd:totalDigits value="10"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="#E0" maxOccurs="1" minOccurs="0" name="DeliveryBookDate">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element dfdl:textNumberPattern="#E0" minOccurs="0" name="DeliveryActualDate">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="FactoryLoaded">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>	
+										<xsd:element dfdl:textNumberPattern="###" maxOccurs="1" name="PhysicalLocation1">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:fractionDigits value="0"/>
+													<xsd:totalDigits value="3"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="1" minOccurs="0" name="Carrier">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="50"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>	
+										<xsd:element maxOccurs="1" name="ShippingMethod">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="40"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>	
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>				
+				<xsd:element minOccurs="0" name="FileTrailer">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="|" dfdl:terminator="%NL;">
+							<xsd:element maxOccurs="1" minOccurs="1" name="RecordType">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="6"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element maxOccurs="1" minOccurs="1" name="Description1">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="6"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element dfdl:textNumberPattern="#######" maxOccurs="1" minOccurs="1" name="ControlTotal1">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:int">
+										<xsd:maxInclusive value="9999999"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element maxOccurs="1" minOccurs="1" name="Description2">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="6"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element dfdl:textNumberPattern="#######" maxOccurs="1" minOccurs="1" name="ControlTotal2">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:int">
+										<xsd:maxInclusive value="9999999"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

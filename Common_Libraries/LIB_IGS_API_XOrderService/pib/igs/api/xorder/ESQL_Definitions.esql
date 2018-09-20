@@ -1,0 +1,28 @@
+BROKER SCHEMA pib.igs.api.xorder
+
+
+DECLARE	XOrderPublishingServiceNS	NAMESPACE 'http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1';
+DECLARE	XOrderDescNS				NAMESPACE 'http://www.oracle.com/retail/integration/base/bo/XOrderDesc/v1';
+DECLARE	XOrderRefNS					NAMESPACE 'http://www.oracle.com/retail/integration/base/bo/XOrderRef/v1';
+
+  	
+CREATE FUNCTION ESB_GetNamespaceXOrderPublishingService() RETURNS CHARACTER
+BEGIN
+
+	RETURN XOrderPublishingServiceNS;
+
+END; 
+
+CREATE FUNCTION ESB_GetNamespaceXOrderDesc() RETURNS CHARACTER
+BEGIN
+
+	RETURN XOrderDescNS;
+
+END; 
+
+CREATE FUNCTION ESB_GetNamespaceXOrderRef() RETURNS CHARACTER
+BEGIN
+
+	RETURN XOrderRefNS;
+
+END;

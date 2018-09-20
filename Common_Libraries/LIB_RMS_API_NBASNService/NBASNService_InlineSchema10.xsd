@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1" version="1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns11="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xs:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1" schemaLocation="NBASNService_InlineSchema3.xsd"/>
+            <xs:element name="ExtOfNBFactoryAddr">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns11:ExtOfNBAddrDesc">
+                            <xs:annotation>
+                                <xs:documentation>It's a referenced element. For detailed description, please refer referenced element doc.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ExtOfNBItemBarcode">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="ean" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Barcode</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ean_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>barcode type</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="primary_ref_item_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Primary Barcode flag</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ExtOfNBPODesc">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="order_no" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number to uniquely identify an order within the system.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="order_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the type of order and which Open To Buy bucket will be updated. Valid values include: N/B - Non Basic ARB - Automatic Reorder of Basic 	BRB - Buyer Reorder of Basic.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supplier" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the vendor number who will provide the merchandise specified in the order.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supplier_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the suppliers trading name.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supplier_parent" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Supplier parent.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supplier_parent_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Supplier parent desc.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supplier_site_org_unit" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Supplier Site Organizational Unit.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supplier_site_org_unit_ebs" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Supplier Site Organizational Unit for EBS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supplier_site_bus_unit" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Supplier Site Business Unit.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supp_site_vat_number" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Supplier Site vat number.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" ref="tns:ExtOfNBSupplierAddr">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="qc_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Determines whether or not quality control will be required when items for this order are received. Valid values are 'Y' and 'N'.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="not_before_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>Contains the first date that delivery of the order will be accepted.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="not_after_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>Contains the last date that delivery of the order will be accepted.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="earliest_ship_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>The date before which the items on the purchase order can not be shipped by the supplier.  Represents the earliest earliest ship date of all the items on the order.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="terms" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicator identifying the sales terms for the order. These terms specify when payment is due and if any discounts exist for early payment.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="terms_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the Alphanumeric representation of Term Name which acts as the Term code in Oracle Financials.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="payment_method" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates how the purchase order will be paid. Valid options are LC (Letter of Credit), WT (Wire Transfer), OA (Open Account).</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_method" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The method used to ship the items on the purchase order from the country of origin to the country of import.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_method_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The description of the method used to ship the items on the purchase order from the country of origin to the country of import.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="status" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the current status of the order. Valid values include 'W' - Worksheet, 'S' - Submitted, 'A' - Approved, 'C' - Closed</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_pay_method" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Code indicating the payment terms for freight charges associated with the order.  Valid values inlude: 'CC' - Collect, 'CF' - Collect Freight Credited Back to Customer, 'DF' - Defined by Buyer and Seller, 'MX' - Mixed, 'PC' - Prepaid but Charged to Customer, 'PO' - Prepaid Only, 'PP' - Prepaid by Seller.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="factory" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Factory.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="factory_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Factory description.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" ref="tns:ExtOfNBFactoryAddr">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="discharge_port" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The port at which the items on the purchase order will enter the country of import. This field is only available when the system is running Import functionality.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="currency_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the currency code for the order. When creating an order within Retek, this field will always default to the currency of the supplier, but it can be overwritten.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="total_retail" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Total Retail.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="freight_terms" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicator that references what freight terms are related to the order.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="freight_terms_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains a description of the freight terms used in the system. Examples include a specified percent of total cost, free, or a specified percentage added to the invoice.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="written_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>Contains the date the order was created within the system.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="certificate_issued" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Intertek Certificate Flag. Saved as a CFA against a PO in RMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="certificate_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>Intertek Certificate Date. Saved as a CFA against a PO in RMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="receiving_wh_country_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Country code associated with the receiving WH.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="create_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>This column holds the order creation date.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ExtOfNBPODtl">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="vendor_order_no" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the vendor's unique identifying number for an order. These orders may have originated by the vendor through the EDI process or this number can be associated to a Retek order when the order is created on-line.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="buyer_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the authorized buyer.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="lading_port" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The port from which the items on the purchase order are shipped. This field is only available when the system is running Import functionality.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="lading_port_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The description of the port from which the items on the purchase order are shipped. This field is only available when the system is running Import functionality.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="dept" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number which uniquely identifies the department.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="dept_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the department.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="comment_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Any miscellaneous comments attached to the purchase order.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="incoterms_location" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Incoterms location address calculated in FFE.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="locked_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>Will be filled up after a PO lockdown happens in FFE. That field will be part of the PO delivered to SIV which will allow SIV to lock the PO on Suppl~y~View, preventing additional changes on the PO from the Supplier</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ExtOfNBPODtl">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="physical_location_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the type of location in the location field.  Valid values are 'S' -Store, 'W' -Warehouse</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="physical_location" type="xs:long">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the actual physical location that item will be ordered to.  This field may contain a store or a physical warehouse.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="physical_location_curr_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the currency code under which the location operates.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="supp_pack_size" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Supplier pack size for this order/item.  Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="item" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="item_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Pack description.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="pack_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates if the item is a pack (Y or N)</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="physical_qty_ordered" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="kimball5" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Style reference ? Kimball 5.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="super_sku" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Contains the supersku.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="dept" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number which uniquely identifies the department.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="dept_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the department.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="class" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number which uniquely identifies the class within the system.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="class_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the class which, along with the class number, identifies the class.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="subclass" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number which uniquely identifies the subclass.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="subclass_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the subclass which, along with the subclass number, uniquely identifies the subclass.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="pack_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Pack type from FFE. Possible values: "C"(for solid colour) / "S"(for solid size) / "K"(for kimball by size)</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="packing_method" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field indicates whether the packing method of the item in the container is Flat or Hanging.  Values for this field are store in the PKMT code.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="selling_season_year" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Selling season year from FFE.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="customs_friendly_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>SKU Customs Friendly Description from FFE.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="number_of_pieces" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Number of pieces in a set from FFE.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="hazardous" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Represents the "Hazardous/Flammable" attribute. Possible values are "01"(for Yes) / "02"(for no).</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="product_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Represents the product type attribute. Possible values are: "01"(for aerosols) / "02"(for food) / "03"(for electrical e electronics) / "04"(for cosmetic and skincare).</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="length" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Lenght.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="width" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Widht.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="height" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Height.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="size_po" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Size.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ExtOfNbPoSku">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="unit_cost" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the unit cost for the Item/Location on the order, including discounts (deal/bracket/allowance), but not landed cost components. This field is stored in order currency.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="unit_retail" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>This field holds the unit retail in the standard unit of measure for the item/zone combination. This field is stored in the local currency.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="season_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>No description available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="new_line_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>New line indicator from FFE.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="organization_unit" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Organization unit.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="organization_unit_ebs" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Organization unit.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="business_unit" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number to uniquely identify an order within the system.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="dest_email" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the receipt PO / TSF destination email information.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ExtOfNBItemBarcode">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="origin_country_id" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The identifier of the country into which the items on the order are being imported.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="vat_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The identifier of the country into which the items on the order are being imported.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ExtOfNBSupplierAddr">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns11:ExtOfNBAddrDesc">
+                            <xs:annotation>
+                                <xs:documentation>It's a referenced element. For detailed description, please refer referenced element doc.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ExtOfNbPoSku">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="item" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="item_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Item description.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="quantity_in_pack" type="xs:long">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the quantity of this sku in pack.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="style" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Style.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="style_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Style description.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="kimball7" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Style reference ? Kimball 7.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="colour" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Colour.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="colour_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Colour Description.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="size_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Size.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="size_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Size Description.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="unit_retail" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Contains the current retail price for the SKU at this location.  This field is stored in the local currency.  This field is only stored on this table for the purpose of calculating Open-To-Buy.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="hazardous" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Represents the "Hazardous/Flammable" attribute. Possible values are "01"(for Yes) / "02"(for no).</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="product_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Represents the product type attribute. Possible values are: "01"(for aerosols) / "02"(for food) / "03"(for electrical e electronics) / "04"(for cosmetic and skincare).</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="dept" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number which uniquely identifies the department.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="dept_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the department.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="class" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number which uniquely identifies the class within the system.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="class_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the class which, along with the class number, identifies the class.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="subclass" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number which uniquely identifies the subclass.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="subclass_name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the name of the subclass which, along with the subclass number, uniquely identifies the subclass.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="customs_friendly_desc" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>SKU Customs Friendly Description from FFE.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>

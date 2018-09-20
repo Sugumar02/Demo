@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--RedPrarie Corp.
+
+W3C XML Schema for IFD [WO_INB_IFD] Version [PRI_V1.0]
+
+Assumptions:
+- Parent Tag []
+- Show ifd tag [T]
+- Envelope IFD [] Version []
+
+IFD Description: This transaction is used to create, change, or delete work order information from the warehouse system.-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="WO_INB_IFD">
+<xsd:annotation>
+<xsd:documentation>This transaction is used to create, change, or delete work order information from the warehouse system.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="CTRL_SEG">
+<xsd:annotation>
+<xsd:documentation>Identifies the transaction, using the transaction name and version as well as the warehouse routing information.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="TRNNAM">
+<xsd:annotation>
+<xsd:documentation>Transaction ID - Identifier of this IFD.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TRNVER">
+<xsd:annotation>
+<xsd:documentation>Transaction version</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WHSE_ID">
+<xsd:annotation>
+<xsd:documentation>Warehouse ID - Identifier for the warehouse system.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="HEADER_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change the top level information and general processing requirements for the work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="TRNTYP">
+<xsd:annotation>
+<xsd:documentation>Transaction Type - &quot;A&quot; for Add record, &quot;C&quot; for Change record, &quot;R&quot; for Refresh record,  or &quot;D&quot; for Delete record.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CLIENT_ID">
+<xsd:annotation>
+<xsd:documentation>Client ID - Client to which this work order belongs.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRCPRI">
+<xsd:annotation>
+<xsd:documentation>Processing Priority - Priority at which work order should be considered for crossdock or other allocation processing.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WKONUM">
+<xsd:annotation>
+<xsd:documentation>Word Order Number - Unique identifier for the work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WKOREV">
+<xsd:annotation>
+<xsd:documentation>Work Order Revision - Identifier for one instance of a work order. Used if multiple copies of a standard work order are desired.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTNUM">
+<xsd:annotation>
+<xsd:documentation>Part Number - Part number or top-level part that will be produced as a result of processing this work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="HSTSTS">
+<xsd:annotation>
+<xsd:documentation>Host Status - The host status of item to be produced.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LOTNUM">
+<xsd:annotation>
+<xsd:documentation>Lot Number - Lot number required for the top-level part/finished good that will be produced if that part is tracked by lot number.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORGCOD">
+<xsd:annotation>
+<xsd:documentation>Origin Code - Origin code required for the top-level part/finished good that will be produced if the part is tracked by origin code.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="REVLVL">
+<xsd:annotation>
+<xsd:documentation>Revision Level - Revision level required for the top-level part/finished good that will be produced if the part is tracked by revision level.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WKOQTY">
+<xsd:annotation>
+<xsd:documentation>Quantity To Be Produced - Quantity of finished goods expected to be produced against this work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRD_TOL_PCT">
+<xsd:annotation>
+<xsd:documentation>Production Tolerance % -  Value that determined the minimum and maximum percentage of the total number of required parts that can be assembled.  Example: .10 indicates that the system will allow set users create between 90-110% of the required.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRICOD">
+<xsd:annotation>
+<xsd:documentation>Priority Code - Priority at which work queue work for this work order should be created.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="2"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRCARE">
+<xsd:annotation>
+<xsd:documentation>Processing Work Order Area - Production line area where this work order is to be processed and the top level part assembled.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRCLOC">
+<xsd:annotation>
+<xsd:documentation>Processing Work Order Location - The production line location where this work order is to be processed and the top level part assembled - obsolete with 2008.1</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ADDDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Work Order Add Date - Date/time when work order was added to Warehouse Management.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="ENTDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Work Order Entered Date - Typically the date/time when the order was entered on the host system.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRJNUM">
+<xsd:annotation>
+<xsd:documentation>Project Number - Customer information that can be maintained in Warehouse Management and used in the custom reports or labels.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ACCNUM">
+<xsd:annotation>
+<xsd:documentation>Accounting Number - Customer information that can be maintained in Warehouse Management and used in the custom reports or labels.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RRLFLG">
+<xsd:annotation>
+<xsd:documentation>Release Remaining Lines Flag - Determines whether component lines that are not marked for cross docking get released even though cross docked component lines for this work order have not yet receive any inventory.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CMP_TRK_FLG">
+<xsd:annotation>
+<xsd:documentation>Component Tracking Flag - Determines whether the system should track the attributes of the components when the finished part is identified.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="INVSTS">
+<xsd:annotation>
+<xsd:documentation>Inventory Status - Inventory status required for the top-level part/finished good that will be produced.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="DUEDTE" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Due Date - The date the work order is due to be completed</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element minOccurs="0" name="WKO_CATCH_QTY">
+<xsd:annotation>
+<xsd:documentation>Catch Quantity To Be Produced - Catch Quantity of finished goods expected to be produced against this work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRDLIN">
+<xsd:annotation>
+<xsd:documentation>Production Line - The production line where the work order is processed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="EXCL_FLG">
+<xsd:annotation>
+<xsd:documentation>Exclusively Occupy Production Line - This flag indicates whether this work order will occupy a production line exclusively or share a production line with other &quot;Started&quot; work orders when this work order is &quot;Started&quot;.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="START_FLG">
+<xsd:annotation>
+<xsd:documentation>Started Flag - It indicates whether this work order is started or not.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NUM_PEOPLE">
+<xsd:annotation>
+<xsd:documentation>Number of People - Number of people working on this work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SPEED">
+<xsd:annotation>
+<xsd:documentation>Speed - The speed the production line will be run at for this work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ACTCOD">
+<xsd:annotation>
+<xsd:documentation>Activity Code - Work order activity code for LMS</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOCOMP_FLG">
+<xsd:annotation>
+<xsd:documentation>No Components Needed - This flag indicates whether this work order has components specified or not.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="LINE_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change component information for the work order. A separate LINE_SEG is required for each component associated with the work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WKOLIN">
+<xsd:annotation>
+<xsd:documentation>Work Order Component Line - Line number for the work order component. Allows for multiple components to be defined.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRTNUM">
+<xsd:annotation>
+<xsd:documentation>Part Number - Part number of the component inventory that is being consumed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="REVLVL">
+<xsd:annotation>
+<xsd:documentation>Revision Level - Revision level required when allocating this part number for this work order line. If not defined, system will allocate for any revision level.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LOTNUM">
+<xsd:annotation>
+<xsd:documentation>Lot Number - Lot number required when allocating this part number for this work order line. If not defined, system will allocate for any lot number.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORGCOD">
+<xsd:annotation>
+<xsd:documentation>Origin Code - Place of origin required when allocating this part number for this work order line. If not defined, system will allocate for any origin code.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="HSTSTS">
+<xsd:annotation>
+<xsd:documentation>Host Status - The host status of the part to be consumed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LINQTY">
+<xsd:annotation>
+<xsd:documentation>Work Order Line (Component) Quantity - Requested quantity to be delivered to the production line.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="BOM_CNSQTY">
+<xsd:annotation>
+<xsd:documentation>BOM Consume Quantity - Quantity of this component that is required to produce one top-level part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="CNS_TOL_PCT">
+<xsd:annotation>
+<xsd:documentation>Consumption Tolerance Percent - Percentage by which the consumption may be over/under the expected consumption quantity.  Example: if you expect to consume 100, and the cns_tol_pct is 10, then the system accepts consumption quantities of 90 or 110.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTCAS">
+<xsd:annotation>
+<xsd:documentation>Units per Case - Units per case required for the component. If set to 0, the system will allocate for any case configuration.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="UNTPAK">
+<xsd:annotation>
+<xsd:documentation>Units per Pack - Units per pack required for the component. If set to 0, the system will allocate for any pack configuration.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="OVRCOD">
+<xsd:annotation>
+<xsd:documentation>Over Allocation Code - Code that identifies how over-allocation is performed. Percent is the percentage of the original quantity required for the work order. Quantity is a specific quantity of the part.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="OVRAMT">
+<xsd:annotation>
+<xsd:documentation>Over Allocation Amount - Total amount of inventory that can be allocated when the allocation code is quantity or percentage of inventory that can be allocated when the allocation code is percentage.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="XDKFLG">
+<xsd:annotation>
+<xsd:documentation>Crossdock Flag - Indicates that when the work order is allocated, this component will not be allocated from inventory, but will instead be cross docked to the production line when it is received.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="RPQFLG">
+<xsd:annotation>
+<xsd:documentation>Round Up Pick Quantity Flag - Determines whether allocation should automatically round up pick quantities in order to get the next highest material handling unit of product.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="INVSTS">
+<xsd:annotation>
+<xsd:documentation>Inventory Status - (Obsolete with 6.0 for Components)</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="INVSTS_PRG">
+<xsd:annotation>
+<xsd:documentation>Inventory Status Progression - Identifier for a list of valid inventory statuses for the component.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="LIN_CATCH_QTY">
+<xsd:annotation>
+<xsd:documentation>Work Order Line (Component) Catch Quantity - Requested catch quantity to be delivered to the production line.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ALLOCATE_CATCH">
+<xsd:annotation>
+<xsd:documentation>Allocate by Catch Quantity</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SUPNUM">
+<xsd:annotation>
+<xsd:documentation>Supplier Number: The Supplier number of the part to be consumed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="128"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="PRCLOC">
+<xsd:annotation>
+<xsd:documentation>Production Station - The location where the components for the work order line are processed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="FTPCOD">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="ORDINV">
+<xsd:annotation>
+<xsd:documentation>Order Inventory- This value determines how the system will determine which inventory in an area code to allocate for this order line. Examples of possible values include FEFO-ORDER-BY, FIFO-ORDER-BY.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="120"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="MIN_SHELF_HRS">
+<xsd:annotation>
+<xsd:documentation>Minimum Shelf Life (hours) - If set, only inventory with an expiration date that is at least this many hours away from expiring will be allocated for this order line</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="WO_LINE_NOTE_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change work order line notes for this work order line in the WKODTL_NOTE table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IDF segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="WKOLIN">
+<xsd:annotation>
+<xsd:documentation>Work Order Line Number - Line number for the Work Order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="16"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTLIN">
+<xsd:annotation>
+<xsd:documentation>Note Line - Line number for note text. Used to distinguish multiple lines of notes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTTXT">
+<xsd:annotation>
+<xsd:documentation>Note Text - Text of the note associated with the work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="WO_DTL_DEF_SERV_SEG">
+<xsd:annotation>
+<xsd:documentation>Work Order Detail Default Service (Workflow) Segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_RATE_ID">
+<xsd:annotation>
+<xsd:documentation>Service Rate ID</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_REQ_FLG">
+<xsd:annotation>
+<xsd:documentation>Service Required Flag - indicates whether the user is required to perform this service before proceeding.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_ID">
+<xsd:annotation>
+<xsd:documentation>Service ID - identifier that uniquely identifies the service to be performed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="WO_NOTE_SEG">
+<xsd:annotation>
+<xsd:documentation>This segment is used to create or change work order notes for this work order in the Work Order Note [WKOHDR_NOTE] table.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTLIN">
+<xsd:annotation>
+<xsd:documentation>Note Line - Line number for note text. Used to distinguish multiple lines of notes.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="NOTTXT">
+<xsd:annotation>
+<xsd:documentation>Note Text - Text of the note associated with the work order.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="160"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="WO_DEF_SERV_SEG">
+<xsd:annotation>
+<xsd:documentation>Work Order Default Service (Workflow) Segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element minOccurs="0" name="SEGNAM">
+<xsd:annotation>
+<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_RATE_ID">
+<xsd:annotation>
+<xsd:documentation>Service Rate ID</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_REQ_FLG">
+<xsd:annotation>
+<xsd:documentation>Service Required Flag - indicates whether the user is required to perform this service before proceeding.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:decimal">
+<xsd:totalDigits value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element minOccurs="0" name="SERV_ID">
+<xsd:annotation>
+<xsd:documentation>Service ID - identifier that uniquely identifies the service to be performed.</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>

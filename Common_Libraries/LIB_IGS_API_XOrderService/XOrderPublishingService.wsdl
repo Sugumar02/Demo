@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" name="XOrderPublishingService" targetNamespace="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <documentation>
+    <appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="XOrderPublishingService_InlineSchema6.xsd"/>
+        <generatedXSD location="XOrderPublishingService_InlineSchema5.xsd"/>
+        <generatedXSD location="XOrderPublishingService_InlineSchema4.xsd"/>
+        <generatedXSD location="XOrderPublishingService_InlineSchema1.xsd"/>
+        <generatedXSD location="XOrderPublishingService_InlineSchema2.xsd"/>
+        <generatedXSD location="XOrderPublishingService_InlineSchema3.xsd"/>
+        <binding hasEncoding="false" imported="true" name="XOrderPublishingPortBinding" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </appinfo>
+  </documentation>
+    <wsp:Policy wsu:Id="XOrderPublishingPortBinding_Wsaw_Addressing_Policy-XOrderPublishingPortBinding_WSAM_Addressing_Policy-XOrderPublishingPortBinding_WSAM_Addressing_Policy" xmlns:wsapw3c="http://www.w3.org/2006/05/addressing/wsdl">
+        <wsapw3c:UsingAddressing wsp:Optional="true"/>
+        <wsam:Addressing wsp:Optional="true">
+            <wsp:Policy/>
+        </wsam:Addressing>
+    </wsp:Policy>
+    <types>
+        
+        
+        
+        
+        
+        
+            <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/base/bo/XOrderRef/v1" version="1.0" xmlns:tns="http://www.oracle.com/retail/integration/base/bo/XOrderRef/v1">
+<xsd:include schemaLocation="XOrderPublishingService_InlineSchema6.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/base/bo/XOrderDesc/v1" version="1.0" xmlns:tns="http://www.oracle.com/retail/integration/base/bo/XOrderDesc/v1">
+<xsd:include schemaLocation="XOrderPublishingService_InlineSchema5.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:ns1="http://www.oracle.com/retail/integration/base/bo/XOrderDesc/v1" xmlns:ns2="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" xmlns:ns3="http://www.oracle.com/retail/integration/base/bo/XOrderRef/v1">
+<xs:import namespace="http://www.oracle.com/retail/integration/base/bo/XOrderDesc/v1" schemaLocation="XOrderPublishingService_InlineSchema5.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" schemaLocation="XOrderPublishingService_InlineSchema2.xsd"/>
+<xs:import namespace="http://www.oracle.com/retail/integration/base/bo/XOrderRef/v1" schemaLocation="XOrderPublishingService_InlineSchema6.xsd"/>
+<xsd:include schemaLocation="XOrderPublishingService_InlineSchema4.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1" version="1.0" xmlns:Q1="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+<xsd:include schemaLocation="XOrderPublishingService_InlineSchema1.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1" version="1.0" xmlns:tns="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1">
+<xsd:include schemaLocation="XOrderPublishingService_InlineSchema2.xsd"/>
+    </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/services/exception/v1" version="1.0" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:tns="http://www.oracle.com/retail/integration/services/exception/v1">
+<xsd:include schemaLocation="XOrderPublishingService_InlineSchema3.xsd"/>
+    </xs:schema>
+    </types>
+    <message name="publishXOrderDeleteUsingXOrderRef">
+        <part element="tns:publishXOrderDeleteUsingXOrderRef" name="parameters"/>
+        <part element="ns4:BusinessObjectId" name="BusinessObjectId" xmlns:ns4="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+    </message>
+    <message name="publishXOrderDeleteUsingXOrderRefResponse">
+        <part element="tns:publishXOrderDeleteUsingXOrderRefResponse" name="result"/>
+    </message>
+    <message name="IllegalStateWSFaultException">
+        <part element="ns6:IllegalStateWSFaultException" name="fault" xmlns:ns6="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="PublishingWSFaultException">
+        <part element="ns5:PublishingWSFaultException" name="fault" xmlns:ns5="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="ValidationWSFaultException">
+        <part element="ns7:ValidationWSFaultException" name="fault" xmlns:ns7="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    </message>
+    <message name="publishXOrderDtlCreateUsingXOrderDesc">
+        <part element="tns:publishXOrderDtlCreateUsingXOrderDesc" name="parameters"/>
+        <part element="ns8:BusinessObjectId" name="BusinessObjectId" xmlns:ns8="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+    </message>
+    <message name="publishXOrderDtlCreateUsingXOrderDescResponse">
+        <part element="tns:publishXOrderDtlCreateUsingXOrderDescResponse" name="result"/>
+    </message>
+    <message name="publishXOrderDtlDeleteUsingXOrderRef">
+        <part element="tns:publishXOrderDtlDeleteUsingXOrderRef" name="parameters"/>
+        <part element="ns9:BusinessObjectId" name="BusinessObjectId" xmlns:ns9="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+    </message>
+    <message name="publishXOrderDtlDeleteUsingXOrderRefResponse">
+        <part element="tns:publishXOrderDtlDeleteUsingXOrderRefResponse" name="result"/>
+    </message>
+    <message name="publishXOrderDtlModifyUsingXOrderDesc">
+        <part element="tns:publishXOrderDtlModifyUsingXOrderDesc" name="parameters"/>
+        <part element="ns10:BusinessObjectId" name="BusinessObjectId" xmlns:ns10="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+    </message>
+    <message name="publishXOrderDtlModifyUsingXOrderDescResponse">
+        <part element="tns:publishXOrderDtlModifyUsingXOrderDescResponse" name="result"/>
+    </message>
+    <message name="publishXOrderModifyUsingXOrderDesc">
+        <part element="tns:publishXOrderModifyUsingXOrderDesc" name="parameters"/>
+        <part element="ns11:BusinessObjectId" name="BusinessObjectId" xmlns:ns11="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+    </message>
+    <message name="publishXOrderModifyUsingXOrderDescResponse">
+        <part element="tns:publishXOrderModifyUsingXOrderDescResponse" name="result"/>
+    </message>
+    <message name="publishXOrderCreateUsingXOrderDesc">
+        <part element="tns:publishXOrderCreateUsingXOrderDesc" name="parameters"/>
+        <part element="ns12:BusinessObjectId" name="BusinessObjectId" xmlns:ns12="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+    </message>
+    <message name="publishXOrderCreateUsingXOrderDescResponse">
+        <part element="tns:publishXOrderCreateUsingXOrderDescResponse" name="result"/>
+    </message>
+    <message name="ping">
+        <part element="tns:ping" name="parameters"/>
+    </message>
+    <message name="pingResponse">
+        <part element="tns:pingResponse" name="parameters"/>
+    </message>
+    <portType name="XOrderPublishingPortType">
+        <wsdl:documentation>An external application publishes Purchase order information onto the RIB. POs can be Created, Modified, or Deleted at the header or the detail level.
+	Topic Name : etXOrder     	
+	Subcriber : XOrder_sub (RMS).    	
+	Other publisher : XOrder_pub (AIP)</wsdl:documentation>
+        <operation name="publishXOrderDeleteUsingXOrderRef" parameterOrder="parameters BusinessObjectId">
+            <wsdl:documentation>This Operation invokes the publishing of "Delete" event for the XOrder.</wsdl:documentation>
+            <input message="tns:publishXOrderDeleteUsingXOrderRef" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDeleteUsingXOrderRefRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDeleteUsingXOrderRefRequest">
+                <wsdl:documentation>XOrderRef RBO complies with the XML schema XOrderRef.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishXOrderDeleteUsingXOrderRefResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDeleteUsingXOrderRefResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDeleteUsingXOrderRef/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDeleteUsingXOrderRef/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDeleteUsingXOrderRef/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="publishXOrderDtlCreateUsingXOrderDesc" parameterOrder="parameters BusinessObjectId">
+            <wsdl:documentation>This Operation invokes the publishing of "Create" event for the XOrder Dtl.</wsdl:documentation>
+            <input message="tns:publishXOrderDtlCreateUsingXOrderDesc" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlCreateUsingXOrderDescRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlCreateUsingXOrderDescRequest">
+                <wsdl:documentation>XOrderDesc RBO complies with the XML schema XOrderDesc.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishXOrderDtlCreateUsingXOrderDescResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlCreateUsingXOrderDescResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlCreateUsingXOrderDesc/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlCreateUsingXOrderDesc/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlCreateUsingXOrderDesc/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="publishXOrderDtlDeleteUsingXOrderRef" parameterOrder="parameters BusinessObjectId">
+            <wsdl:documentation>This Operation invokes the publishing of "Delete" event for the XOrder Dtl.</wsdl:documentation>
+            <input message="tns:publishXOrderDtlDeleteUsingXOrderRef" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlDeleteUsingXOrderRefRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlDeleteUsingXOrderRefRequest">
+                <wsdl:documentation>XOrderRef RBO complies with the XML schema XOrderRef.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishXOrderDtlDeleteUsingXOrderRefResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlDeleteUsingXOrderRefResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlDeleteUsingXOrderRef/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlDeleteUsingXOrderRef/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlDeleteUsingXOrderRef/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="publishXOrderDtlModifyUsingXOrderDesc" parameterOrder="parameters BusinessObjectId">
+            <wsdl:documentation>This Operation invokes the publishing of "Modify" event for the XOrder Dtl.</wsdl:documentation>
+            <input message="tns:publishXOrderDtlModifyUsingXOrderDesc" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlModifyUsingXOrderDescRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlModifyUsingXOrderDescRequest">
+                <wsdl:documentation>XOrderDesc RBO complies with the XML schema XOrderDesc.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishXOrderDtlModifyUsingXOrderDescResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlModifyUsingXOrderDescResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlModifyUsingXOrderDesc/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlModifyUsingXOrderDesc/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderDtlModifyUsingXOrderDesc/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="publishXOrderModifyUsingXOrderDesc" parameterOrder="parameters BusinessObjectId">
+            <wsdl:documentation>This Operation invokes the publishing of "Modify" event for the XOrder.</wsdl:documentation>
+            <input message="tns:publishXOrderModifyUsingXOrderDesc" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderModifyUsingXOrderDescRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderModifyUsingXOrderDescRequest">
+                <wsdl:documentation>XOrderDesc RBO complies with the XML schema XOrderDesc.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishXOrderModifyUsingXOrderDescResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderModifyUsingXOrderDescResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderModifyUsingXOrderDesc/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderModifyUsingXOrderDesc/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderModifyUsingXOrderDesc/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="publishXOrderCreateUsingXOrderDesc" parameterOrder="parameters BusinessObjectId">
+            <wsdl:documentation>This Operation invokes the publishing of "Create" event for the XOrder.</wsdl:documentation>
+            <input message="tns:publishXOrderCreateUsingXOrderDesc" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderCreateUsingXOrderDescRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderCreateUsingXOrderDescRequest">
+                <wsdl:documentation>XOrderDesc RBO complies with the XML schema XOrderDesc.xsd, for more information on RBO structure and semantics please refer to the associated XSD.</wsdl:documentation>
+            </input>
+            <output message="tns:publishXOrderCreateUsingXOrderDescResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderCreateUsingXOrderDescResponse">
+                <wsdl:documentation>ServiceOpStatus object represents the acknowledgment from the service. It encloses the information about the Successful or Failed stataus of the publish event.</wsdl:documentation>
+            </output>
+            <fault message="tns:IllegalStateWSFaultException" name="IllegalStateWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderCreateUsingXOrderDesc/Fault/IllegalStateWSFaultException">
+                <wsdl:documentation>Throw this exception when an unknown "soap:Server" side problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:PublishingWSFaultException" name="PublishingWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderCreateUsingXOrderDesc/Fault/PublishingWSFaultException">
+                <wsdl:documentation>Throw this exception when a "soap:Server" side publish problem occurs.</wsdl:documentation>
+            </fault>
+            <fault message="tns:ValidationWSFaultException" name="ValidationWSFaultException" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/publishXOrderCreateUsingXOrderDesc/Fault/ValidationWSFaultException"/>
+        </operation>
+        <operation name="ping">
+            <input message="tns:ping" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/pingRequest" wsaw:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/pingRequest"/>
+            <output message="tns:pingResponse" wsam:Action="http://www.oracle.com/retail/igs/integration/services/XOrderPublishingService/v1/XOrderPublishingPortType/pingResponse"/>
+        </operation>
+    </portType>
+    <binding name="XOrderPublishingPortBinding" type="tns:XOrderPublishingPortType">
+        <wsaw:UsingAddressing/>
+        <wsp:PolicyReference URI="#XOrderPublishingPortBinding_Wsaw_Addressing_Policy-XOrderPublishingPortBinding_WSAM_Addressing_Policy-XOrderPublishingPortBinding_WSAM_Addressing_Policy"/>
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="publishXOrderDeleteUsingXOrderRef">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishXOrderDeleteUsingXOrderRef" part="BusinessObjectId" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="publishXOrderDtlCreateUsingXOrderDesc">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishXOrderDtlCreateUsingXOrderDesc" part="BusinessObjectId" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="publishXOrderDtlDeleteUsingXOrderRef">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishXOrderDtlDeleteUsingXOrderRef" part="BusinessObjectId" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="publishXOrderDtlModifyUsingXOrderDesc">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishXOrderDtlModifyUsingXOrderDesc" part="BusinessObjectId" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="publishXOrderModifyUsingXOrderDesc">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishXOrderModifyUsingXOrderDesc" part="BusinessObjectId" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="publishXOrderCreateUsingXOrderDesc">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body parts="parameters" use="literal"/>
+                <soap:header message="tns:publishXOrderCreateUsingXOrderDesc" part="BusinessObjectId" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="IllegalStateWSFaultException">
+                <soap:fault name="IllegalStateWSFaultException" use="literal"/>
+            </fault>
+            <fault name="PublishingWSFaultException">
+                <soap:fault name="PublishingWSFaultException" use="literal"/>
+            </fault>
+            <fault name="ValidationWSFaultException">
+                <soap:fault name="ValidationWSFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="ping">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="XOrderPublishingService">
+        <port binding="tns:XOrderPublishingPortBinding" name="XOrderPublishingPort">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+        </port>
+    </service>
+</definitions>

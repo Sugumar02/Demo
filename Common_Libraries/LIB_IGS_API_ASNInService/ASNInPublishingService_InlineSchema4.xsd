@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInRef/v1" version="1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="ExtOfNBASNInRef">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="to_location" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the location that the shipment will be delivered to.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="to_loc_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the location type of the to_location field. Valid values are 'S' = store, 'E' = finisher, and 'W' = warehouse. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="to_store_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the store type of the to_location. This will only be populated if to_loc_type is 'S'. Valid values are: 'C' = company store, 'F' = franchise store. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="to_stockholding_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates if the to_location is stockholding or not. Only populated if to_loc_type is 'S'. Valid values are: 'Y' = yes, 'N' = no. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="from_location" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>For transfer and allocation shipments, this field will hold the location from
+which the shipment was sourced.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="from_loc_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the location type of the from_location field. Valid values are 'S' = store and 'W' = warehouse. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="from_store_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the store type of the from_location. This will only be populated if from_location is 'S'. Valid values are: 'C' = company store, 'F' = franchise store.  RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="from_stockholding_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates if the from_location is stockholding or not. Only populated if from_location is 'S'. Valid values are: 'Y' = yes, 'N' = no. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="asn_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Holds the advance shipping notice number associated with a shipment to be deleted.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>

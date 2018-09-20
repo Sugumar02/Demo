@@ -1,0 +1,925 @@
+BROKER SCHEMA pib.rms.asn
+PATH pib.rms.api.nbasn, pib.igs.api.asnin, pib.rms.api.nbtsf, pib.igs.api.xorder, pib.igs.api.asnout, pib.esb.common;
+
+/* -------------------------------------------------------------------------------------------------------------------------------
+		Program Details:
+		----------------
+		This Interface will reads the message published on specific topic, transforms the message from CDM to target format and 
+		calls the RMS(IGS) webservice. 
+		--------------------------------------------------------------------------------------------------------------------------
+		Version:     		Initials:   Date:       	Description:
+		--------     		---------   -----      		------------
+		Revision  1.0  		RBH     	14/02/2018     	Initial version of the file.
+ --------------------------------------------------------------------------------------------------------------------------------*/
+
+CREATE COMPUTE MODULE ESB_RMS_ASN_1313_CMF_CaptureBusinessData
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE inRef			REFERENCE TO InputRoot.XMLNSC.ASN; 
+		DECLARE envRef	 		REFERENCE TO Environment;
+		
+		-- Copying the Entire message
+		CALL CopyEntireMessage();
+		
+		-- Create and Store the MessageId for audit 
+		SET envRef.Variables.MessageId	=	inRef.ASNOutDesc.asn_nbr || '|' || CAST(CURRENT_TIMESTAMP AS CHAR);
+		SET envRef.Variables.AuditName 	= 'CDM Subscriber Request';
+
+		-- Propagating the message to Audit
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+		
+	   	IF EXISTS(inRef.ASNOutDesc.ASNOutDistro[1].ASNOutCtn[1].ASNOutItem[1].ASNDetail[])THEN
+	   	PROPAGATE TO TERMINAL 'out';		
+	   	ELSE
+	   	PROPAGATE TO TERMINAL 'out1';	
+	   	END IF;
+	   	
+	    RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+CREATE FILTER MODULE ESB_RMS_ASN_1313_CMF_FilterMsgType
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE inRef,inRefDetail	REFERENCE TO Root.XMLNSC.ASN;
+		
+		MOVE inRefDetail TO inRef.ASNOutDesc.ASNOutDistro[1].ASNOutCtn;
+		
+		-- Process the message only from the RMS source application. 
+		IF(UPPER(inRefDetail.ASNOutItem.ASNDetail.SourceSystem) = 'ORMS') THEN
+			RETURN TRUE;
+		END IF;
+		
+		RETURN FALSE;
+	END;
+
+END MODULE;
+
+
+
+CREATE COMPUTE MODULE ESB_RMS_ASN_1313_CMF_CheckStatus_BuildSOAPReq
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		-- Variable and Reference declarations.
+		DECLARE inRef,inRefHead,inRefDetail				REFERENCE TO InputRoot.XMLNSC;
+		DECLARE envRef,envVarRef,envPORespRef,envOPORef,
+				envTPORef,envTsfRespRef,envConPoOrder,
+				envConTras								REFERENCE TO Environment.Variables;
+		DECLARE outRef									REFERENCE TO OutputRoot;
+		DECLARE intOrder,intTrans 						INTEGER 1;				
+		
+		-- SOAP NameSpace declaration
+		DECLARE	nsNBASNService			NAMESPACE ESB_GetNamespaceNBASNService();
+		DECLARE	nsNBPOInfoDesc			NAMESPACE ESB_GetNamespaceNBPOInfoDesc();
+		DECLARE	nsNBPODescRef			NAMESPACE ESB_GetNamespaceNBPODesc();
+		DECLARE	nsNBAddrDescRef			NAMESPACE ESB_GetNamespaceNBAddrDesc();
+		
+		DECLARE nsNBTsfSvc 			NAMESPACE ESB_GetNamespaceNBTsfService(); 
+		DECLARE nsNBTsfDescRef		NAMESPACE ESB_GetNamespaceNBTsfDesc();
+		
+		-- Storing the Input message in Environment for reference.  
+		SET envRef.inOrgMsg = inRef;
+		--SET OutputRoot.Properties = InputRoot.Properties;
+		
+		MOVE inRefHead TO inRef.ASN;
+		MOVE inRefDetail TO inRefHead.ASNOutDesc.ASNOutDistro;
+
+		CREATE LASTCHILD OF envRef AS envRef NAME 'OrderPO';
+		MOVE envOPORef TO envRef.OrderPO;
+				
+		CREATE LASTCHILD OF envRef AS envRef NAME 'TransferPO';
+		MOVE envTPORef TO envRef.TransferPO;
+			
+		X:WHILE(LASTMOVE(inRefDetail)) DO
+			IF (UPPER(inRefDetail.ASNOutCtn.ASNOutItem.ASNDetail.OrderType) = 'O') THEN
+				SET envVarRef.Temp.Detail_POCID = inRefDetail.distro_nbr;
+				CALL GetPOInfo(inRef,outRef);
+				MOVE envPORespRef TO envVarRef.resPOInfo.{nsNBASNService}:getPOInfoResponse.{nsNBPOInfoDesc}:ExtOfNBPOInfoDesc;
+				-- Checks for the status code
+				IF (inRefHead.StatusCode = 99) THEN
+					IF (UPPER(envPORespRef.{nsNBPOInfoDesc}:ship_exists) = 'Y') THEN
+						THROW USER EXCEPTION VALUES('Shipment was already received.ship_exists = Y.');
+					ELSE
+						-- Copying the Entire message
+						CALL CopyEntireMessage();
+						SET envVarRef.Message_State = 'ASN_CANCEL';  
+						-- Leave the Loop
+						LEAVE X;
+					END IF;	
+				END IF;	
+				IF (UPPER(inRefDetail.ASNOutCtn.ASNOutItem.ASNDetail.WarehouseTransferFlag) = 'Y') THEN
+					-- Insert the Record in NB_ASN_TRANSSHIP staging table.
+					PASSTHRU ('INSERT INTO ESBWORK_RMS.NB_ASN_TRANSHIP (ASN_NO,PO,ORIGINAL_TO_LOC,HOLDING_LOC,CREATE_DATE) VALUES(?,?,?,?,?)',inRefHead.ASNID,
+			       	inRefDetail.POCID,inRefDetail.ToFinalLocation,inRefHead.ToPhysicalLocation,CURRENT_TIMESTAMP);
+				ELSE
+					IF(inRefHead.ToPhysicalLocation = envPORespRef.{nsNBPODescRef}:ExtOfNBPODesc.{nsNBPODescRef}:ExtOfNBPODtl[1].{nsNBPODescRef}:physical_location) THEN
+						-- Add this record in Environment Under Ordertype_O for ASNIn Operation
+						SET	envVarRef.POOrders.Detail_Ordertype_O[intOrder].Poc_ID			= 	inRefDetail.distro_nbr;
+						SET	envVarRef.POOrders.Detail_Ordertype_O[intOrder].Pack_ID			=	inRefDetail.ASNOutCtn.ASNOutItem.item_id;
+						SET	envVarRef.POOrders.Detail_Ordertype_O[intOrder].Quantity		=	inRefDetail.ASNOutCtn.ASNOutItem.unit_qty;
+						SET envVarRef.POOrders.Detail_Ordertype_O[intOrder].Supplier_Code	= 	inRefDetail.ASNOutCtn.ASNOutItem.ASNDetail.SupplierCode;
+						SET envVarRef.POOrders.Detail_Ordertype_O[intOrder].EnSupplier		= 	envPORespRef.{nsNBPODescRef}:ExtOfNBPODesc.{nsNBPODescRef}:supplier;
+							
+						SET intOrder = intOrder + 1;
+					ELSE
+						IF(UPPER(envPORespRef.same_cost_locs) <> 'Y') THEN
+							THROW USER EXCEPTION VALUES('Cannot change Cost Zone location.');
+						ELSE 
+							IF(UPPER(envPORespRef.ship_exists) = 'Y') THEN
+								THROW USER EXCEPTION VALUES('Shipment was already exists for this PO, Cannot change location.');
+							ELSE
+								SET envVarRef.Temp.Pack_id 			= inRefDetail.ASNOutCtn.ASNOutItem.item_id;
+								SET envVarRef.Temp.Physical_loc		= inRefHead.ToPhysicalLocation;	 
+								SET envVarRef.Temp.Quantity 		= inRefDetail.ASNOutCtn.ASNOutItem.unit_qty;
+									
+								-- Call XOrderDtlCreateUsingXOderDesc
+								CALL CreatePOUsingXOderDesc(inRef,outRef);
+									
+								-- Call XOrderDtlCreateUsingXOderDesc
+								CALL DeletePOUsingXOderDesc(inRef,outRef);
+									
+								DELETE FIELD envVarRef.Temp;
+									
+								-- Add this record in Environment Under Ordertype_O for ASNIn Operation
+								SET	envVarRef.POOrders.Detail_Ordertype_O[intOrder].Poc_ID			= 	inRefDetail.distro_nbr;
+								SET	envVarRef.POOrders.Detail_Ordertype_O[intOrder].Pack_ID			=	inRefDetail.ASNOutCtn.ASNOutItem.item_id;
+								SET	envVarRef.POOrders.Detail_Ordertype_O[intOrder].Quantity		=	inRefDetail.ASNOutCtn.ASNOutItem.unit_qty;
+								SET envVarRef.POOrders.Detail_Ordertype_O[intOrder].Supplier_Code	= 	inRefDetail.ASNOutCtn.ASNOutItem.ASNDetail.SupplierCode;
+								SET envVarRef.POOrders.Detail_Ordertype_O[intOrder].EnSupplier		= 	envPORespRef.{nsNBPODescRef}:ExtOfNBPODesc.{nsNBPODescRef}:supplier;
+									
+								SET intOrder = intOrder + 1;
+							END IF;
+						END IF;
+					END IF;	
+				END IF;	 	
+			ELSEIF (UPPER(inRefDetail.ASNOutCtn.ASNOutItem.ASNDetail.OrderType) = 'T') THEN
+				IF (inRefHead.StatusCode = 99) THEN
+					THROW USER EXCEPTION VALUES('99 status code cannot have Transfer Order types');
+				END IF;	
+				
+				--Call getTSf  to get transfer details
+				CALL GetTsfDetails(inRefDetail,outRef);
+				-- Add this record in Environment Under Ordertype_T for ASNOut Operation
+				MOVE envTsfRespRef TO envVarRef.resTrfInfo.{nsNBTsfSvc}:getTsfResponse;
+					
+				SET	envVarRef.TROrders.Detail_Ordertype_T[intTrans].Poc_ID					= 	inRefDetail.distro_nbr;
+				SET	envVarRef.TROrders.Detail_Ordertype_T[intTrans].Pack_ID					=	inRefDetail.ASNOutCtn.ASNOutItem.item_id;
+				SET	envVarRef.TROrders.Detail_Ordertype_T[intTrans].Quantity				=	inRefDetail.ASNOutCtn.ASNOutItem.unit_qty;
+				SET envVarRef.TROrders.Detail_Ordertype_T[intTrans].EnFrom_Loc				= 	envTsfRespRef.{nsNBTsfDescRef}:ExtOfNBTsfDesc.{nsNBTsfDescRef}:from_loc;
+				SET envVarRef.TROrders.Detail_Ordertype_T[intTrans].EnTo_Loc				= 	envTsfRespRef.{nsNBTsfDescRef}:ExtOfNBTsfDesc.{nsNBTsfDescRef}:to_loc;
+				SET envVarRef.TROrders.Detail_Ordertype_T[intTrans].EnVirtual_from_Loc		= 	envTsfRespRef.{nsNBTsfDescRef}:ExtOfNBTsfDesc.{nsNBTsfDescRef}:virtual_from_loc;
+				SET envVarRef.TROrders.Detail_Ordertype_T[intTrans].EnVirtual_to_Loc		= 	envTsfRespRef.{nsNBTsfDescRef}:ExtOfNBTsfDesc.{nsNBTsfDescRef}:virtual_to_loc;
+				SET envVarRef.TROrders.Detail_Ordertype_T[intTrans].EnTsf_no				= 	envTsfRespRef.{nsNBTsfDescRef}:ExtOfNBTsfDesc.{nsNBTsfDescRef}:tsf_no;
+					
+				SET intTrans = intTrans + 1;
+			END IF; -- End of Order type check 
+				
+			-- Move to the next detailed record.
+			MOVE inRefDetail NEXTSIBLING REPEAT TYPE NAME;
+			SET envVarRef.Message_State = 'ASN_IN';
+		END WHILE;  -- End of While
+		
+		-- Copies the properties from Input to Output.
+		SET OutputRoot.Properties = InputRoot.Properties;	
+		
+		PROPAGATE TO TERMINAL 'out1';	
+		
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE GetPOInfo(IN inRef REFERENCE,IN outRef REFERENCE)
+	BEGIN
+		
+		-- Variable and Reference declarations.
+		DECLARE envRef,envDetailRef		REFERENCE TO Environment.Variables;
+		DECLARE outRef,outBody			REFERENCE TO OutputRoot;
+		DECLARE outLocalEnvRef			REFERENCE TO OutputLocalEnvironment;
+	
+		-- SOAP NameSpace declaration
+		DECLARE	nsNBASNService			NAMESPACE ESB_GetNamespaceNBASNService();
+		DECLARE	nsNBPOInfoRef			NAMESPACE ESB_GetNamespaceNBPOInfoRef();
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		-- Building the SOAP Request message for getPOInfo operation (ASN).
+		CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'SOAP';
+		
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBASNService;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBPOInfoRef;
+	
+		CREATE LASTCHILD OF outRef AS outBody NAME 'Body';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBASNService NAME 'getPOInfo';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBPOInfoRef NAME 'ExtOfNBPOInfoRef';
+		
+		SET outBody.{nsNBPOInfoRef}:order_no 		= envRef.Temp.Detail_POCID;
+		SET outBody.{nsNBPOInfoRef}:to_location		= envRef.inOrgMsg.ASN.ToPhysicalLocation;
+		
+		SET outLocalEnvRef.Destination.SOAP.Request.Operation	= 'getPOInfo';
+		
+		-- Audit the message 
+	 	SET envRef.AuditName 		= 'RMS API Request';
+	 	SET envRef.KeyIdentifier	= 'getPOInfo';
+	 	
+	 	PROPAGATE TO LABEL 'Logger' DELETE NONE;
+	 		
+	 	--Service with operation type - getPOInfo
+		PROPAGATE TO TERMINAL 'out';
+	END; 
+	
+	
+	CREATE PROCEDURE CreatePOUsingXOderDesc(IN inRef REFERENCE,IN outRef REFERENCE)
+	BEGIN
+	
+		-- Variable and Reference declarations.
+		DECLARE inPOInfo,inPODesc,inPODtl					REFERENCE TO inRef;
+		DECLARE envRef,envPOInfo,envPODesc,envPODtl			REFERENCE TO Environment.Variables;
+		DECLARE outRef,outHead,outBody,outDesc,outXOdtl		REFERENCE TO OutputRoot;
+		DECLARE outLocalEnvRef								REFERENCE TO OutputLocalEnvironment;
+		
+		-- SOAP NameSpace declaration
+		DECLARE	nsNBBusinessObjectId	NAMESPACE ESB_GetNamespaceBusinessObjectId();
+		DECLARE	nsNBXOrderPubService	NAMESPACE ESB_GetNamespaceXOrderPublishingService(); 
+		DECLARE	nsNBXOrderDesc			NAMESPACE ESB_GetNamespaceXOrderDesc();  
+
+		DECLARE	nsNBASNService			NAMESPACE ESB_GetNamespaceNBASNService(); 
+		DECLARE	nsNBPOInfoDesc			NAMESPACE ESB_GetNamespaceNBPOInfoDesc(); 
+		DECLARE	nsNBPODescRef			NAMESPACE ESB_GetNamespaceNBPODesc();
+		DECLARE	nsNBAddrDescRef			NAMESPACE ESB_GetNamespaceNBAddrDesc();
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'SOAP';
+		
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBBusinessObjectId;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBXOrderPubService;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v12	= nsNBXOrderDesc;
+		
+		MOVE envPOInfo TO envRef.resPOInfo.{nsNBASNService}:getPOInfoResponse.{nsNBPOInfoDesc}:ExtOfNBPOInfoDesc;
+		MOVE envPODesc TO envPOInfo.{nsNBPODescRef}:ExtOfNBPODesc;
+		MOVE envPODtl TO envPODesc.{nsNBPODescRef}:ExtOfNBPODtl[1]; 
+		
+		CREATE LASTCHILD OF outRef AS outHead NAME 'Header';
+		SET outHead.{nsNBBusinessObjectId}:BusinessObjectId = envPODesc.{nsNBPODescRef}:order_no; 
+		
+		CREATE LASTCHILD OF outRef AS outBody NAME 'Body';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBXOrderPubService NAME 'publishXOrderDtlCreateUsingXOrderDesc';
+		CREATE LASTCHILD OF outBody AS outDesc NAMESPACE nsNBXOrderDesc NAME 'XOrderDesc';
+
+		SET outDesc.{nsNBXOrderDesc}:order_no 			= envPODesc.{nsNBPODescRef}:order_no; 			
+		SET outDesc.{nsNBXOrderDesc}:supplier 			= envPODesc.{nsNBPODescRef}:supplier;
+		SET outDesc.{nsNBXOrderDesc}:currency_code 		= envPODesc.{nsNBPODescRef}:currency_code;
+		SET outDesc.{nsNBXOrderDesc}:terms 				= envPODesc.{nsNBPODescRef}:terms; 			
+		SET outDesc.{nsNBXOrderDesc}:not_before_date 	= envPODesc.{nsNBPODescRef}:not_before_date;
+		SET outDesc.{nsNBXOrderDesc}:not_after_date 	= envPODesc.{nsNBPODescRef}:not_after_date;
+		SET outDesc.{nsNBXOrderDesc}:dept 				= envPODtl.{nsNBPODescRef}:dept;
+		SET outDesc.{nsNBXOrderDesc}:status 			= 'A';
+		SET outDesc.{nsNBXOrderDesc}:written_date 		= CURRENT_TIMESTAMP;
+		
+		WHILE (LASTMOVE(inPODtl)) DO
+			CREATE LASTCHILD OF outDesc AS outXOdtl NAMESPACE nsNBXOrderDesc NAME 'XOrderDtl';
+			SET outXOdtl.{nsNBXOrderDesc}:item 				= envRef.Temp.Pack_id; 
+			SET outXOdtl.{nsNBXOrderDesc}:location 			= envRef.Temp.Physical_loc; 
+			SET outXOdtl.{nsNBXOrderDesc}:supp_pack_size  	= 1;
+			SET outXOdtl.{nsNBXOrderDesc}:qty_ordered  		= envRef.Temp.Quantity;
+			SET outXOdtl.{nsNBXOrderDesc}:location_type  	= 'W'; 	
+			
+			MOVE inPODtl NEXTSIBLING REPEAT TYPE NAME;
+		END WHILE;
+		
+		SET outLocalEnvRef.Destination.SOAP.Request.Operation 				  = 'publishXOrderDtlCreateUsingXOrderDesc';
+		
+		-- Audit the message 
+ 		SET envRef.AuditName 		= 'IGS API Request';
+ 		SET envRef.KeyIdentifier	= 'CreateUsingXOrderDesc';
+ 		
+ 		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+ 		
+ 		-- Service with operation type - publishXOrderDtlCreateUsingXOrderDesc
+		PROPAGATE TO TERMINAL 'out4';
+	END;	
+	
+	CREATE PROCEDURE DeletePOUsingXOderDesc(IN inRef REFERENCE,IN outRef REFERENCE)
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE inPOInfo,inPODesc,inPODtl					REFERENCE TO inRef;
+		DECLARE envRef,envPOInfo,envPODesc,envPODtl			REFERENCE TO Environment.Variables;
+		DECLARE outRef,outHead,outBody,outDesc,outXOdtl		REFERENCE TO OutputRoot;
+		DECLARE outLocalEnvRef								REFERENCE TO OutputLocalEnvironment;
+		DECLARE intLenItm 									INTEGER 0;
+		DECLARE charItmNum 									CHARACTER '';
+		
+		-- SOAP NameSpace declaration
+		DECLARE	nsNBBusinessObjectId	NAMESPACE ESB_GetNamespaceBusinessObjectId();
+		DECLARE	nsNBXOrderPubService	NAMESPACE ESB_GetNamespaceXOrderPublishingService();
+		DECLARE	nsNBXOrderRef			NAMESPACE ESB_GetNamespaceXOrderRef();  
+
+		DECLARE	nsNBASNService			NAMESPACE ESB_GetNamespaceNBASNService();
+		DECLARE	nsNBPOInfoDesc			NAMESPACE ESB_GetNamespaceNBPOInfoDesc();
+		DECLARE	nsNBPODescRef			NAMESPACE ESB_GetNamespaceNBPODesc();
+		DECLARE	nsNBAddrDescRef			NAMESPACE ESB_GetNamespaceNBAddrDesc();
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'SOAP';
+		
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBBusinessObjectId;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBXOrderPubService;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v12	= nsNBXOrderRef;
+		
+		MOVE envPOInfo TO envRef.resPOInfo.{nsNBASNService}:getPOInfoResponse.{nsNBPOInfoDesc}:ExtOfNBPOInfoDesc;
+		MOVE envPODesc TO envPOInfo.{nsNBPODescRef}:ExtOfNBPODesc;
+		MOVE envPODtl TO envPODesc.{nsNBPODescRef}:ExtOfNBPODtl[1]; 
+		
+		CREATE LASTCHILD OF outRef AS outHead NAME 'Header';
+		SET outHead.{nsNBBusinessObjectId}:BusinessObjectId = envPODesc.{nsNBPODescRef}:order_no; 
+		
+		CREATE LASTCHILD OF outRef AS outBody NAME 'Body';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBXOrderPubService NAME 'publishXOrderDtlDeleteUsingXOrderRef';
+		CREATE LASTCHILD OF outBody AS outDesc NAMESPACE nsNBXOrderRef NAME 'XOrderRef';
+		SET outDesc.{nsNBXOrderRef}:order_no 			= envPODesc.{nsNBPODescRef}:order_no;
+		
+		WHILE (LASTMOVE(envPODtl)) DO
+			-- Add '0' character to item id to make the length as 8 characters. 
+			SET intLenItm = LENGTH(envPODtl.{nsNBPODescRef}:item); 
+			IF(intLenItm < 8) THEN
+				SET charItmNum = REPLICATE('0',8-intLenItm);
+				SET charItmNum = charItmNum ||envPODtl.{nsNBPODescRef}:item;
+			ELSE
+				SET charItmNum = envPODtl.{nsNBPODescRef}:item;
+			END IF;	
+						
+			CREATE LASTCHILD OF outDesc AS outXOdtl NAMESPACE nsNBXOrderRef NAME 'XOrderDtlRef';
+			SET outXOdtl.{nsNBXOrderRef}:item 				= charItmNum; 
+			SET outXOdtl.{nsNBXOrderRef}:location 			= envPODtl.{nsNBPODescRef}:physical_location;
+			
+			MOVE envPODtl NEXTSIBLING REPEAT TYPE NAME;
+		END WHILE;	 			
+		
+		SET outLocalEnvRef.Destination.SOAP.Request.Operation 				  = 'publishXOrderDtlDeleteUsingXOrderRef';
+		
+		-- Audit the message 
+ 		SET envRef.AuditName 		= 'IGS API Request';
+ 		SET envRef.KeyIdentifier	= 'DeleteUsingXOrderRef';
+ 		
+ 		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+ 		
+ 		-- Service with operation type - publishXOrderDtlDeleteUsingXOrderRef
+		PROPAGATE TO TERMINAL 'out4';
+	END;
+	
+	CREATE PROCEDURE GetTsfDetails(IN inRef REFERENCE,IN outRef REFERENCE)
+	BEGIN
+		
+		-- Variable and Reference declarations.
+		DECLARE envRef 			REFERENCE TO Environment.Variables;
+		DECLARE outLocalEnvRef	REFERENCE TO OutputLocalEnvironment;
+		DECLARE outRef 			REFERENCE TO OutputRoot;
+		
+		-- SOAP Name Spaces declaration
+		DECLARE nsNBTsfSvc 			NAMESPACE ESB_GetNamespaceNBTsfService();
+		DECLARE nsNBTsfRef			NAMESPACE ESB_GetNamespaceNBTsfRef();
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		-- Build the SOAP request to RMS (for getTsf operation).
+		CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'SOAP';
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBTsfSvc;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBTsfRef;
+			
+		SET outRef.Body.{nsNBTsfSvc}:getTsf.{nsNBTsfRef}:ExtOfNBTsfRef.{nsNBTsfRef}:tsf_no 		= inRef.distro_nbr;
+		SET outLocalEnvRef.Destination.SOAP.Request.Operation 									= 'getTsf';
+				
+		-- Audit the message 
+		SET envRef.AuditName 		= 'RMS API Request';
+		SET envRef.KeyIdentifier	= 'getTsf';
+		
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+				
+		-- Service with operation type - getTsf
+		PROPAGATE TO TERMINAL 'out2';
+	END;	
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_RMS_ASN_1313_CMF_Validate_getPOInfo_Res
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE inRef		REFERENCE TO InputRoot.SOAP;
+		DECLARE envRef	 	REFERENCE TO Environment.Variables;
+		
+		-- Copying the Entire message
+		CALL CopyEntireMessage();
+		
+		-- Stores the response in environment
+		SET envRef.resPOInfo = inRef.Body;
+		
+		-- Propagating the message to Audit
+		SET envRef.AuditName = 'RMS API Response';
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+	    
+		RETURN FALSE;
+	END;
+	
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_RMS_ASN_1313_CMF_Validate_ASN_Res
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		-- Variable and Reference declarations.
+		DECLARE inRef,inRefBody,inRefFail	REFERENCE TO InputRoot.SOAP;
+		DECLARE envRef						REFERENCE TO Environment.Variables;
+		DECLARE outLocalEnvRef				REFERENCE TO OutputLocalEnvironment;
+		
+		-- SOAP NameSpace declaration
+		DECLARE nsNBASNOutPubService		NAMESPACE ESB_GetNamespaceASNOutPublishingService();
+		DECLARE nsNBServiceOpStatus			NAMESPACE ESB_GetNamespaceServiceOpStatus();
+		
+		-- Copying the Entire message
+		CALL CopyEntireMessage();
+		DELETE FIELD OutputRoot.HTTPResponseHeader;
+			
+		-- Propagating the message to Audit
+		SET envRef.AuditName = 'IGS API Response';
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+		  
+		MOVE inRefBody TO inRef.Body.{nsNBASNOutPubService}:publishASNOutCreateUsingASNOutDescResponse.{nsNBServiceOpStatus}:ServiceOpStatus;
+		   	
+		-- Check the response from the ASN webservice 
+		IF (EXISTS(inRefBody.{nsNBServiceOpStatus}:FailStatus[])) THEN
+		   	MOVE inRefFail TO inRefBody.{nsNBServiceOpStatus}:FailStatus.{nsNBServiceOpStatus}:BusinessProblemDetail;
+		   	THROW USER EXCEPTION VALUES('Failed response received from the IGS application. Error msg:'||inRefFail.{nsNBServiceOpStatus}:problemDescription);
+		END IF;
+			
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_RMS_ASN_1313_CMF_Validate_getTsf_Res
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE inRef		REFERENCE TO InputRoot.SOAP;
+		DECLARE envRef	 	REFERENCE TO Environment.Variables;
+				
+		-- Copying the Entire message
+		CALL CopyEntireMessage();
+		
+		-- Stores the response in environment
+		SET envRef.resTrfInfo = inRef.Body;
+		
+		-- Propagating the message to Audit
+		SET envRef.AuditName = 'RMS API Response';
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+	    
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE ESB_IGS_RMS_1313_CMF_Validate_XOrder_Res
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE inRef,inRefBody,inRefFail	REFERENCE TO InputRoot.SOAP;
+		DECLARE envRef	 					REFERENCE TO Environment.Variables;
+				
+		-- SOAP NameSpace declaration
+		DECLARE nsNBXOrderPubService		NAMESPACE ESB_GetNamespaceXOrderPublishingService();
+		DECLARE nsNBServiceOpStatus			NAMESPACE ESB_GetNamespaceServiceOpStatus();
+		
+		-- Copying the Entire message
+		CALL CopyEntireMessage();
+		
+		-- Propagating the message to Audit
+		SET envRef.AuditName = 'IGS API Response';
+		
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+	    
+	    MOVE inRefBody TO inRef.Body.{nsNBXOrderPubService}:publishXOrderDtlCreateUsingXOrderDescResponse.{nsNBServiceOpStatus}:ServiceOpStatus;
+	   	-- If the received response contains the failed status. 
+	    IF (EXISTS(inRefBody.{nsNBServiceOpStatus}:FailStatus[])) THEN
+	    	MOVE inRefFail TO inRefBody.{nsNBServiceOpStatus}:FailStatus.{nsNBServiceOpStatus}:BusinessProblemDetail;
+	    	THROW USER EXCEPTION VALUES('Failed response received from the PO Creation Request. Error msg:'||inRefFail.{nsNBServiceOpStatus}:problemDescription);
+	    END IF;	
+	    
+		RETURN FALSE;
+	END;
+	
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_RMS_ASN_1313_CMF_Build_ASNRequest
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE inRef		REFERENCE TO InputRoot.XMLNSC;
+		DECLARE outRef		REFERENCE TO OutputRoot;
+		DECLARE envRef		REFERENCE TO Environment.Variables;
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		IF(envRef.Message_State = 'ASN_CANCEL') THEN
+			CALL DeleteASNUsingASNIn(inRef,outRef);
+		ELSEIF(envRef.Message_State = 'ASN_IN') THEN
+			CALL CreateASNUsingASNIn(inRef,outRef);
+			CALL CreateASNUsingASNOut(inRef,outRef);
+		END IF;	
+		
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+	
+	CREATE PROCEDURE DeleteASNUsingASNIn(IN inRef REFERENCE,IN outRef REFERENCE)
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE envRef,envHeadRef		REFERENCE TO Environment.Variables;
+		DECLARE outRef,outHead,outBody	REFERENCE TO OutputRoot;
+		DECLARE outLocalEnvRef			REFERENCE TO OutputLocalEnvironment;
+	
+		-- SOAP NameSpace declaration
+		DECLARE	nsNBRoutingInfos		NAMESPACE ESB_GetNamespaceRoutingInfos();
+		DECLARE	nsNBBusinessObjectId	NAMESPACE ESB_GetNamespaceBusinessObjectId();
+		DECLARE nsNBASNInPubService		NAMESPACE ESB_GetNamespaceASNInPublishingService();
+		DECLARE nsNBASNInRef			NAMESPACE ESB_GetNamespaceASNInRef();
+	
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		MOVE envHeadRef TO envRef.inOrgMsg.ASN.ASNOutDesc;
+		-- Building the SOAP Request message for  operation (ASNInDeleteUsingASNInRef).
+		CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'SOAP';
+		
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBRoutingInfos;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBBusinessObjectId;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v12	= nsNBASNInPubService;
+		SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v13	= nsNBASNInRef;
+		
+		CREATE LASTCHILD OF outRef AS outHead NAME 'Header';
+		SET outHead.{nsNBBusinessObjectId}:BusinessObjectId = envHeadRef.asn_nbr; 
+		
+		CREATE LASTCHILD OF outRef AS outBody NAME 'Body';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBASNInPubService NAME 'publishASNInDeleteUsingASNInRef';
+		CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBASNInRef NAME 'ASNInRef';
+		
+		SET outBody.{nsNBASNInRef}:asn_nbr 		= envHeadRef.asn_nbr;
+		
+		SET outLocalEnvRef.Destination.SOAP.Request.Operation	= 'publishASNInDeleteUsingASNInRef';
+		
+		-- Audit the message 
+	 	SET envRef.AuditName 		= 'IGS API Request';
+	 	SET envRef.KeyIdentifier	= 'DeleteUsingASNInRef';
+	 	
+	 	PROPAGATE TO LABEL 'Logger' DELETE NONE;
+	 		
+	 	--Service with operation type - publishASNInDeleteUsingASNInRef
+		PROPAGATE TO TERMINAL 'out';
+	END;
+	
+	CREATE PROCEDURE CreateASNUsingASNIn(IN inRef REFERENCE,IN outRef REFERENCE)
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE envRef,envRefData,envHeadRef,envBodyRef		REFERENCE TO Environment.Variables;
+		DECLARE outRef,outHead,outBody,outASN				REFERENCE TO OutputRoot;
+		DECLARE outLocalEnvRef								REFERENCE TO OutputLocalEnvironment;
+		DECLARE inCount										INTEGER 1;
+		
+		-- SOAP NameSpace declaration
+		DECLARE	nsNBRoutingInfos		NAMESPACE ESB_GetNamespaceRoutingInfos();
+		DECLARE	nsNBBusinessObjectId	NAMESPACE ESB_GetNamespaceBusinessObjectId();
+		DECLARE	nsNBASNInPubService		NAMESPACE ESB_GetNamespaceASNInPublishingService();
+		DECLARE	nsNBASNInDesc			NAMESPACE ESB_GetNamespaceASNInDesc();
+		
+		SET OutputRoot.Properties = InputRoot.Properties; 
+		
+		-- Create the ASN IN  SOAP Request
+		IF (EXISTS(envRef.POOrders.Detail_Ordertype_O[])) THEN
+			-- Building the SOAP Request message for ASNIN.
+			CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'SOAP';
+			
+			SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBRoutingInfos;
+			SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBBusinessObjectId;
+			SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v12	= nsNBASNInPubService;
+			SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v13	= nsNBASNInDesc;
+			
+			--MOVE envHeadRef TO envRef.inOrgMsg.ASN.ASNHeader;
+			MOVE envHeadRef TO envRef.inOrgMsg.ASN;
+			MOVE envBodyRef TO envRef.POOrders.Detail_Ordertype_O[1];
+			
+			CREATE LASTCHILD OF outRef AS outHead NAME 'Header';
+			SET outHead.{nsNBBusinessObjectId}:BusinessObjectId = envHeadRef.ASNOutDesc.asn_nbr;
+			
+			CREATE LASTCHILD OF outRef AS outBody NAME 'Body';
+			CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBASNInPubService NAME 'publishASNInCreateUsingASNInDesc';
+			CREATE LASTCHILD OF outBody AS outASN NAMESPACE nsNBASNInDesc NAME 'ASNInDesc';
+			
+			SET outASN.{nsNBASNInDesc}:to_location 		= envHeadRef.ToPhysicalLocation;
+			SET outASN.{nsNBASNInDesc}:from_location 	= envBodyRef.Supplier_Code;
+			SET outASN.{nsNBASNInDesc}:asn_nbr 			= envHeadRef.ASNOutDesc.asn_nbr;
+			SET outASN.{nsNBASNInDesc}:asn_type 		= 'T';
+			SET outASN.{nsNBASNInDesc}:container_qty 	= 0;
+			SET outASN.{nsNBASNInDesc}:bol_nbr 			= envHeadRef.ASNOutDesc.bol_nbr;
+						
+			SET envRefData.shipment_date = SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 1 FOR 4)||'-'||SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 5 FOR 2)||'-'||SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 7 FOR 2);
+			SET envRefData.shipment_time = SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 9 FOR 2)||':'||SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 11 FOR 2)||':'||SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 13 FOR 2);
+			SET outASN.{nsNBASNInDesc}:shipment_date	= envRefData.shipment_date||'T'||envRefData.shipment_time;
+			
+			SET envRefData.est_arr_date = SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 1 FOR 4)||'-'||SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 5 FOR 2)||'-'||SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 7 FOR 2);
+			SET envRefData.est_arr_time = SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 9 FOR 2)||':'||SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 11 FOR 2)||':'||SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 13 FOR 2);
+			SET outASN.{nsNBASNInDesc}:est_arr_date 	= envRefData.est_arr_date||'T'||envRefData.est_arr_time;
+			
+			SET outASN.{nsNBASNInDesc}:trailer_nbr 		= envHeadRef.ContainerNumber;
+			SET outASN.{nsNBASNInDesc}:seal_nbr 		= envHeadRef.SealNumber;
+			SET outASN.{nsNBASNInDesc}:carrier_code 	= SUBSTRING(envHeadRef.ASNOutDesc.Carrier_code FROM 0 FOR 5);
+			SET outASN.{nsNBASNInDesc}:vendor_nbr		= envBodyRef.EnSupplier;
+			SET outASN.{nsNBASNInDesc}:comments			= envHeadRef.ASNOutDesc.Comments;
+			
+			WHILE(LASTMOVE(envBodyRef)) DO
+				SET outASN.{nsNBASNInDesc}:ASNInPO[inCount].{nsNBASNInDesc}:po_nbr 		= envBodyRef.Poc_ID;
+				SET outASN.{nsNBASNInDesc}:ASNInPO[inCount].{nsNBASNInDesc}:doc_type 	= 'P';
+				
+				SET outASN.{nsNBASNInDesc}:ASNInPO[inCount].{nsNBASNInDesc}:ASNInItem.{nsNBASNInDesc}:final_location 	 = envHeadRef.ToPhysicalLocation;
+				SET outASN.{nsNBASNInDesc}:ASNInPO[inCount].{nsNBASNInDesc}:ASNInItem.{nsNBASNInDesc}:item_id 	 = envBodyRef.Pack_ID;
+				SET outASN.{nsNBASNInDesc}:ASNInPO[inCount].{nsNBASNInDesc}:ASNInItem.{nsNBASNInDesc}:unit_qty   = envBodyRef.Quantity;
+				SET outASN.{nsNBASNInDesc}:ASNInPO[inCount].{nsNBASNInDesc}:ASNInItem.{nsNBASNInDesc}:distro_nbr = '';
+				
+				MOVE envBodyRef NEXTSIBLING REPEAT TYPE NAME;
+				SET inCount = inCount +1;
+			END WHILE;
+			
+			SET outLocalEnvRef.Destination.SOAP.Request.Operation 				  = 'publishASNInCreateUsingASNInDesc';
+				
+			-- Audit the message 
+		 	SET envRef.AuditName 		= 'IGS API Request';
+		 	SET envRef.KeyIdentifier	= 'CreateUsingASNInDesc';
+		 	
+		 	PROPAGATE TO LABEL 'Logger' DELETE NONE;
+		 	
+		 	-- Service with operation type - publishASNInCreateUsingASNInDesc
+			PROPAGATE TO TERMINAL 'out' DELETE NONE;
+		END IF;	
+	END;	
+	
+	CREATE PROCEDURE CreateASNUsingASNOut(IN inRef REFERENCE,IN outRef REFERENCE)
+	BEGIN
+		-- Variable and Reference declarations.
+		DECLARE envRef,envRefData,envHeadRef,envBodyRef		REFERENCE TO Environment.Variables;
+		DECLARE outRef,outHead,outBody,outASN				REFERENCE TO OutputRoot;
+		DECLARE outLocalEnvRef								REFERENCE TO OutputLocalEnvironment;
+		DECLARE inCount										INTEGER 1;
+		
+		-- SOAP NameSpace declaration
+		DECLARE	nsNBBusinessObjectId	NAMESPACE ESB_GetNamespaceBusinessObjectId();
+		DECLARE nsNBRoutingInfos		NAMESPACE ESB_GetNamespaceRoutingInfos();
+		DECLARE nsNBASNOutPubService	NAMESPACE ESB_GetNamespaceASNOutPublishingService();
+		DECLARE nsNBASNOutDesc			NAMESPACE ESB_GetNamespaceASNOutDesc();
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		-- Create the ASN Out  SOAP Request
+		IF (EXISTS(envRef.TROrders.Detail_Ordertype_T[])) THEN 
+		-- Building the SOAP Request message for ASNOut. - First leg
+			-- Delete the existing SOAP message 
+			IF (EXISTS(outRef.SOAP[]))THEN
+				DELETE FIELD outRef.SOAP;
+			END IF;	
+			CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'SOAP';
+			SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBBusinessObjectId;
+			SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBRoutingInfos;
+			SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v12	= nsNBASNOutPubService;
+			SET outRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v13	= nsNBASNOutDesc;
+			
+			--MOVE envHeadRef TO envRef.OrderHeader.ASNHeader;
+			MOVE envHeadRef TO envRef.inOrgMsg.ASN;
+			MOVE envBodyRef TO envRef.TROrders.Detail_Ordertype_T;
+			
+						
+			CREATE LASTCHILD OF outRef AS outHead NAME 'Header';
+			SET outHead.{nsNBBusinessObjectId}:BusinessObjectId = envHeadRef.ASNOutDesc.asn_nbr;
+			
+			SET outHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo[1].name 	='from_phys_loc';
+			SET outHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo[1].Value = envBodyRef.EnFrom_Loc;
+			SET outHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo[2].name 	='to_phys_loc';
+			SET outHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo[2].Value = envBodyRef.EnTo_Loc;
+			
+			-- Gets the Sequence number from the database.
+			SET envRef.ASN_value[] = PASSTHRU('SELECT NEXT VALUE FOR dbo.ASNSeq AS ASN');
+			
+			CREATE LASTCHILD OF outRef AS outBody NAME 'Body';
+			CREATE LASTCHILD OF outBody AS outBody NAMESPACE nsNBASNOutPubService NAME 'publishASNOutCreateUsingASNOutDesc';
+			CREATE LASTCHILD OF outBody AS outASN NAMESPACE nsNBASNOutDesc NAME 'ASNOutDesc';
+		
+			SET outASN.{nsNBASNOutDesc}:to_location 		= envBodyRef.EnTo_Loc;
+			SET outASN.{nsNBASNOutDesc}:to_loc_type			= 'W';
+			SET outASN.{nsNBASNOutDesc}:from_location 		= envBodyRef.EnFrom_Loc;
+			SET outASN.{nsNBASNOutDesc}:from_loc_type 		= 'W';
+			SET outASN.{nsNBASNOutDesc}:asn_nbr 			= 'ESB'||CAST(envRef.ASN_value.ASN AS CHAR);
+			SET outASN.{nsNBASNOutDesc}:container_qty 		= 1;
+			SET outASN.{nsNBASNOutDesc}:bol_nbr 			= 'ESB'||CAST(envRef.ASN_value.ASN AS CHAR);
+						
+			SET envRefData.shipment_date = SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 1 FOR 4)||'-'||SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 5 FOR 2)||'-'||SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 7 FOR 2);
+			SET envRefData.shipment_time = SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 9 FOR 2)||':'||SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 11 FOR 2)||':'||SUBSTRING(envHeadRef.ASNOutDesc.shipment_date FROM 13 FOR 2);
+			SET outASN.{nsNBASNOutDesc}:shipment_date	= envRefData.shipment_date||'T'||envRefData.shipment_time;
+			
+			SET envRefData.est_arr_date = SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 1 FOR 4)||'-'||SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 5 FOR 2)||'-'||SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 7 FOR 2);
+			SET envRefData.est_arr_time = SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 9 FOR 2)||':'||SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 11 FOR 2)||':'||SUBSTRING(envHeadRef.ASNOutDesc.est_arr_date FROM 13 FOR 2);
+			SET outASN.{nsNBASNOutDesc}:est_arr_date 	= envRefData.est_arr_date||'T'||envRefData.est_arr_time;
+
+			SET outASN.{nsNBASNOutDesc}:comments 			= envHeadRef.ASNOutDesc.Comments;
+			SET outASN.{nsNBASNOutDesc}:carrier_code 		= envHeadRef.ASNOutDesc.Carrier_code;
+			WHILE(LASTMOVE(envBodyRef)) DO
+				SET outASN.{nsNBASNOutDesc}:ASNOutDistro[inCount].{nsNBASNOutDesc}:distro_nbr 								= envBodyRef.Poc_ID;
+				SET outASN.{nsNBASNOutDesc}:ASNOutDistro[inCount].{nsNBASNOutDesc}:distro_doc_type 							= 'T';  
+				SET outASN.{nsNBASNOutDesc}:ASNOutDistro[inCount].{nsNBASNOutDesc}:ASNOutCtn.{nsNBASNOutDesc}:container_id 	= '0';
+				SET outASN.{nsNBASNOutDesc}:ASNOutDistro[inCount].{nsNBASNOutDesc}:ASNOutCtn.{nsNBASNOutDesc}:ASNOutItem.{nsNBASNOutDesc}:item_id  = envBodyRef.Pack_ID;
+				SET outASN.{nsNBASNOutDesc}:ASNOutDistro[inCount].{nsNBASNOutDesc}:ASNOutCtn.{nsNBASNOutDesc}:ASNOutItem.{nsNBASNOutDesc}:unit_qty = envBodyRef.Quantity;
+				SET outASN.{nsNBASNOutDesc}:ASNOutDistro[inCount].{nsNBASNOutDesc}:ASNOutCtn.{nsNBASNOutDesc}:ASNOutItem.{nsNBASNOutDesc}:from_disposition = 'ATS';
+				
+				MOVE envBodyRef NEXTSIBLING REPEAT TYPE NAME;
+				SET inCount = inCount +1;
+			END WHILE;
+			
+			SET outLocalEnvRef.Destination.SOAP.Request.Operation 				  = 'publishASNOutCreateUsingASNOutDesc';
+				
+			-- Audit the message 
+		 	SET envRef.AuditName 		= 'IGS API Request';
+		 	SET envRef.KeyIdentifier	= 'CreateUsingASNOutDesc-1st';
+		 	
+		 	PROPAGATE TO LABEL 'Logger' DELETE NONE;
+		 	
+		 	--SET envRef.ASN_OUT = 'First_Leg';	
+		 	-- Service with operation type - publishASNOutCreateUsingASNOutDesc
+			PROPAGATE TO TERMINAL 'out1' DELETE NONE;
+			
+			-- Building the SOAP Request message for ASNOut. - Second leg
+			SET outHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo[1].name 	='from_phys_loc';
+			SET outHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo[1].Value = envBodyRef.EnTo_Loc;
+			SET outHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo[2].name 	='to_phys_loc';
+			SET outHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo[2].Value = envHeadRef.ToPhysicalLocation;
+			
+			SET outASN.{nsNBASNOutDesc}:to_location 		= envHeadRef.ToPhysicalLocation;
+			SET outASN.{nsNBASNOutDesc}:from_location 		= envBodyRef.EnTo_Loc;
+			SET outASN.{nsNBASNOutDesc}:asn_nbr 			= envHeadRef.ASNOutDesc.bol_nbr;
+			SET outASN.{nsNBASNOutDesc}:bol_nbr 			= envHeadRef.ASNOutDesc.bol_nbr;
+			
+			MOVE envBodyRef TO envRef.TROrders.Detail_Ordertype_T[1];
+			SET inCount = 1;
+			
+			WHILE(LASTMOVE(envBodyRef)) DO
+				SET outASN.{nsNBASNOutDesc}:ASNOutDistro[inCount].{nsNBASNOutDesc}:distro_nbr 								= envBodyRef.EnTsf_no;
+
+				MOVE envBodyRef NEXTSIBLING REPEAT TYPE NAME;
+			END WHILE;
+			
+			-- Audit the message 
+		 	SET envRef.AuditName 		= 'IGS API Request';
+		 	SET envRef.KeyIdentifier	= 'CreateUsingASNOutDesc-2nd';
+		 	
+		 	PROPAGATE TO LABEL 'Logger' DELETE NONE;
+		 	
+			-- Service with operation type - publishASNOutCreateUsingASNOutDesc
+			PROPAGATE TO TERMINAL 'out1';
+		END IF;	
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE ESB_RMS_ASN_1113_CMF_Build_ASNOUT_SOAPReq
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE routRef,routHead,routBody,routASN,routDistroRef,routCtnRef,routItemRef,routRoutingInfo				REFERENCE TO OutputRoot;
+		DECLARE rinRef,rinHdrRef,rinDistroRef,rinCtnRef,rinItemRef									REFERENCE TO InputRoot.XMLNSC.ASN;
+
+		DECLARE	nsNBBusinessObjectId	NAMESPACE ESB_GetNamespaceBusinessObjectId();
+		DECLARE nsNBRoutingInfos		NAMESPACE ESB_GetNamespaceRoutingInfos();
+		DECLARE nsNBASNOutPubService	NAMESPACE ESB_GetNamespaceASNOutPublishingService();
+		DECLARE nsNBASNOutDesc			NAMESPACE ESB_GetNamespaceASNOutDesc();
+		
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		CREATE LASTCHILD OF OutputRoot AS routRef DOMAIN 'SOAP';
+			SET routRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v1 	= nsNBBusinessObjectId;
+			SET routRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v11	= nsNBRoutingInfos;
+			SET routRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v12	= nsNBASNOutPubService;
+			SET routRef.Context.Namespace.(SOAP.NamespaceDecl)xmlns:v13	= nsNBASNOutDesc;
+			
+			CREATE LASTCHILD OF routRef AS routHead NAME 'Header';
+			SET routHead.{nsNBBusinessObjectId}:BusinessObjectId = rinRef.ASNOutDesc.asn_nbr;
+			
+			CREATE FIELD routHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo;
+			
+			MOVE routRoutingInfo TO routHead.{nsNBRoutingInfos}:RoutingInfos.{nsNBRoutingInfos}:routingInfo[1];
+			
+			SET routRoutingInfo.name 	='from_phys_loc';
+			SET routRoutingInfo.Value 	= rinRef.ASNOutDesc.from_location;
+			SET routRoutingInfo.{nsNBRoutingInfos}:detail[1].dtl_name	='from_phys_loc_type';
+			SET routRoutingInfo.{nsNBRoutingInfos}:detail[1].dtl_value 	= 'S';
+			
+			CREATE NEXTSIBLING OF routRoutingInfo AS routRoutingInfo REPEAT;
+			
+			SET routRoutingInfo.name 	='to_phys_loc';
+			SET routRoutingInfo.Value 	= rinRef.ASNOutDesc.to_location;
+			SET routRoutingInfo.{nsNBRoutingInfos}:detail[1].dtl_name	='to_phys_loc_type';
+			SET routRoutingInfo.{nsNBRoutingInfos}:detail[1].dtl_value 	= rinRef.ASNOutDesc.to_loc_type;
+			
+			CREATE LASTCHILD OF routRef AS routBody NAME 'Body';
+			CREATE LASTCHILD OF routBody AS routBody NAMESPACE nsNBASNOutPubService NAME 'publishASNOutCreateUsingASNOutDesc';
+			CREATE LASTCHILD OF routBody AS routASN NAMESPACE nsNBASNOutDesc NAME 'ASNOutDesc';
+			
+			MOVE rinHdrRef TO rinRef.ASNOutDesc;
+			
+			SET routASN.{nsNBASNOutDesc}:to_location 		=	 rinHdrRef.to_location;
+			SET routASN.{nsNBASNOutDesc}:to_loc_type 		=	 rinHdrRef.to_loc_type;
+			SET routASN.{nsNBASNOutDesc}:from_location	 	=	 rinHdrRef.from_location;
+			SET routASN.{nsNBASNOutDesc}:from_loc_type 		=	 rinHdrRef.from_loc_type;
+			SET routASN.{nsNBASNOutDesc}:asn_nbr 			=	 rinHdrRef.asn_nbr;
+			SET routASN.{nsNBASNOutDesc}:container_qty 		=	 rinHdrRef.container_qty;
+			SET routASN.{nsNBASNOutDesc}:bol_nbr 			=	 rinHdrRef.bol_nbr;
+			SET routASN.{nsNBASNOutDesc}:shipment_date 		=	 rinHdrRef.shipment_date;
+			SET routASN.{nsNBASNOutDesc}:est_arr_date 		=	 rinHdrRef.est_arr_date;
+			SET routASN.{nsNBASNOutDesc}:ship_address1		=	 rinHdrRef.ship_address1;
+			SET routASN.{nsNBASNOutDesc}:ship_address2	 	=	 rinHdrRef.ship_address2;
+			SET routASN.{nsNBASNOutDesc}:ship_address3 		=	 rinHdrRef.ship_address3;
+			SET routASN.{nsNBASNOutDesc}:ship_city			=	 rinHdrRef.ship_city;
+			SET routASN.{nsNBASNOutDesc}:ship_zip 			=	 rinHdrRef.ship_zip;
+			SET routASN.{nsNBASNOutDesc}:ship_country_id 	=	 rinHdrRef.ship_country_id;
+			SET routASN.{nsNBASNOutDesc}:comments 			=	 rinHdrRef.comments;
+			
+			CREATE FIELD routASN.{nsNBASNOutDesc}:ASNOutDistro;
+			
+			MOVE rinDistroRef TO rinHdrRef.ASNOutDistro[1];
+			MOVE routDistroRef TO routASN.{nsNBASNOutDesc}:ASNOutDistro[1];
+			
+			WHILE LASTMOVE(rinDistroRef) DO
+				SET routDistroRef.{nsNBASNOutDesc}:distro_nbr 		= 	rinDistroRef.distro_nbr;
+				SET routDistroRef.{nsNBASNOutDesc}:distro_doc_type 	=	rinDistroRef.distro_doc_type;
+				
+				CREATE FIELD routDistroRef.{nsNBASNOutDesc}:ASNOutCtn;
+				
+				MOVE rinCtnRef TO rinDistroRef.ASNOutCtn[1];
+				MOVE routCtnRef TO routDistroRef.{nsNBASNOutDesc}:ASNOutCtn[1];
+				
+				WHILE LASTMOVE(rinCtnRef) DO
+					SET routCtnRef.{nsNBASNOutDesc}:container_id	=	rinCtnRef.container_id;
+					
+					
+					CREATE FIELD routCtnRef.{nsNBASNOutDesc}:ASNOutItem;
+					MOVE rinItemRef TO rinCtnRef.ASNOutItem[1];
+					MOVE routItemRef TO routCtnRef.{nsNBASNOutDesc}:ASNOutItem[1];
+					
+					WHILE LASTMOVE(rinItemRef) DO
+						SET routItemRef.{nsNBASNOutDesc}:item_id	=	rinItemRef.item_id;
+						SET routItemRef.{nsNBASNOutDesc}:unit_qty	=	rinItemRef.unit_qty;
+						SET routItemRef.{nsNBASNOutDesc}:unit_cost	=	rinItemRef.unit_cost;
+						
+						MOVE rinItemRef NEXTSIBLING REPEAT TYPE NAME;
+						IF LASTMOVE(rinItemRef) THEN
+							CREATE NEXTSIBLING OF routItemRef AS routItemRef REPEAT;
+						END IF;
+						
+					END WHILE;
+						
+					SET routCtnRef.{nsNBASNOutDesc}:original_item_id	=	rinCtnRef.original_item_id;
+					
+					MOVE rinCtnRef NEXTSIBLING REPEAT TYPE NAME;
+					IF LASTMOVE(rinCtnRef) THEN
+						CREATE NEXTSIBLING OF routCtnRef AS routCtnRef REPEAT;
+					END IF;
+			
+			END WHILE;
+			MOVE rinDistroRef NEXTSIBLING REPEAT TYPE NAME;
+			IF LASTMOVE(rinDistroRef) THEN
+				CREATE NEXTSIBLING OF routDistroRef AS routDistroRef REPEAT;
+			END IF;
+			
+			END WHILE;
+		RETURN TRUE;
+	END;
+
+END MODULE;

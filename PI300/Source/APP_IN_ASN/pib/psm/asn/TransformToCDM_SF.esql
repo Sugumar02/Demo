@@ -1,0 +1,117 @@
+/* 
+ * Filename : TransformToCDM_SF.esql
+ * @author : Wipro Technologies.
+ * © Copyright 2010 by Wipro.  
+ * This Program is the property of Wipro COE and may not be used in 
+ * whole, or in part without express permission of Wipro COE
+ * 
+   ------------------------------Description---------------------------
+  Program Details:
+  ----------------
+  This Interface will reads the message from the Subscribed Topic and filters the message as per the messageType.
+  It creates the JSON Message for the REST API.
+  The REST API performs the required implementations in PSM.
+  It logs the Message as when required 
+  ---------------------------------------------------------------------------------
+  Version:       Initials:   		Date:        Description:
+  --------       ---------   		-----        ------------
+  1.0    		 Sruthy Narayan    30/04/2018    Initial version of the file.
+ --------------------------------------------------------------------------------- */
+
+ BROKER SCHEMA pib.psm.asn
+
+
+CREATE COMPUTE MODULE TransformToCDM_SF_SetLabel
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+	CALL CopyEntireMessage();
+
+		DECLARE envRef REFERENCE TO Environment.Variables;
+   		SET OutputLocalEnvironment.Destination.RouterList.DestinationData[1].labelName = envRef.MsgType;
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE TransformToCDM_SF_MapASNOutToCDM
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		
+		DECLARE envRef 														REFERENCE TO Environment.Variables;
+		DECLARE routRef,routHdrRef,routDistroRef,routCtnRef,routItemRef 	REFERENCE TO OutputRoot;
+		DECLARE rinRef,rinHdrRef,rinDistroRef,rinCtnRef,rinItemRef 			REFERENCE TO InputRoot.JSON;
+
+		-- Value for Key Identifier in logging
+		SET envRef.id = rinRef.Data.Item.ASNOutDesc.rinHdrRef.asn_nbr;
+		
+		CREATE LASTCHILD OF routRef AS routRef DOMAIN 'XMLNSC';
+		CREATE LASTCHILD OF routRef AS routRef NAME 'ASN';
+		SET routRef.msgType				= envRef.MsgType;
+	
+		CREATE LASTCHILD OF routRef AS routHdrRef NAME 'ASNOutDesc';
+		
+		MOVE rinHdrRef TO rinRef.Data.Item.ASNOutDesc;
+				
+		SET routHdrRef.to_location 		= 	rinHdrRef.to_location;
+		SET routHdrRef.to_loc_type		=	rinHdrRef.to_loc_type;
+		SET routHdrRef.from_location	= 	rinHdrRef.from_location;
+		SET routHdrRef.from_loc_type	= 	rinHdrRef.from_loc_type;
+		SET routHdrRef.asn_nbr			= 	rinHdrRef.asn_nbr;
+		SET routHdrRef.container_qty	= 	rinHdrRef.container_qty;
+		SET routHdrRef.bol_nbr			= 	rinHdrRef.bol_nbr;
+		SET routHdrRef.shipment_date	= 	rinHdrRef.shipment_date;
+		SET routHdrRef.est_arr_date		= 	rinHdrRef.est_arr_date;
+		SET routHdrRef.ship_address1	= 	rinHdrRef.ship_address1;
+		SET routHdrRef.ship_address2	= 	rinHdrRef.ship_address2;
+		SET routHdrRef.ship_address3	= 	rinHdrRef.ship_address3;
+		SET routHdrRef.ship_city		= 	rinHdrRef.ship_city;
+		SET routHdrRef.ship_zip			= 	rinHdrRef.ship_zip;
+		SET routHdrRef.ship_country_id	= 	rinHdrRef.ship_country_id;
+		SET routHdrRef.comments			=	rinHdrRef.comments;
+		
+		MOVE rinDistroRef TO rinHdrRef.ASNOutDistro.Item[1];
+		
+		WHILE LASTMOVE(rinDistroRef) DO
+			CREATE LASTCHILD OF routHdrRef AS routDistroRef NAME 'ASNOutDistro';
+			SET routDistroRef.distro_nbr 		= 	rinDistroRef.distro_nbr;
+			SET routDistroRef.distro_doc_type 	= 	rinDistroRef.distro_doc_type;
+			
+			MOVE rinCtnRef TO rinDistroRef.ASNOutCtn.Item[1];
+			WHILE LASTMOVE(rinCtnRef) DO
+				CREATE LASTCHILD OF routDistroRef AS routCtnRef NAME 'ASNOutCtn';
+				SET routCtnRef.container_id			=	rinCtnRef.container_id;
+					
+				MOVE rinItemRef TO rinCtnRef.AsnOutItem.Item[1];
+				WHILE LASTMOVE(rinItemRef) DO
+					CREATE LASTCHILD OF routCtnRef AS routItemRef NAME 'ASNOutItem';
+					SET routItemRef.item_id 		= 	rinItemRef.item_id;
+					SET routCtnRef.original_item_id = 	rinItemRef.original_item_id; 
+					SET routItemRef.unit_qty 		= 	rinItemRef.unit_qty;
+					SET routItemRef.unit_cost 		= 	rinItemRef.unit_cost;
+						
+					MOVE rinItemRef NEXTSIBLING REPEAT TYPE NAME; 
+				END WHILE;
+						
+				MOVE rinCtnRef NEXTSIBLING REPEAT TYPE NAME; 
+			END WHILE;	
+			
+			MOVE rinDistroRef NEXTSIBLING REPEAT TYPE NAME; 
+		END WHILE;	
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+END MODULE;

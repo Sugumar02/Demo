@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1" version="1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="ASNInCtn">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="final_location" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This will be the final destination of the carton. For a cross-dock order this will be the allocation location, otherwise it will be the direct to order location.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="container_id" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Holds the UCC-128 carton number.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="container_weight" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="container_length" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="container_width" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="container_height" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="container_cube" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="expedite_flag" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="in_store_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="carrier_shipment_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field represents the shipment number that manifest systems use to group multi-container shipments for a carrier. Typically a 1 of 4 type message.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="tracking_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This is a unique tracking number that is used to track containers through carriers system.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="freight_charge" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="master_container_id" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" ref="tns:ASNInItem">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="comments" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains any comments about the shipment container.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ASNInDesc">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="schedule_nbr" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Contains the Schedule identifier number.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="auto_receive" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the flag to enable auto receiving at SIM.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="to_location" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the location that the shipment will be delivered to. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="to_loc_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the location type of the to_location field. Valid values are 'S' = store, 'E' = finisher, and 'W' = warehouse.
+							RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="to_store_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the store type of the to_location. This will only be populated if to_loc_type is 'S'. Valid values are: 'C' = company store, 'F' = franchise store. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="to_stockholding_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates if the to_location is stockholding or not. Only populated if to_loc_type is 'S'. Valid values are: 'Y' = yes, 'N' = no. RWMS does not utilize this.
+							field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="from_location" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>For transfer and allocation shipments, this field will hold the location from which the shipment was sourced. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="from_loc_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the location type of the from_location field. Valid values are 'S' = store and 'W' = warehouse. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="from_store_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the store type of the from_location. This will only be populated if from_location is 'S'. Valid values are: 'C' = company store, 'F' = franchise store. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="from_stockholding_ind" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates if the from_location is stockholding or not. Only populated if from_location is 'S'. Valid values are: 'Y' = yes, 'N' = no. RWMS does not utilize this field.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="asn_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Holds the advance shipping notice number associated with a shipment.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="asn_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This field is used to determine the ship origin. If asn_type is 'C', ship_origin will be set to '6' (ASN UCC-128) upon insert to the SHIPMENT table. Otherwise, SHIP_ORIGIN is defaulted to '0' (ASN Shipment).</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="container_qty" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="bol_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Holds the transaction sequence number on the input message from the receiving PO or transfer process.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="shipment_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the date the transfer or PO was shipped.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="est_arr_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>This field contains the estimated arrival date of a vendor PO shipment. It is updated by EDIUP856. It is
+used for vendor/lead time analysis.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_address1" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_address2" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_address3" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_address4" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_address5" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_city" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_state" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_zip" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_country_id" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="trailer_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="seal_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="carrier_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the courier that will deliver the shipment.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="carrier_service_code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the service level code for the courier that will deliver the shipment.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="vendor_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the supplier who will provide the merchandise specified in the order. This element is used to validate the order number(s) in ASNInPO (ASNInPO.po_nbr). The order number must be in the table ORDHEAD, in either the ORDER_NO column or VENDOR_ORDER_NO column.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ship_pay_method" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Indicates the payment terms for freight charges associated with the
+order. Used to validate the order number(s) in ASNInPO (ASNInPO.po_nbr). The ship_pay_method in the message must match the value of the order's SHIP_PAY_METHOD in RMS (ORDHEAD table.) If the message field is blank, the ORDHEAD value must be NULL.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" ref="tns:ASNInPO">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="comments" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains any comments about the shipment.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ASNInItem">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="final_location" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Required if the order's pre_mark_ind is 'Y'. Validated against the ALLOC_DETAIL table. There needs to be at least one allocation with the same ORDER_NO that is in the ASNIn message, and the same TO_LOC as the final_location.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="item_id" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Unique identifier for the item. Either vpn, item_id, or ref_item must be specified in the message.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="unit_qty" type="xs:decimal">
+                            <xs:annotation>
+                                <xs:documentation>Contains the number of items expected to be received based on the supplier's ASN for this Item/Shipment
+							combination.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="priority_level" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="vpn" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Used to find the item number, found on the ITEM_SUPPLIER table. Either vpn, item_id, or ref_item must be specified in the message.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="order_line_nbr" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="lot_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Not used in RWMS.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ref_item" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains a reference item to the item field. Either vpn, item_id, or ref_item must be specified in the
+message.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="distro_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Specifies the transfer or allocation number associated with the shipment/item/carton.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="consumer_direct" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This is a Y or N indicator to inform the consuming application if the distro is for a consmer direct order or not.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="cust_order_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This is the customer order number that was generated by OMS and contains multiple fulfillment numbers.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="fulfill_order_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Based on a customer order - OMS will generate fulfillments to specific locations based on availability. RMS will generate Transfers based on the fulfillment request.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="distro_doc_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Valid Document Type</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="container_qty" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="comments" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains any comment about the item in the shipment.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ASNInUIN">
+                            <xs:annotation>
+                                <xs:documentation>Collection of Universal Identification Numbers.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ASNInPO">
+                <xs:annotation>
+                    <xs:documentation>Description is not available.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="po_nbr" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Identifies the order number which relates to the goods delivered in the shipment. Validated against the
+ORDHEAD table, and also the SHIPMENT table if the message applies to an existing shipment.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="doc_type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="not_after_date" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>Contains the last date that delivery of the order will be accepted.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="comments" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains any comments about the shipment.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ASNInCtn">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ASNInItem">
+                            <xs:annotation>
+                                <xs:documentation>Description is not available.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ASNInUIN">
+                <xs:annotation>
+                    <xs:documentation>Represents a Universal Identification Number.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="uin" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Universal Identification Number</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>

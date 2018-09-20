@@ -1,0 +1,1788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--RedPrarie Corp.
+
+W3C XML Schema for IFD [RCPT_INB_IFD] Version [PRI_V1.0]
+
+Assumptions:
+- Parent Tag []
+- Show ifd tag [T]
+- Envelope IFD [] Version []
+
+IFD Description: This transaction is used to create, change, or delete receipt information from the warehouse system.-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="RCPT_INB_IFD">
+		<xsd:annotation>
+			<xsd:documentation>This transaction is used to create, change, or delete receipt information from the warehouse system.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="CTRL_SEG">
+					<xsd:annotation>
+						<xsd:documentation>Identifies the transaction, using the transaction name and version as well as the warehouse routing information.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element minOccurs="0" name="TRNNAM">
+								<xsd:annotation>
+									<xsd:documentation>Transaction ID - Identifier for this IFD.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="120"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="TRNVER">
+								<xsd:annotation>
+									<xsd:documentation>Transaction version</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="60"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="WHSE_ID">
+								<xsd:annotation>
+									<xsd:documentation>Warehouse ID - Identifier for the warehouse system.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="128"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" name="RCPT_TRLR_SEG">
+								<xsd:annotation>
+									<xsd:documentation>This segment is used to create, change or remove receipt trailer information in the Trailer (TRLR) table.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element minOccurs="0" name="SEGNAM">
+											<xsd:annotation>
+												<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRNTYP">
+											<xsd:annotation>
+												<xsd:documentation>Transaction Type -  &quot;A&quot; for Add record, &quot;C&quot; for Change record, &quot;R&quot; for Refresh record or &quot;D&quot; for Delete record.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="4"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_NUM">
+											<xsd:annotation>
+												<xsd:documentation>User identification for the trailer.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="CARCOD">
+											<xsd:annotation>
+												<xsd:documentation>Carrier for which this trailer transports inventory. A carrier code is only required for Shipping trailers.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="40"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_STAT">
+											<xsd:annotation>
+												<xsd:documentation>The trailer status is updated by system to indicate the current condition of trailer. Receiving trailer status include EX, CI, OR, R, SUSP. Shipping trailer status include CI, O, L, LDG, P, D, C.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="32"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_TYP">
+											<xsd:annotation>
+												<xsd:documentation>The Trailer Type is a user-defined value that can be assigned to the trailer.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="16"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_SIZE">
+											<xsd:annotation>
+												<xsd:documentation>The size of the trailer</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="4"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="REFRIG_FLG">
+											<xsd:annotation>
+												<xsd:documentation>Indicates that the trailer is a refrigerator trailer.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_BROKER">
+											<xsd:annotation>
+												<xsd:documentation>Owner of the trailer</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_SEAL1">
+											<xsd:annotation>
+												<xsd:documentation>Identifier assigned to the first trailer seal.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="120"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_SEAL2">
+											<xsd:annotation>
+												<xsd:documentation>Identifier assigned to the second trailer seal</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="120"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_SEAL3">
+											<xsd:annotation>
+												<xsd:documentation>Identifier assigned to the third trailer seal</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="120"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_SEAL4">
+											<xsd:annotation>
+												<xsd:documentation>Identifier assigned to the fourth trailer seal</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="120"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="STOLOC">
+											<xsd:annotation>
+												<xsd:documentation>Shipment location. Logical location in the system where inventory for shipments are moved as the inventory is loaded on the trailer.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="YARD_LOC">
+											<xsd:annotation>
+												<xsd:documentation>Physical location in the yard where the trailer is located</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="YARD_STAT">
+											<xsd:annotation>
+												<xsd:documentation>User defined status that can be applied to the trailer to specify the current activity of that trailer. This status is a visual cue and is not associated with any DLx processes.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="32"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_WGT">
+											<xsd:annotation>
+												<xsd:documentation>The weight of the trailer</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="19"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="DRIVER_NAM">
+											<xsd:annotation>
+												<xsd:documentation>The name of the trailer driver</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="160"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="DRIVER_LIC_NUM">
+											<xsd:annotation>
+												<xsd:documentation>The drivers license number of the trailer driver</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="160"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="CLOSE_DTE" type="xsd:string">
+											<xsd:annotation>
+												<xsd:documentation>Trailer closed date.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="PEND_DTE" type="xsd:string">
+											<xsd:annotation>
+												<xsd:documentation>Date the trailer is expected to be dispatched.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="DISPATCH_DTE" type="xsd:string">
+											<xsd:annotation>
+												<xsd:documentation>Date the trailer was dispatched or left the yard.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="AUTOGEN_FLG">
+											<xsd:annotation>
+												<xsd:documentation>Flags the trailer as having been automatically generated when the user chose to automatically generate the carrier move and stops.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="HOT_FLG">
+											<xsd:annotation>
+												<xsd:documentation>Indicates that product on the trailer could be used to satisfy short allocations</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="MODDTE" type="xsd:string">
+											<xsd:annotation>
+												<xsd:documentation>Last date this trailer was modified</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="SEC_TRLR_NUM">
+											<xsd:annotation>
+												<xsd:documentation>User identification for second trailer on the tractor if carrier move is part of pup.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_COD">
+											<xsd:annotation>
+												<xsd:documentation>Defines the trailer as either a Shipping or Receiving trailer. Trailer Code options are RCV or SHIP.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="16"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TURN_FLG">
+											<xsd:annotation>
+												<xsd:documentation>Indicates whether this receiving trailer will be turned around for shipping</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TUTN_FLG">
+											<xsd:annotation>
+												<xsd:documentation>Indicates whether this receiving trailer will be turned around for shipping</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="DELV_FLG">
+											<xsd:annotation>
+												<xsd:documentation>Indicates if this is a delivery trailer</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="APPT_ID">
+											<xsd:annotation>
+												<xsd:documentation>The appointment number assigned to the trailer</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="40"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="ARRDTE" type="xsd:string">
+											<xsd:annotation>
+												<xsd:documentation>Date trailer arrived (was checked in) into the facility.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="CLIENT_ID">
+											<xsd:annotation>
+												<xsd:documentation>Client ID (owner) of the trailer</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="128"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRACTOR_NUM">
+											<xsd:annotation>
+												<xsd:documentation>The tractor or cab number of the trailer, different than the customer known trailer number.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="40"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_COND">
+											<xsd:annotation>
+												<xsd:documentation>The condition of the trailer.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="40"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="PAL_SLOT_FLG">
+											<xsd:annotation>
+												<xsd:documentation>Keeps track of whether or not the user is required to capture pallet positions for that trailer.  Currently will get set when the loader loads the first piece of inventory onto the trailer.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="STOLOC_WH_ID">
+											<xsd:annotation>
+												<xsd:documentation>The ID of the warehouse where the shipment location is</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="128"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="YARD_LOC_WH_ID">
+											<xsd:annotation>
+												<xsd:documentation>The ID of the warehouse where the yard location of the trailer is</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="128"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="ORIG_TRLR_NUM">
+											<xsd:annotation>
+												<xsd:documentation>Original Trailer Number.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRLR_REF">
+											<xsd:annotation>
+												<xsd:documentation>Trailer Reference number, will be used during trailer audit if user entered a reference number during trailer check in.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" name="RCPT_TRUCK_SEG">
+								<xsd:annotation>
+									<xsd:documentation>This segment is used to create or change receipt truck information for the receive in the Receive Truck (RCVTRK) table.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element minOccurs="0" name="SEGNAM">
+											<xsd:annotation>
+												<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRNTYP">
+											<xsd:annotation>
+												<xsd:documentation>Transaction Type -  &quot;A&quot; for Add record, &quot;C&quot; for Change record or &quot;D&quot; for Delete record.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="4"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRKNUM">
+											<xsd:annotation>
+												<xsd:documentation>Truck Number - Identifier for the truck.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRKREF">
+											<xsd:annotation>
+												<xsd:documentation>Truck Reference - Alternate identification for the truck.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRKSTS">
+											<xsd:annotation>
+												<xsd:documentation>Truck Status - Obsolete with 6.1</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="4"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="TRNSPT">
+											<xsd:annotation>
+												<xsd:documentation>Transport Method - Method in which the truck (group of shipments) is to be transported to the warehouse.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="4"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="NUMPAL">
+											<xsd:annotation>
+												<xsd:documentation>Number of Pallets - Number of pallets expected on the truck.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="10"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="NUMCAS">
+											<xsd:annotation>
+												<xsd:documentation>Number of Cases - Number of cases expected on the truck.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="10"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="GRSWGT">
+											<xsd:annotation>
+												<xsd:documentation>Gross Case Weight - This value represents the weight of all product plus the weight of all packing materials expected on the truck.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="12"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="FRTCST">
+											<xsd:annotation>
+												<xsd:documentation>Freight Cost - Cost of shipping the product on this truck.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="12"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="SHPDTE" type="xsd:string">
+											<xsd:annotation>
+												<xsd:documentation>Shipment Date - Expected Shipment date from the vendor&apos;s facility.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="EXPDTE" type="xsd:string">
+											<xsd:annotation>
+												<xsd:documentation>Expected Date - Expected arrival date at the warehouse.</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="ARRDTE" type="xsd:string">
+											<xsd:annotation>
+												<xsd:documentation>Arrived Date - Obsolete with 6.1</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="RCVDCK">
+											<xsd:annotation>
+												<xsd:documentation>Receiving Dock - Obsolete with 6.1</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="80"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="DEVCOD">
+											<xsd:annotation>
+												<xsd:documentation>Device Code - Device code of label device that should be used to print labels for inventory received from this truck.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="40"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="LBLFLG">
+											<xsd:annotation>
+												<xsd:documentation>Produce Labels Flag - Set if labels should be generated for product identified on this truck using an RDT device.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="ARECOD">
+											<xsd:annotation>
+												<xsd:documentation>Expected Receipts Area Code - The area where the identified inventory is created. In multi-building sites, this area determines the building in which the inventory is received.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="40"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="IGNORE_INV_FLG">
+											<xsd:annotation>
+												<xsd:documentation>Ignore Invoice Flag - Only used for trntyp = &apos;D&apos;. Determines if we ignore the fact that inventory still exists in the warehouse for that rcvkey when removing the truck and invoices.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:decimal">
+													<xsd:totalDigits value="1"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="CARCOD">
+											<xsd:annotation>
+												<xsd:documentation>Carrier Code - the carrier for this receiving trailer.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="40"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element minOccurs="0" name="CRNCY_CODE">
+											<xsd:annotation>
+												<xsd:documentation>The Currency Code used to specify the Currency fields in Truck related operations.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:maxLength value="16"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element maxOccurs="unbounded" minOccurs="0" name="RCPT_INVOICE_SEG">
+											<xsd:annotation>
+												<xsd:documentation>This segment is used to create or change receive invoice information for a receive in the Receive Invoice (RCVINV) table.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element minOccurs="0" name="SEGNAM">
+														<xsd:annotation>
+															<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="80"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="TRNTYP">
+														<xsd:annotation>
+															<xsd:documentation>Transaction Type -  &quot;A&quot; for Add record, &quot;C&quot; for Change record or &quot;D&quot; for Delete record.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="4"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="INVNUM">
+														<xsd:annotation>
+															<xsd:documentation>Invoice Number - Identifier for the invoice.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="140"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="SUPNUM">
+														<xsd:annotation>
+															<xsd:documentation>Supplier Number - Identifier for a supplier.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="80"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="CLIENT_ID">
+														<xsd:annotation>
+															<xsd:documentation>Client ID - Client ID associated with the invoice and supplier.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="128"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="INVTYP">
+														<xsd:annotation>
+															<xsd:documentation>Invoice Type - Type of invoice to which incoming product is associated.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="16"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="SADNUM">
+														<xsd:annotation>
+															<xsd:documentation>Shipment and Delivery Number - Shipping and delivery number. Not used for any standard system processing.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="80"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="WAYBIL">
+														<xsd:annotation>
+															<xsd:documentation>Waybill Number - Bill-of-lading number from the shipping paperwork.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="80"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="INVDTE" type="xsd:string">
+														<xsd:annotation>
+															<xsd:documentation>Invoice Date - Date on which the invoice was created.</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="ORGREF">
+														<xsd:annotation>
+															<xsd:documentation>Originators Reference - Information that identifies the invoice in the supplier&apos;s system.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="140"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="SRC_HOST">
+														<xsd:annotation>
+															<xsd:documentation>Source Host - Specifies the MOCA server which the inventory originated.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="400"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="SRC_PORT">
+														<xsd:annotation>
+															<xsd:documentation>Source Port - Specifies the MOCA port which the inventory originated.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="40"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="SHIP_ID">
+														<xsd:annotation>
+															<xsd:documentation>Shipment ID - The from shipment which the inventory originated</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="120"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="DOC_NUM">
+														<xsd:annotation>
+															<xsd:documentation>Bill of Lading Number - Identifier for paperwork for the delivery of returned inventory.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="80"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="TRACK_NUM">
+														<xsd:annotation>
+															<xsd:documentation>Bill of Lading PRO Number - PRO number identifier on paperwork for the delivery of returned inventory.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="80"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="UC_INVNUM">
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="140"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element minOccurs="0" name="UC_MRT_ID">
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:maxLength value="100"/>
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element maxOccurs="unbounded" minOccurs="0" name="RCPT_LINE_SEG">
+														<xsd:annotation>
+															<xsd:documentation>This segment is used to create or change a receive line information for a receive line in the Receive Line (RCVLIN) table.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element minOccurs="0" name="SEGNAM">
+																	<xsd:annotation>
+																		<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="80"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="TRNTYP">
+																	<xsd:annotation>
+																		<xsd:documentation>Transaction Type -  &quot;A&quot; for Add record, &quot;C&quot; for Change record or &quot;D&quot; for Delete record.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="4"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="INVLIN">
+																	<xsd:annotation>
+																		<xsd:documentation>Invoice Line - Number that identifies this line. The number corresponds to the line&apos;s position on the invoice.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="16"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="INVSLN">
+																	<xsd:annotation>
+																		<xsd:documentation>Invoice Sub-Line - Number that identifies a sub-line associated with this invoice line.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="16"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="EXPQTY" nillable="true" >
+																	<xsd:annotation>
+																		<xsd:documentation>Expected Quantity - Total amount of product expected with this invoice line (in pieces).</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:decimal">
+																			<xsd:totalDigits value="10"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="PRTNUM">
+																	<xsd:annotation>
+																		<xsd:documentation>Part Number - Also referred to as item number or SKU to be received.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="120"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="ORGCOD">
+																	<xsd:annotation>
+																		<xsd:documentation>Origin Code - The expected/actual origin code of the product. If left blank, this value will be entered during identification if the part is tracked by origin code.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="100"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="REVLVL">
+																	<xsd:annotation>
+																		<xsd:documentation>Revision Level - Expected/actual revision level of the product. If left blank, this value will be entered during identification if the part is tracked by revision level.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="100"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="LOTNUM">
+																	<xsd:annotation>
+																		<xsd:documentation>Lot Number - Expected/actual lot number of the product. If left blank, this value will be entered during identification if the part is tracked by lot number.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="100"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="RCVSTS">
+																	<xsd:annotation>
+																		<xsd:documentation>Receive Status - Default status for inventory identified against this line.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="16"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="FRHSTA">
+																	<xsd:annotation>
+																		<xsd:documentation>From Host Account Code - Receive from host account.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="120"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="TOHSTA">
+																	<xsd:annotation>
+																		<xsd:documentation>To Host Account Code - Receive to host account.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="120"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="HSTTRN">
+																	<xsd:annotation>
+																		<xsd:documentation>Host Transaction - Code that identifies the transaction that will be sent to the host system when product is received. This information is optionally provided by the customer or supplier.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="40"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="MANDTE" type="xsd:string">
+																	<xsd:annotation>
+																		<xsd:documentation>Manufacturing Date - Date on which the part number identified on this line was manufactured. The date defaults to the received date if this field is left blank.</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="RETCOD">
+																	<xsd:annotation>
+																		<xsd:documentation>Return code - Return code to use upon receipt.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="16"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="EDTFLG">
+																	<xsd:annotation>
+																		<xsd:documentation>Edit Host Flag</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:decimal">
+																			<xsd:totalDigits value="1"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="EXP_CATCH_QTY">
+																	<xsd:annotation>
+																		<xsd:documentation>Expected Catch Quantity - Expected catch quantity.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:decimal">
+																			<xsd:totalDigits value="10"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="SHIP_LINE_ID">
+																	<xsd:annotation>
+																		<xsd:documentation>Shipment Line ID - The shipment line which this inventory originated.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="40"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="CNSG_FLG">
+																	<xsd:annotation>
+																		<xsd:documentation>Consignment Flag: The flag indicates immediate ownership transfer from supplier.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:decimal">
+																			<xsd:totalDigits value="1"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element maxOccurs="unbounded" minOccurs="0" name="RCPT_ASN_SEG">
+																	<xsd:annotation>
+																		<xsd:documentation>This segment is to identify or to create inventory in the warehouse system. Inventory can only be created with this segment. To modify or remove the inventory, use the warehouse system application.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element minOccurs="0" name="SEGNAM">
+																				<xsd:annotation>
+																					<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="TRNTYP">
+																				<xsd:annotation>
+																					<xsd:documentation>Transaction Type -  &quot;A&quot; for Add record, &quot;C&quot; for Change record or &quot;D&quot; for Delete record.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="4"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="PRTNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Part Number - Part number on this load.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="UNTCAS">
+																				<xsd:annotation>
+																					<xsd:documentation>Units per Case - Units per case of the inventory on this load.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:decimal">
+																						<xsd:totalDigits value="10"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="UNTPAK">
+																				<xsd:annotation>
+																					<xsd:documentation>Units per Pack - Units per pack of the inventory on this load.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:decimal">
+																						<xsd:totalDigits value="10"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="UNTQTY">
+																				<xsd:annotation>
+																					<xsd:documentation>Unit Quantity - Total quantity of the inventory on this load.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:decimal">
+																						<xsd:totalDigits value="10"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="INVSTS">
+																				<xsd:annotation>
+																					<xsd:documentation>Inventory Status - Quality status of the inventory on this load.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="16"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="FTPCOD">
+																				<xsd:annotation>
+																					<xsd:documentation>Foot Print Code - The footprint code that defines the dimensional data and pallet configuration for the inventory on this load.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="FIFDTE" type="xsd:string">
+																				<xsd:annotation>
+																					<xsd:documentation>FIFO Date - Used to determine order of allocation for this inventory. Defaults to manufacturing date if no date is passed in.</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="SRCLOC">
+																				<xsd:annotation>
+																					<xsd:documentation>Source Location - Location from which the load originated. Not required for ASNs.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="LODNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Load Number - Uniquely identifies the load or LPN. In many systems this value is the same as the label on the pallet.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="SUBNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Subload Number - Unique identifier used to identify inventory being tracked at the case level. Uniquely identifies the subload or case level of the load.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="DTLNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Detail Number - Uniquely identifies the detail or each level of the load.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="DSTLOC">
+																				<xsd:annotation>
+																					<xsd:documentation>Destination Location - Typically, this is the expected receipt location where the inventory will be created.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="DSTLOD">
+																				<xsd:annotation>
+																					<xsd:documentation>Destination Load Number - Load number in the warehouse system to create the inventory on. Typically used when creating cases on an existing load.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="DSTSUB">
+																				<xsd:annotation>
+																					<xsd:documentation>Destination Sub load - Sub load number in the warehouse system to create the inventory on. Typically used when creating details or eaches in an existing case.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="USR_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>User ID - The user that identified or created the inventory.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="40"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="ORGCOD">
+																				<xsd:annotation>
+																					<xsd:documentation>Origin Code - Country of origin.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="100"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="REVLVL">
+																				<xsd:annotation>
+																					<xsd:documentation>Revision Level - Version of this inventory.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="100"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="LOTNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Lot Number - Lot number of this inventory.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="100"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="AGE_PFLNAM">
+																				<xsd:annotation>
+																					<xsd:documentation>Aging Profile Name - Aging profile to use for this inventory.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="MANDTE" type="xsd:string">
+																				<xsd:annotation>
+																					<xsd:documentation>Manufacturing Date - Date on which the inventory on this load was manufactured.</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="CATCH_QTY">
+																				<xsd:annotation>
+																					<xsd:documentation>Catch Unit Quantity - The catch quantity for the inventory on this load per stocking unit of measure.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:decimal">
+																						<xsd:totalDigits value="10"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="EXPDTE" type="xsd:string">
+																				<xsd:annotation>
+																					<xsd:documentation>Expiration Date - The date on which this inventory is expired. Only applies to date-controlled parts.</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="PLAT_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>Platform ID - the platform identifier for this load, typically a type of pallet.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="16"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="DISTRO_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>The distribution ID for this order line</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="140"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="CNSG_FLG">
+																				<xsd:annotation>
+																					<xsd:documentation>Consigned Flag: The status indicates ownership of the inventory (1=ownership is with the supplier, 0=ownership is not with supplier)</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:decimal">
+																						<xsd:totalDigits value="1"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="ASSET_TYP">
+																				<xsd:annotation>
+																					<xsd:documentation>Asset Type for the load</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="SUB_ASSET_TYP">
+																				<xsd:annotation>
+																					<xsd:documentation>Asset type for the sub.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element maxOccurs="unbounded" minOccurs="0" name="SER_NUM_SEG">
+																				<xsd:annotation>
+																					<xsd:documentation>This segment is used to create or change a Serial Number</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:complexType>
+																					<xsd:sequence>
+																						<xsd:element minOccurs="0" name="SEGNAM">
+																							<xsd:annotation>
+																								<xsd:documentation>Segment Name - Identifier of this IFD Segment</xsd:documentation>
+																							</xsd:annotation>
+																							<xsd:simpleType>
+																								<xsd:restriction base="xsd:string">
+																									<xsd:maxLength value="80"/>
+																								</xsd:restriction>
+																							</xsd:simpleType>
+																						</xsd:element>
+																						<xsd:element minOccurs="0" name="SER_NUM">
+																							<xsd:annotation>
+																								<xsd:documentation>Serial Number</xsd:documentation>
+																							</xsd:annotation>
+																							<xsd:simpleType>
+																								<xsd:restriction base="xsd:string">
+																									<xsd:maxLength value="160"/>
+																								</xsd:restriction>
+																							</xsd:simpleType>
+																						</xsd:element>
+																						<xsd:element minOccurs="0" name="SER_NUM_TYP_ID">
+																							<xsd:annotation>
+																								<xsd:documentation>Serial Number Type ID</xsd:documentation>
+																							</xsd:annotation>
+																							<xsd:simpleType>
+																								<xsd:restriction base="xsd:string">
+																									<xsd:maxLength value="40"/>
+																								</xsd:restriction>
+																							</xsd:simpleType>
+																						</xsd:element>
+																					</xsd:sequence>
+																				</xsd:complexType>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element maxOccurs="unbounded" minOccurs="0" name="RCPT_DISTRO_SEG">
+																	<xsd:annotation>
+																		<xsd:documentation>The distribution info for this order line</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element minOccurs="0" name="SEGNAM">
+																				<xsd:annotation>
+																					<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="DISTRO_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>Distribution Identifier - system-generated or user-entered unique identifier for this distribution record.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="140"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="ORDTYP">
+																				<xsd:annotation>
+																					<xsd:documentation>Order Type</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="16"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="CLIENT_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>Client Id - The client for which this distribution is to be allocated/processed.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="128"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="PRTNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Part Number - Also referred to as item number or SKU to be received.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="120"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="PRT_CLIENT_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>Part Client ID</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="128"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="INVSTS_PRG">
+																				<xsd:annotation>
+																					<xsd:documentation>Inventory Status Progression</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="16"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="LOTNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Lot Number - defaults to &apos;----&apos; if not specified.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="100"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="ORGCOD">
+																				<xsd:annotation>
+																					<xsd:documentation>Origin Code - defaults to &apos;----&apos; if not specified.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="100"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="REVLVL">
+																				<xsd:annotation>
+																					<xsd:documentation>Revision Level - defaults to &apos;----&apos; if not specified.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="100"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="DEPT_COD">
+																				<xsd:annotation>
+																					<xsd:documentation>Department Code - defaults to the department code value from the part master.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="20"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="PROMO_COD">
+																				<xsd:annotation>
+																					<xsd:documentation>Promotion Code - an attribute that may be assigned to this distribution for filtering and selection.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="20"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="PRCPRI">
+																				<xsd:annotation>
+																					<xsd:documentation>Distribution Processing Priority - the priority used for selection and processing of this distro. This value is defaulted from the store information and may be modified.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:decimal">
+																						<xsd:totalDigits value="10"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="UNTQTY">
+																				<xsd:annotation>
+																					<xsd:documentation>Quantity - Quantity of the distro that is expected to be shipped to this store.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:decimal">
+																						<xsd:totalDigits value="10"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="APPQTY">
+																				<xsd:annotation>
+																					<xsd:documentation>Applied Quantity - quantity that has been received/and or picked for this distro.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:decimal">
+																						<xsd:totalDigits value="10"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="RTCUST">
+																				<xsd:annotation>
+																					<xsd:documentation>Route-to Customer - the &apos;customer&apos; or Hub facility where the inventory for this distro will be sent before being distributed to the store. This value is defaulted from the store information and may be modified.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="RT_ADR_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>Route-to Address ID - Address of the Hub facility where the inventory for this distro will be sent before being distributed to the store. This value is defaulted from the store information and may be modified.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="BTCUST">
+																				<xsd:annotation>
+																					<xsd:documentation>Bill-to Customer - the customer or facility that may be billed for this distro&apos;s inventory. This value is defaulted from the store information and may be modified.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="BT_ADR_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>Bill-to Address ID - Address of the customer or facility that may be billed for this distro&apos;s inventory. This value is defaulted on the distro and may be modified or over-ridden for individual distros.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="STCUST">
+																				<xsd:annotation>
+																					<xsd:documentation>Ship-To Customer - The cstnum which is the store address.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="ST_ADR_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>Ship-To Address ID - The address id of the Ship-To Customer.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="EARLY_SHPDTE" type="xsd:string">
+																				<xsd:annotation>
+																					<xsd:documentation>Early Shipment Date</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="LATE_SHPDTE" type="xsd:string">
+																				<xsd:annotation>
+																					<xsd:documentation>Late Shipment Date</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="EARLY_DLVDTE" type="xsd:string">
+																				<xsd:annotation>
+																					<xsd:documentation>Early Delivery Date</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="LATE_DLVDTE" type="xsd:string">
+																				<xsd:annotation>
+																					<xsd:documentation>Late Delivery Date</xsd:documentation>
+																				</xsd:annotation>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="TRKNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Truck Number - The invoice&apos;s truck number.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="80"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="INVNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Invoice Number - The invoice number used for this distro.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="140"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="SUPNUM">
+																				<xsd:annotation>
+																					<xsd:documentation>Supplier Number - The supplier number used for this distro.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="128"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="INVLIN">
+																				<xsd:annotation>
+																					<xsd:documentation>Invoice Line Number - The invoice line number used for this distro.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="16"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="INVSLN">
+																				<xsd:annotation>
+																					<xsd:documentation>Invoice Sub-line Number - The invoice sub-line number used for this distro.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="16"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="SOURCE_DISTRO_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>Distribution Identifier - system-generated or user-entered unique identifier for this distribution record.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="140"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="SOURCE_WH_ID">
+																				<xsd:annotation>
+																					<xsd:documentation>Source Warehouse - Source warehouse that created the distribution for merge and transit.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="128"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																			<xsd:element minOccurs="0" name="SOURCE_ADRNAM">
+																				<xsd:annotation>
+																					<xsd:documentation>Source_wh_ext_id.  This is the external ID for the address of the source warehouse.</xsd:documentation>
+																				</xsd:annotation>
+																				<xsd:simpleType>
+																					<xsd:restriction base="xsd:string">
+																						<xsd:maxLength value="160"/>
+																					</xsd:restriction>
+																				</xsd:simpleType>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element maxOccurs="unbounded" minOccurs="0" name="RCPT_ASSET_SEG">
+														<xsd:annotation>
+															<xsd:documentation>This segment is used to create the asset details.</xsd:documentation>
+														</xsd:annotation>
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element minOccurs="0" name="SEGNAM">
+																	<xsd:annotation>
+																		<xsd:documentation>Segment Name - Identifier for this IFD segment.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="80"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="TRNTYP">
+																	<xsd:annotation>
+																		<xsd:documentation>Transaction Type -  &quot;A&quot; for Add record, &quot;C&quot; for Change record or &quot;D&quot; for Delete record.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="4"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="INVT_ID">
+																	<xsd:annotation>
+																		<xsd:documentation>The inventory Identifier that this asset is associated with this could  be lodnum/subnum.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="120"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="ASSET_ID">
+																	<xsd:annotation>
+																		<xsd:documentation>Unique identifier for an asset.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="120"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="PAR_ASSET_ID">
+																	<xsd:annotation>
+																		<xsd:documentation>Unique identifier for the parent asset id. This field will be used for serialized assets in the ASN, in order to store the nesting relationship for the assets.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="120"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="ASSET_TYP">
+																	<xsd:annotation>
+																		<xsd:documentation>Asset Type.(Will be set to active for all inbound assets)</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="120"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="ASSET_QTY" type="xsd:decimal">
+																	<xsd:annotation>
+																		<xsd:documentation>This field will hold the total quantity of non-serialized assets in this transaction.(empty+non-empty non-serialized assets). This will be set to 1 for serialized assets in the transaction.</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="ASSET_TAG">
+																	<xsd:annotation>
+																		<xsd:documentation>Asset Tag - Typically a unique RFID identifier.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="160"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="CLIENT_ID">
+																	<xsd:annotation>
+																		<xsd:documentation>Client ID - Unique asset client identifier.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="128"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="WARRANTY_DTE" type="xsd:string">
+																	<xsd:annotation>
+																		<xsd:documentation>Date and time at which the warranty for an asset expires.</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="PURCH_DTE" type="xsd:string">
+																	<xsd:annotation>
+																		<xsd:documentation>Date and time at which an asset was purchased.</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="MAN_ID">
+																	<xsd:annotation>
+																		<xsd:documentation>Identifies where the asset is manufactured.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="80"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="MODEL">
+																	<xsd:annotation>
+																		<xsd:documentation>Identifies the model numbers for the asset.</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="80"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="SER_NUM">
+																	<xsd:annotation>
+																		<xsd:documentation>Serial number of the asset</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="160"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+																<xsd:element minOccurs="0" name="ASSET_STAT">
+																	<xsd:annotation>
+																		<xsd:documentation>Status of the asset</xsd:documentation>
+																	</xsd:annotation>
+																	<xsd:simpleType>
+																		<xsd:restriction base="xsd:string">
+																			<xsd:maxLength value="60"/>
+																		</xsd:restriction>
+																	</xsd:simpleType>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1" xmlns:ns1="http://www.oracle.com/retail/integration/services/exception/v1" xmlns:ns10="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPORef/v1" xmlns:ns2="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1" xmlns:ns3="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoDesc/v1" xmlns:ns4="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInfoDesc/v1" xmlns:ns5="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoRef/v1" xmlns:ns6="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegRef/v1" xmlns:ns7="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegDesc/v1" xmlns:ns8="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBLocDesc/v1" xmlns:ns9="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1" xmlns:tns="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPORef/v1" schemaLocation="NBASNService_InlineSchema11.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1" schemaLocation="NBASNService_InlineSchema10.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBLocDesc/v1" schemaLocation="NBASNService_InlineSchema9.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegDesc/v1" schemaLocation="NBASNService_InlineSchema8.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegRef/v1" schemaLocation="NBASNService_InlineSchema7.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoRef/v1" schemaLocation="NBASNService_InlineSchema6.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInfoDesc/v1" schemaLocation="NBASNService_InlineSchema5.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoDesc/v1" schemaLocation="NBASNService_InlineSchema4.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1" schemaLocation="NBASNService_InlineSchema3.xsd"/>
+  <xsd:include schemaLocation="NBASNService_InlineSchema2.xsd"/>
+  <xsd:import namespace="http://www.oracle.com/retail/integration/services/exception/v1" schemaLocation="NBASNService_InlineSchema1.xsd"/>
+
+<!-- BEGIN Global group petaining to all wsdl:message definitions -->
+<!-- END Global group -->
+
+
+<!-- BEGIN Message Definitions for the wsdl:operations  -->
+<!-- END Message Definitions -->
+
+
+</xsd:schema>

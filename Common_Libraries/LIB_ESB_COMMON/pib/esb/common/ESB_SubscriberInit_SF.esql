@@ -1,0 +1,56 @@
+BROKER SCHEMA pib.esb.common
+
+CREATE COMPUTE MODULE ESB_SubscriberInit_SF_CaptureBusinessData
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE envRef, envSeqRef	REFERENCE TO Environment;
+		DECLARE inRef				REFERENCE TO InputRoot.XMLNSC;
+
+		CREATE FIELD Environment.Variables AS envRef;
+
+		-- Move to the CDM Metadata section.
+		MOVE inRef FIRSTCHILD;
+
+		-- Is used in the filtering logic.
+		SET envRef.msgType			= inRef.msgType;
+
+		-- Used when inserting to the Aggregation DB
+		IF EXISTS(inRef.publishTime[]) THEN
+			SET envRef.publishTime	= CAST(inRef.publishTime AS TIMESTAMP);
+		END IF;
+
+		SET envRef.msgId			= inRef.msgId;
+
+		-- For Sequence Error Handling.
+		CREATE LASTCHILD OF envRef AS envSeqRef FROM InputRoot.MQRFH2.usr.SequenceInfo;
+
+		-- Copy the Subscriber message to Environment tree, so can be inserted later to Sequence table if blocking occurs. This is because
+		-- there is generic code in Sequence Error Handler which takes message data from Sequence Info in Environment tree.
+		CREATE LASTCHILD OF envSeqRef DOMAIN 'XMLNSC';
+		SET envSeqRef.XMLNSC = InputRoot.XMLNSC;
+
+		-- For Auditing
+		SET envRef.AuditName 		= 'CDM Subscriber Request';
+		SET envRef.MessageId		= inRef.msgId;
+		SET envRef.KeyIdentifier	= inRef.id;
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+
+	    RETURN TRUE;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE ESB_SubscriberInit_SF_RemoveRFH2Header
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+
+		SET OutputRoot.MQRFH2 = NULL;
+
+	    RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

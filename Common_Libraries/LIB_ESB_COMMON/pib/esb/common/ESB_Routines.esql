@@ -1,0 +1,326 @@
+/*
+ *
+ * File name: ESB_Routines.esql
+ *
+ * Purpose:   Common Routines for ESB
+ *
+ * Authors:   Brian McGinty
+ *                 
+ * Date:      December 2017
+ *                 
+ * Version:   1.0
+ *
+ */
+BROKER SCHEMA pib.esb.common
+
+CREATE PROCEDURE ESB_MQFlowInit(INOUT envRef REFERENCE, IN rootRef REFERENCE)
+BEGIN
+	DECLARE contextInfoRef, messageRef REFERENCE TO envRef;
+
+	-- Context information about the Broker, Flow and Message
+	CALL ESB_FlowInit(envRef);
+
+	-------------------------------------------------------------------
+	-- Set the Transport Layer related context information
+	-------------------------------------------------------------------
+	DECLARE MQMDRef 	REFERENCE TO rootRef.MQMD;
+	DECLARE MQRFH2Ref 	REFERENCE TO rootRef.MQRFH2;
+
+	CREATE LASTCHILD OF envRef.ContextInfo AS messageRef NAME 'Message';
+	CREATE LASTCHILD OF messageRef AS MQMDRef FROM rootRef.MQMD;
+
+	-- Now set the logging information.
+
+	-- If there is a GlobalTransactionId in usr folder, this means that this is a subscriber service and the publisher has published a message
+	-- and this is the GlobalTransactionId to be used for correlation.
+	IF COALESCE(MQRFH2Ref.usr.GlobalTransactionId, '') <> '' THEN
+		SET envRef.GlobalTransactionId	= MQRFH2Ref.usr.GlobalTransactionId;
+		-- Remove the MQRFH2 Header now afer GlobalTransactionId has been extracted.
+		SET rootRef.MQRFH2 = NULL;
+	ELSE
+		-- Else this must be the first log point of the whole business transaction, so initialise the GlobalTransactionId to a UUID.
+		SET envRef.GlobalTransactionId	= UUIDASCHAR;
+	END IF;
+
+	SET envRef.LocalTransactionId	= UUIDASCHAR;
+	SET envRef.ParentTransactionId	= '';
+	SET envRef.SourceQueue			= MQMDRef.SourceQueue;
+END;
+
+CREATE PROCEDURE ESB_FileFlowInit(INOUT envRef REFERENCE, IN localEnvRef REFERENCE)
+BEGIN
+	-- Context information about the Broker, Flow and Message	
+	CALL ESB_FlowInit(envRef);
+
+	-- Set the logging information.
+
+	-- Check firstly if AuditName already has a value set, the first logpoint of the File Service may not necessarily want to log the input file, and so if it has set an AuditName already
+	-- before the first log point, use this and do not log the File Received log point. 
+	IF COALESCE(envRef.AuditName, '') = '' THEN
+
+		-- If File is being processed record by record parsing at File Input node, give record count in Log Point.
+		IF localEnvRef.File.Record > 1 THEN
+			SET envRef.AuditName 	= 'File Received : Record ' || CAST(localEnvRef.File.Record AS CHAR); 
+		ELSE
+			SET envRef.AuditName 	= 'File Received';
+		END IF;
+
+	END IF;
+
+	SET envRef.MessageId 			= localEnvRef.File.Name; 
+	SET envRef.GlobalTransactionId	= UUIDASCHAR;
+	SET envRef.LocalTransactionId	= UUIDASCHAR;
+	SET envRef.ParentTransactionId	= '';
+	SET envRef.SourceQueue 			= localEnvRef.File.Directory; 
+END;
+
+CREATE PROCEDURE ESB_HTTPFlowInit(INOUT envRef REFERENCE, IN rootRef REFERENCE)
+BEGIN
+	-- Context information about the Broker, Flow and Message	
+	CALL ESB_FlowInit(envRef);
+
+	-- Now set the logging information.
+	SET envRef.GlobalTransactionId	= UUIDASCHAR;
+	SET envRef.LocalTransactionId	= UUIDASCHAR;
+	SET envRef.ParentTransactionId	= '';
+	SET envRef.SourceQueue 			= rootRef.HTTPInputHeader."X-Original-HTTP-Command"; 
+END;
+
+CREATE PROCEDURE ESB_OtherFlowInit(INOUT envRef REFERENCE)
+BEGIN
+	-- Context information about the Broker, Flow and Message	
+	CALL ESB_FlowInit(envRef);
+
+	-- Now set the logging information.
+	SET envRef.GlobalTransactionId	= UUIDASCHAR;
+	SET envRef.LocalTransactionId	= UUIDASCHAR;
+	SET envRef.ParentTransactionId	= '';
+END;
+
+CREATE PROCEDURE ESB_FlowInit(INOUT envRef REFERENCE)
+BEGIN
+	DECLARE contextInfoRef, brokerRef, flowRef REFERENCE TO envRef;
+
+	CREATE LASTCHILD OF envRef AS contextInfoRef NAME 'ContextInfo';
+
+	-- Context information about the Broker, Flow and Message	
+	CREATE LASTCHILD OF contextInfoRef AS brokerRef 	NAME 'Broker';
+	CREATE LASTCHILD OF contextInfoRef AS flowRef 		NAME 'Flow';
+
+	-------------------------------------------------------------------
+	-- Add the broker related context information
+	-------------------------------------------------------------------
+	CREATE LASTCHILD OF brokerRef NAME 'BrokerName' 		VALUE BrokerName;
+	CREATE LASTCHILD OF brokerRef NAME 'BrokerFamily' 		VALUE Family;
+	CREATE LASTCHILD OF brokerRef NAME 'QueueManagerName' 	VALUE QueueManagerName;
+
+	-------------------------------------------------------------------
+	-- Set the flow related context information
+	-------------------------------------------------------------------
+	CREATE LASTCHILD OF flowRef NAME 'MessageFlowName' 		VALUE MessageFlowLabel;
+	CREATE LASTCHILD OF flowRef NAME 'InitiatingNodeName' 	VALUE '';
+	CREATE LASTCHILD OF flowRef NAME 'ExecutionGroupLabel' 	VALUE ExecutionGroupLabel;
+	CREATE LASTCHILD OF flowRef NAME 'ProcessId' 			VALUE ProcessId;
+	CREATE LASTCHILD OF flowRef NAME 'AdditionalInstances' 	VALUE AdditionalInstances;
+END;
+
+CREATE PROCEDURE ConvertFileToUTF8(INOUT rootRef REFERENCE, INOUT localEnvRef REFERENCE)
+BEGIN
+	DECLARE CONTINUE HANDLER FOR SQLSTATE LIKE '%'
+
+	BEGIN
+		-- Casting to character string using code page 1208 failed so the file must not be based on code page 1208.
+		-- The next common code page is 819 which is used on Windows, convert the data to a character string using this code page,
+		-- then convert back to Blob using code page 1208 and then from this Blob, which we know will be in code page 1208, to
+		-- a character string.  
+
+		-- Note if this fails, then allow exception handling to occur as normal since there is nothing more that we can do.  
+			
+		SET localEnvRef.dataChar = CAST(rootRef.BLOB.BLOB AS CHARACTER CCSID PCC_Get819CCSID() ENCODING rootRef.Properties.Encoding);
+	END;
+
+	-- Convert file to a character string using UTF-8 encoding. If this fails due to unconvertible characters then flow will go the above
+	-- error handler.
+	SET localEnvRef.dataChar = CAST(rootRef.BLOB.BLOB AS CHARACTER CCSID PCC_GetUTF8CCSID() ENCODING rootRef.Properties.Encoding);
+
+   	-- The Perform a lookup in the XRef table to get the list of UTF-8 Chars to be replaced and the corresponding ASCII value. List so far is:
+
+	-- File is sometimes containing multibyte UTF-8 characters which are causing length exceptions when inserting to RMS DB since the RMS DB has its columns defined as
+	-- length in bytes and not characters. So, a 20 character field in file may actually be longer in bytes if it has multibyte characters and hence the RMS DB exception
+	-- when trying to insert this data. Since RMS DB column data types cannot be change as it is Vanilla, the fix is being provided in ESB Layer by replacing multibyte 
+	-- UTF-8 characters with standard single byte ASCII character.
+	CALL TranslateMultibyteChars(rootRef, localEnvRef);
+
+	SET rootRef.BLOB.BLOB = CAST(localEnvRef.dataChar AS BLOB CCSID PCC_GetUTF8CCSID() ENCODING rootRef.Properties.Encoding);
+END;
+
+CREATE PROCEDURE ConvertDataToUTF8(INOUT dataBlob BLOB, INOUT localEnvRef REFERENCE, IN encoding INTEGER)
+BEGIN
+	DECLARE CONTINUE HANDLER FOR SQLSTATE LIKE '%'
+
+	BEGIN
+		-- Casting to character string using code page 1208 failed so the file must not be based on code page 1208.
+		-- The next common code page is 819 which is used on Windows, convert the data to a character string using this code page,
+		-- then convert back to Blob using code page 1208 and then from this Blob, which we know will be in code page 1208, to
+		-- a character string.  
+			
+		-- Note if this fails, then allow exception handling to occur as normal since there is nothing more that we can do.  
+		SET localEnvRef.dataChar = CAST(dataBlob AS CHARACTER CCSID PCC_Get819CCSID() ENCODING encoding);
+	END;
+
+	-- Convert file to a character string using UTF-8 encoding. If this fails due to unconvertible characters then flow will go the above
+	-- error handler.
+	SET localEnvRef.dataChar	= CAST(dataBlob AS CHARACTER CCSID PCC_GetUTF8CCSID() ENCODING encoding);
+	SET dataBlob 				= CAST(localEnvRef.dataChar AS BLOB CCSID PCC_GetUTF8CCSID() ENCODING encoding);
+END;
+
+CREATE PROCEDURE TranslateMultibyteChars(IN rootRef REFERENCE, INOUT localEnvRef REFERENCE)
+BEGIN
+	DECLARE localEnvRecRef 	REFERENCE TO localEnvRef;
+	DECLARE utf8Blob 		BLOB;
+	DECLARE utf8Char 		CHARACTER;
+
+	-- UTF-8 Char Pairing List has following format [UTF8 Char1, ASCII Char1], [UTF8 Char2, ASCII Char2],...,[UTF8 Char(n), ASCII Char(n)],
+	-- So, each pairing needs to be processed in turn.
+	CALL ParseUTF8List(localEnvRef.UTF8CharPairingList, localEnvRef);
+	MOVE localEnvRecRef TO localEnvRef.Variables.UTF8CharRecord[1];
+	WHILE LASTMOVE(localEnvRecRef) DO
+
+		SET utf8Blob = CAST(localEnvRecRef.Token[1] AS BLOB);
+		SET utf8Char = CAST(utf8Blob AS CHARACTER CCSID PCC_GetUTF8CCSID() ENCODING rootRef.Properties.Encoding);
+
+		IF POSITION(utf8Char IN localEnvRef.dataChar) <> 0 THEN
+			SET localEnvRef.dataChar = TRANSLATE(localEnvRef.dataChar, utf8Char, localEnvRecRef.Token[2]);
+		END IF;
+
+		MOVE localEnvRecRef NEXTSIBLING REPEAT TYPE NAME;
+	END WHILE;
+END;
+
+CREATE PROCEDURE ParseUTF8List(IN		inList		CHAR, 
+					   	 	   INOUT	localEnvRef	REFERENCE)
+BEGIN
+	DECLARE token, pairingList, pair CHAR;
+	DECLARE pos1, pos2 INTEGER;
+	DECLARE localEnvRecRef REFERENCE TO localEnvRef;
+
+	SET pairingList = inList;
+	SET localEnvRef.Variables.UTF8Record = NULL;
+
+	-- Parse this list of UTF-8 pairings into its fields, each grouped by [...]
+	-- If List is empty, do nothing.
+	IF COALESCE(pairingList, '') <> '' THEN
+		SET pos1 = POSITION('[' IN pairingList);
+		SET pos2 = POSITION(']' IN pairingList);
+
+		WHILE pos1 <> 0 DO
+
+			SET pair = TRIM(SUBSTRING(pairingList FROM pos1 + 1 FOR (pos2 - pos1 - 1)));
+			CALL ParseUTF8Pair(pair, localEnvRef);
+
+			CREATE LASTCHILD OF localEnvRef.Variables AS localEnvRecRef NAME 'UTF8CharRecord';
+			SET localEnvRecRef = localEnvRef.Variables.Record;
+
+			-- Remove the pairing from the list.
+			SET pairingList = SUBSTRING(pairingList FROM pos2 + 1);
+			SET pos1 = POSITION('[' IN pairingList);
+			SET pos2 = POSITION(']' IN pairingList);
+		END WHILE;
+	END IF;
+END;
+
+CREATE PROCEDURE ParseTokenList(IN		inList		CHAR, 
+					   	 	 	INOUT	localEnvRef	REFERENCE)
+BEGIN
+	DECLARE token, tokenList CHAR;
+	DECLARE pos INTEGER;
+
+	SET tokenList = inList;
+	SET localEnvRef.Variables.Record = NULL;
+
+	-- Parse this list of Depots into its fields, each separated by COMMA.
+	-- If List is empty, do nothing.
+	IF COALESCE(tokenList, '') <> '' THEN
+		SET pos = POSITION(',' IN tokenList);
+
+		WHILE pos <> 0 DO
+			SET token = TRIM(SUBSTRING(tokenList FROM 1 FOR pos - 1));
+			CREATE LASTCHILD OF localEnvRef.Variables.Record NAME 'Token' VALUE token;
+
+			-- Remove the token from the list.
+			SET tokenList = SUBSTRING(tokenList FROM pos + 1);
+			SET pos = POSITION(',' IN tokenList);
+		END WHILE;
+
+		-- Add the last token in the list to the tree, or it may be the only token in the list.
+		SET token = TRIM(tokenList);
+		IF COALESCE(token, '') <> '' THEN
+			CREATE LASTCHILD OF localEnvRef.Variables.Record NAME 'Token' VALUE token;
+		END IF;
+	END IF;
+END;
+
+CREATE PROCEDURE ParseUTF8Pair(IN		inPair		CHAR, 
+					   	 	   INOUT	localEnvRef	REFERENCE)
+BEGIN
+	DECLARE token, tokenPair CHAR;
+	DECLARE pos INTEGER;
+
+	SET tokenPair = inPair;
+	SET localEnvRef.Variables.Record = NULL;
+
+	-- Parse this pairing into its two constituent values, each separated by COMMA.
+	-- If List is empty, do nothing.
+	IF COALESCE(tokenPair, '') <> '' THEN
+		SET pos = POSITION(',' IN tokenPair);
+
+		SET token = TRIM(SUBSTRING(tokenPair FROM 1 FOR pos - 1));
+		CREATE LASTCHILD OF localEnvRef.Variables.Record NAME 'Token' VALUE token;
+
+		SET token = TRIM(SUBSTRING(tokenPair FROM pos + 1));
+		-- In case the replacing character is an SPACE, check for this as it would have been moved by the previous generic TRIM which we do want.
+		IF token = '' THEN
+			SET token = ' ';
+		END IF;
+		CREATE LASTCHILD OF localEnvRef.Variables.Record NAME 'Token' VALUE token;
+	END IF;
+END;
+
+CREATE FUNCTION Pad(inputData CHARACTER, padChar CHARACTER, padLength INTEGER) RETURNS CHARACTER
+BEGIN
+	DECLARE paddedData CHAR inputData;
+
+	-- If input data is NULL, still return full padded string then.
+	SET paddedData = COALESCE(inputData, '');
+
+	WHILE LENGTH(paddedData) < padLength DO 
+  		SET paddedData = padChar || paddedData; 
+	END WHILE; 
+
+	RETURN paddedData;
+END;
+
+CREATE FUNCTION ConvertToImpliedDecimalPlacesValue(inputData CHARACTER, impliedDecimalPlaces INTEGER) RETURNS CHARACTER
+BEGIN
+	DECLARE intValue INTEGER;
+	DECLARE impiedDecimalPlaceValue CHAR;
+
+	SET intValue				= ROUND(CAST(inputData AS DECIMAL), impliedDecimalPlaces) * POWER(10, impliedDecimalPlaces);
+	SET impiedDecimalPlaceValue	= COALESCE(CAST(intValue AS CHARACTER), '');
+
+	RETURN impiedDecimalPlaceValue;
+END;
+
+CREATE FUNCTION GetEnvVariable(envVar CHARACTER) RETURNS CHARACTER
+BEGIN
+	DECLARE envVarValue CHAR;
+
+	CALL getEnvVar(envVar) INTO envVarValue;
+
+	RETURN envVarValue;
+END;
+
+
+CREATE PROCEDURE encrypt(IN originalString CHAR)  RETURNS CHAR LANGUAGE JAVA EXTERNAL NAME "com.pib.esb.ESBEncryptionUtils.encrypt";
+CREATE PROCEDURE decrypt(IN encryptedString CHAR) RETURNS CHAR LANGUAGE JAVA EXTERNAL NAME "com.pib.esb.ESBEncryptionUtils.decrypt";
+CREATE PROCEDURE getEnvVar(IN envVariable CHAR)	  RETURNS CHAR LANGUAGE JAVA EXTERNAL NAME "com.pib.esb.ESBCommonUtils.getEnvVar";

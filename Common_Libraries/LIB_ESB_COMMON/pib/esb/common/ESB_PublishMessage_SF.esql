@@ -1,0 +1,112 @@
+BROKER SCHEMA pib.esb.common
+
+
+CREATE COMPUTE MODULE ESB_PublishMessage_SF_SetTopicAndHeaders
+	DECLARE UDP_TopicName EXTERNAL CHAR;
+
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+
+		DECLARE envRef 						REFERENCE TO Environment.Variables;
+		DECLARE envMsgCtxtRef				REFERENCE TO envRef.ContextInfo.Message;
+		DECLARE rootRef, MQMDRef, MQRFH2Ref	REFERENCE TO OutputRoot;
+		DECLARE outRef						REFERENCE TO OutputRoot.XMLNSC;
+
+		-- Move to the CDM Metadata section, so we can add the Business Id value to the CDM Header, this is used as the KeyIdentifier in the 
+		-- generic Subscriber Init subflow in the Subscriber service. Add it before the actual CDM data parent of the Entity type. This is just
+		-- for services where the Publisher is RMS so conditionally check for value.
+		IF COALESCE(envRef.id, '') <> '' THEN
+			MOVE outRef FIRSTCHILD;
+			MOVE outRef LASTCHILD;
+			CREATE PREVIOUSSIBLING OF outRef NAME 'id' VALUE envRef.id;
+		END IF;
+		
+		-- Set the Topic.
+		SET OutputRoot.Properties.Topic = UDP_TopicName;
+
+		-- Check if MQMD Header is there, if not create it.
+		IF CARDINALITY(rootRef.MQMD[]) = 0 THEN
+			IF CARDINALITY(envMsgCtxtRef.MQMD[]) <> 0 THEN
+				CREATE NEXTSIBLING OF rootRef.Properties AS MQMDRef DOMAIN 'MQMD' FROM envMsgCtxtRef.MQMD;
+			ELSE
+				CREATE NEXTSIBLING OF rootRef.Properties AS MQMDRef DOMAIN 'MQMD';
+			END IF;
+		ELSE
+			MOVE MQMDRef TO rootRef.MQMD;
+		END IF;
+
+		-- Ensure we are using RF Header version 2
+    	SET MQMDRef.Format		= MQFMT_RF_HEADER_2;
+		SET MQMDRef.MsgType		= MQMT_DATAGRAM;
+
+		CREATE NEXTSIBLING OF rootRef.MQMD AS MQRFH2Ref DOMAIN 'MQRFH2';
+		MOVE MQRFH2Ref TO rootRef.MQRFH2;
+
+		-- Add MQRFH2Ref usr folder to have GlobalTransactionId so we can correlate between Publisher and Subscriber.
+		SET MQRFH2Ref.usr.GlobalTransactionId = envRef.GlobalTransactionId;
+
+		SET OutputRoot.MQMD.UserIdentifier = NULL;
+
+		-- Clear the MessageSet name if it has been set via an API call, as the CDM message has not message model.
+		SET OutputRoot.Properties.MessageSet = '';
+
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+
+CREATE FILTER MODULE ESB_PublishMessage_SF_SequenceInfoExists
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE envRef REFERENCE TO Environment.Variables;
+
+		-- If this is an RMS Publisher service, then Sequence Info will be in the Environment tree.
+		IF EXISTS(envRef.SequenceInfo[]) THEN
+			RETURN TRUE;
+		ELSE
+			RETURN FALSE;
+		END IF;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE ESB_PublishMessage_SF_AddSequenceInfo
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+
+		DECLARE envSeqRef	REFERENCE TO Environment.Variables.SequenceInfo;
+		DECLARE MQRFH2Ref	REFERENCE TO OutputRoot.MQRFH2;
+
+		-- Add Sequence Data to the usr folder of the MQRFH2 Header. This is to be used by the Subscriber.
+		SET MQRFH2Ref.usr.SequenceInfo.RibMessageID 		= envSeqRef.RibMessageID;
+		SET MQRFH2Ref.usr.SequenceInfo.Id 					= envSeqRef.Id;
+		SET MQRFH2Ref.usr.SequenceInfo.Family 				= envSeqRef.Family;
+		SET MQRFH2Ref.usr.SequenceInfo.PublishTime			= envSeqRef.PublishTime;
+		SET MQRFH2Ref.usr.SequenceInfo.GlobalTransactionId	= envSeqRef.GlobalTransactionId;
+
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE ESB_PublishMessage_SF_LogPublishedMessage
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE envRef REFERENCE TO Environment.Variables;
+
+		SET envRef.AuditName = 'CDM Publisher Request';
+		PROPAGATE TO LABEL 'Logger' DELETE NONE;
+
+		RETURN TRUE;
+	END;
+END MODULE;

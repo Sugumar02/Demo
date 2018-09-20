@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmFilter.msgnode="ComIbmFilter.msgnode" xmlns:ComIbmPublication.msgnode="ComIbmPublication.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="pib/esb/common/ESB_PublishMessage_SF.subflow" nsPrefix="pib_esb_common_ESB_PublishMessage_SF.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_TopicName" name="UDP_TopicName" lowerBound="1" defaultValueLiteral="&lt;Topic Name>">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="ESB_PublishMessage_SF" bundleName="pib/esb/common/ESB_PublishMessage_SF" pluginId="LIB_ESB_COMMON"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LIB_ESB_COMMON/icons/full/obj16/ESB_PublishMessage_SF.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LIB_ESB_COMMON/icons/full/obj30/ESB_PublishMessage_SF.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="32,69">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="pib/esb/common/ESB_PublishMessage_SF" pluginId="LIB_ESB_COMMON"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="897,80">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="pib/esb/common/ESB_PublishMessage_SF" pluginId="LIB_ESB_COMMON"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="122,69" computeExpression="esql://routine/pib.esb.common#ESB_PublishMessage_SF_SetTopicAndHeaders.Main">
+        <translation xmi:type="utility:ConstantString" string="Set Topic And Headers"/>
+      </nodes>
+      <nodes xmi:type="ComIbmPublication.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="616,83">
+        <translation xmi:type="utility:ConstantString" string="Publish Message"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="470,82" computeExpression="esql://routine/pib.esb.common#ESB_PublishMessage_SF_AddSequenceInfo.Main">
+        <translation xmi:type="utility:ConstantString" string="Add Sequence Info"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFilter.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="293,70" filterExpression="esql://routine/pib.esb.common#ESB_PublishMessage_SF_SequenceInfoExists.Main">
+        <translation xmi:type="utility:ConstantString" string="Sequence Info Exists ?"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="736,79" computeExpression="esql://routine/pib.esb.common#ESB_PublishMessage_SF_LogPublishedMessage.Main" computeMode="exception">
+        <translation xmi:type="utility:ConstantString" string="Log Published Message"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_1" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.true" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.false" targetTerminalName="InTerminal.in">
+        <bendPoints>171,-57,-139,-70</bendPoints>
+      </connections>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.UDP_TopicName">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_TopicName" bundleName="pib/esb/common/ESB_PublishMessage_SF" pluginId="LIB_ESB_COMMON"/>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

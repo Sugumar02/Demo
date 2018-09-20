@@ -1,0 +1,56 @@
+BROKER SCHEMA pib.psm.asn
+
+/* 
+ * Filename : ESB_PSM_ASNOUT_THROTTLE_MF.esql
+ * @author : Wipro Technologies.
+ * © Copyright 2010 by Wipro.  
+ * This Program is the property of Wipro COE and may not be used in 
+ * whole, or in part without express permission of Wipro COE
+ * 
+   ------------------------------Description---------------------------
+  Program Details:
+  ----------------
+  This Interface will reads the message from the Subscribed Topic and filters the message as per the messageType.
+  It creates the JSON Message for the REST API.
+  The REST API performs the required implementations in PSM.
+  It logs the Message as when required 
+  ---------------------------------------------------------------------------------
+  Version:       Initials:   		Date:        Description:
+  --------       ---------   		-----        ------------
+  1.0    		 Sruthy Narayan    30/04/2018    Initial version of the file.
+ --------------------------------------------------------------------------------- */
+
+CREATE COMPUTE MODULE ESB_PSM_ASNOUT_THROTTLE_MF_PerformThrottlling
+	DECLARE iThrottleVal SHARED INTEGER 0;
+	
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+
+		DECLARE I INTEGER 1;
+
+		-- Get The throttle value from DB	
+		IF iThrottleVal = 0 THEN
+			SET iThrottleVal = TRIM(THE(SELECT ITEM T.VALUE FROM Database.dbo.ESB_OBJ_XREF_VALUES AS T 
+								 		  WHERE T.ID 		= 'ASNOut' AND
+								 				T.OBJECT	= 'PSM Throttle' AND
+								 				T.TYPE 		= 'Count'));
+		END IF;
+
+		-- Sending number of messages to queue depending on the throttle value.
+		WHILE (I <= iThrottleVal) DO
+
+		 	SET I = I + 1;
+		 	PROPAGATE TO TERMINAL 'out' FINALIZE DEFAULT DELETE NONE;
+		END WHILE;
+
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+
+	

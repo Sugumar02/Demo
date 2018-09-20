@@ -1,0 +1,35 @@
+BROKER SCHEMA pib.rms.api.nbtsf
+
+DECLARE NBTsfServiceNS				NAMESPACE 'http://www.oracle.com/retail/primark/integration/services/NBTsfService/v1';
+DECLARE NBTsfRefNS					NAMESPACE 'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfRef/v1';
+DECLARE NBTsfDescNS					NAMESPACE 'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfDesc/v1';
+DECLARE NBVarcharDescNS				NAMESPACE 'http://www.oracle.com/retail/integration/custom/bo/ExtOfNBVarcharDesc/v1';
+
+
+CREATE FUNCTION ESB_GetNamespaceNBTsfService() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBTsfServiceNS;
+
+END;
+  	
+CREATE FUNCTION ESB_GetNamespaceNBTsfRef() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBTsfRefNS;
+
+END;
+  	
+CREATE FUNCTION ESB_GetNamespaceNBTsfDesc() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBTsfDescNS;
+
+END;	
+  	
+CREATE FUNCTION ESB_GetNamespaceNBVarcharDesc() RETURNS CHARACTER
+BEGIN
+
+	RETURN NBVarcharDescNS;
+
+END;

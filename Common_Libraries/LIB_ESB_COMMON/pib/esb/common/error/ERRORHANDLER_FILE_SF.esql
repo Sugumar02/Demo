@@ -1,0 +1,194 @@
+BROKER SCHEMA pib.esb.common.error
+PATH pib.esb.common;
+
+CREATE COMPUTE MODULE ERRORHANDLER_FILE_SF_GenerateErrorMessage
+	DECLARE UDP_ProjectName 			EXTERNAL CHARACTER '';
+	DECLARE UDP_InterfaceName 			EXTERNAL CHARACTER '';
+	DECLARE UDP_InterfaceId 			EXTERNAL CHARACTER '';
+	DECLARE UDP_SourceAppln 			EXTERNAL CHARACTER '';
+	DECLARE UDP_TargetAppln 			EXTERNAL CHARACTER '';
+	DECLARE UDP_LoggingType 			EXTERNAL CHARACTER ''; 
+
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		  
+		DECLARE nsCOE NAMESPACE 'http://w3c.com/schema/LogMessageV1';
+
+		DECLARE envRef, envExcpRef	REFERENCE TO Environment.Variables;
+		DECLARE envCtxtInfoRef		REFERENCE TO envRef.ContextInfo;
+		DECLARE rootRef, inRef		REFERENCE TO InputRoot;
+		DECLARE excpRef 			REFERENCE TO InputExceptionList;
+		DECLARE outRef 				REFERENCE To OutputRoot;
+
+		DECLARE encodingValue 		INTEGER InputRoot.Properties.Encoding;
+		DECLARE ccsidValue 			INTEGER InputRoot.Properties.CodedCharSetId;
+		DECLARE detailedErrorMsg 	CHARACTER ''; 
+		DECLARE errorNumber 		INTEGER 0;
+		DECLARE errorType, errorLocation, errorDiagnosticInfo	CHARACTER '';
+		DECLARE severityLevel 		INTEGER;
+		DECLARE exceptionMsgBLOB 	BLOB;	
+		DECLARE outputMessageBLOB 	BLOB;
+		DECLARE putDateTime	 		CHARACTER;
+		DECLARE I, C INTEGER;
+
+		-- Timer Node does not set the CodedCharSetId value, so use default.
+		IF ccsidValue = 0 THEN
+			SET ccsidValue = PCC_GetUTF8CCSID();
+		END IF;
+
+		-- Remove any HTTP Headers.
+		SET OutputRoot.HTTPInputHeader 		= NULL;
+		SET OutputRoot.HTTPRequestHeader 	= NULL;
+		SET OutputRoot.HTTPResponseHeader 	= NULL;
+
+		SET putDateTime = CAST(CURRENT_TIMESTAMP AS CHARACTER FORMAT 'yyyy-MM-dd HH:mm:ss.SSSSSS');
+
+		CREATE LASTCHILD OF envRef DOMAIN 'XMLNSC'; 
+		CREATE FIELD envRef.XMLNSC.Message.ExceptionInformation AS envExcpRef;
+		SET envExcpRef 			= excpRef;
+		SET exceptionMsgBLOB 	= ASBITSTREAM(envExcpRef OPTIONS FolderBitStream CCSID ccsidValue ENCODING encodingValue);
+		SET detailedErrorMsg 	= CAST(exceptionMsgBLOB AS CHARACTER CCSID ccsidValue ENCODING encodingValue);
+
+		-- Remove temorarily created XMLNSC tree.
+		SET envRef.XMLNSC = NULL;
+
+		-- Extract Error details from ExceptionList tree
+		MOVE excpRef TO InputExceptionList.*[1];
+		WHILE LASTMOVE(excpRef) DO
+
+			IF COALESCE(excpRef.Number,'') <> '' THEN
+				-- Remember only the deepest error number 
+				SET errorNumber = excpRef.Number;
+			END IF;
+			
+			IF COALESCE(excpRef.Label,'') <> '' THEN
+				-- Remember only the deepest error label 
+				SET errorLocation = excpRef.Label;
+
+				-- Remember only the deepest error type 
+				SET errorType = FIELDNAME(excpRef);
+
+				--Setting the severity level
+				SET severityLevel = excpRef.Severity;
+
+				-- Append all error details to ErrorDiagnosticInfo
+				SET errorDiagnosticInfo = errorDiagnosticInfo || excpRef.Text || '/ ';
+			END IF;	
+			
+			IF COALESCE(excpRef.Insert[1].Text, '') <> '' THEN
+				SET I =1;
+				SET C = CARDINALITY(excpRef.Insert[]);
+				WHILE (I <= C) DO					
+					SET errorDiagnosticInfo = errorDiagnosticInfo || COALESCE(excpRef.Insert[I].Text,'') || '/ ';
+					SET I = I + 1; 
+				END WHILE;			
+			END IF;	
+			
+			IF errorNumber = 2667 AND COALESCE(excpRef.Insert[1].Text, '') <> '' THEN
+			
+				DECLARE errorNumberfound BOOLEAN FALSE;
+				SET I = 1;
+				SET C = CARDINALITY(excpRef.Insert[]);
+				WHILE (I <= C AND errorNumberfound = FALSE) DO
+					IF LENGTH(excpRef.Insert[I].Text) = 6 THEN
+						IF LENGTH(excpRef.Insert[I + 1].Text) = 4 THEN
+							SET errorNumber = excpRef.Insert[I + 1].Text;
+							SET errorNumberfound = TRUE;
+						END IF;
+					END IF;
+					SET I = I + 1; 
+				END WHILE;
+
+			END IF;		
+				
+			MOVE excpRef LASTCHILD;
+		END WHILE;	
+		
+		-- Append ErrorType and ErrorLocation to ErrorDiagnosticInfo
+		SET errorDiagnosticInfo = CAST(errorType AS CHAR) || ' / ' || CAST(errorLocation AS CHAR) || ' / ' || CAST(errorDiagnosticInfo AS CHAR); 
+								
+		SET outputMessageBLOB = InputRoot.BLOB.BLOB;
+
+		-- Create the output LogMessage message. These details will be sent to 'MW_ERROR_LOG' table 
+		CREATE LASTCHILD OF OutputRoot DOMAIN 'XMLNSC';
+		CREATE FIELD OutputRoot.XMLNSC.LogMessage AS outRef;
+			
+		SET outRef.(XMLNSC.NamespaceDecl)xmlns:COE = nsCOE;
+
+		-- Generic Metadata Specific Details	
+		SET outRef.nsCOE:GenericMetadata.nsCOE:MessageType 			= 'ExceptionMessage';
+		SET outRef.nsCOE:GenericMetadata.nsCOE:TimeStamp 			= putDateTime;
+		SET outRef.nsCOE:GenericMetadata.nsCOE:GlobalTransactionId 	= envRef.GlobalTransactionId;
+		SET outRef.nsCOE:GenericMetadata.nsCOE:LocalTransactionId 	= envRef.LocalTransactionId;
+		SET outRef.nsCOE:GenericMetadata.nsCOE:ParentTransactionId 	= envRef.ParentTransactionId;
+		SET outRef.nsCOE:GenericMetadata.nsCOE:ProjectName 			= UDP_ProjectName;
+		SET outRef.nsCOE:GenericMetadata.nsCOE:InterfaceName 		= UDP_InterfaceName;
+		SET outRef.nsCOE:GenericMetadata.nsCOE:InterfaceId	 		= UDP_InterfaceId;
+		SET outRef.nsCOE:GenericMetadata.nsCOE:SourceApp 			= UDP_SourceAppln;
+		SET outRef.nsCOE:GenericMetadata.nsCOE:DestinationApp 		= UDP_TargetAppln;
+
+		-- Technology Specific Details		
+		MOVE envCtxtInfoRef	TO envRef.ContextInfo;
+		IF LASTMOVE(envCtxtInfoRef) IS FALSE THEN
+			-- In case Context Information hasn't been created by first logging point. 
+			CALL ESB_FlowInit(envRef);
+			MOVE envCtxtInfoRef	TO envRef.ContextInfo;
+		END IF;
+		SET outRef.nsCOE:TechnologySpecific.nsCOE:ToolName 			= 'IIB';
+		SET outRef.nsCOE:TechnologySpecific.nsCOE:BrokerName 		= envCtxtInfoRef.Broker.BrokerName;
+		SET outRef.nsCOE:TechnologySpecific.nsCOE:BrokerFamily 		= envCtxtInfoRef.Broker.BrokerFamily;
+		SET outRef.nsCOE:TechnologySpecific.nsCOE:ExecutionGroup 	= envCtxtInfoRef.Flow.ExecutionGroupLabel;
+		SET outRef.nsCOE:TechnologySpecific.nsCOE:QueueManager 		= envCtxtInfoRef.Broker.QueueManagerName;
+		SET outRef.nsCOE:TechnologySpecific.nsCOE:InputQueue 		= envRef.SourceQueue;
+		SET outRef.nsCOE:TechnologySpecific.nsCOE:MsgFlow 			= envCtxtInfoRef.Flow.MessageFlowName;
+		
+		-- Implementation Specific Details
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:LoggingPatternInfo[1].(XMLNSC.Attribute) name = 'IsPersisitant';
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:LoggingPatternInfo[1] = 'TRUE';
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:LoggingPatternInfo[2].(XMLNSC.Attribute) name = 'LoggingType';
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:LoggingPatternInfo[2] = UDP_LoggingType;
+
+		-- Audit Information
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:AuditInformation.nsCOE:AuditType 			= 'ESB Exception';
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:AuditInformation.nsCOE:KeyIdentifier 		= envRef.KeyIdentifier;
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:AuditInformation.nsCOE:OriginalMessage	= CAST(outputMessageBLOB AS CHARACTER CCSID ccsidValue ENCODING encodingValue);
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:AuditInformation.nsCOE:MessageId 			= envRef.MessageId;
+
+		--Exception Information
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:ExceptionInformation.nsCOE:ExceptionNumber 	= errorNumber;
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:ExceptionInformation.nsCOE:Severity 			= '3';
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:ExceptionInformation.nsCOE:Category 			= errorType;
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:ExceptionInformation.nsCOE:DetailErrorMessage = detailedErrorMsg;
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:ExceptionInformation.nsCOE:ErrorSource 		= errorLocation;
+		SET outRef.nsCOE:ImplementationSpecific.nsCOE:ExceptionInformation.nsCOE:OriginalMessage 	= CAST(outputMessageBLOB AS CHARACTER CCSID ccsidValue ENCODING encodingValue);
+         
+		PROPAGATE TO TERMINAL 'out' DELETE NONE; 
+
+		SET OutputRoot.XMLNSC = NULL;	
+
+		--In order to raise alert for IIB flow exceptions having nodes other than MQ as source(ex;HTTP/SOAP/FILE nodes etc),
+		--additionally messageid,exception list and original message will be backed out 
+		--to the queue dynamically of format ESB.USER.<<InterfaceId>>.BAK
+		CREATE LASTCHILD OF OutputRoot AS outRef DOMAIN 'XMLNSC';
+		CREATE LASTCHILD OF outRef AS outRef NAME 'RollbackMessage';
+
+		SET outRef.MessageId 		= envRef.MessageId;
+		SET outRef.ExceptionMessage = InputExceptionList;
+		SET outRef.OriginalMessage 	= InputBody;
+		SET OutputLocalEnvironment.Destination.MQ.DestinationData[1].queueName = 'ESB.USER.'||TRIM(UDP_InterfaceId)||'.BAK';
+		PROPAGATE TO TERMINAL 'out1'; 
+
+		RETURN FALSE;
+	END;	 
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+END MODULE;
