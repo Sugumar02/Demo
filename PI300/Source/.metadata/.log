@@ -14,3 +14,40 @@ Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etoo
 
 !ENTRY org.eclipse.core.jobs 2 2 2018-09-21 05:01:22.267
 !MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: com.ibm.etools.mft.node.NodeToolingPlugin$RemainingInitializationJob
+!SESSION 2018-09-21 06:14:19.525 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Parameterized_Build_Development/PI300/Deployable/APP_IN_ASN.bar -a APP_IN_ASN -l ${lib.name} -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Parameterized_Build_Development/PI300/Source -b C:/Program Files (x86)/Jenkins/workspace/Parameterized_Build_Development/PI300/Deployable/APP_IN_ASN.bar -a APP_IN_ASN -l ${lib.name} -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-09-21 06:14:21.044
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.core.jobs 4 2 2018-09-21 06:14:25.406
+!MESSAGE An internal error occurred during: "Initializing User-defined Node framework...".
+!STACK 0
+java.lang.ExceptionInInitializerError
+	at java.lang.J9VMInternals.ensureError(J9VMInternals.java:134)
+	at java.lang.J9VMInternals.recordInitializationFailure(J9VMInternals.java:123)
+	at com.ibm.etools.gef.emf.utility.impl.TranslatableStringImpl.getBundle(TranslatableStringImpl.java:232)
+	at com.ibm.etools.mft.node.UDNUIUtils.<clinit>(UDNUIUtils.java:422)
+	at com.ibm.etools.mft.node.NodeToolingPlugin$RemainingInitializationJob.run(NodeToolingPlugin.java:177)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.core.runtime.AssertionFailedException: assertion failed: The application has not been initialized.
+	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:110)
+	at org.eclipse.core.internal.runtime.InternalPlatform.assertInitialized(InternalPlatform.java:139)
+	at org.eclipse.core.internal.runtime.InternalPlatform.getStateLocation(InternalPlatform.java:545)
+	at org.eclipse.core.runtime.Plugin.getStateLocation(Plugin.java:313)
+	at org.eclipse.pde.internal.core.ExternalLibraryCache.getLibraryCacheDir(ExternalModelManager.java:288)
+	at org.eclipse.pde.internal.core.ExternalLibraryCache.cleanExtractedLibraries(ExternalModelManager.java:259)
+	at org.eclipse.pde.internal.core.ExternalModelManager.initializeModels(ExternalModelManager.java:74)
+	at org.eclipse.pde.internal.core.PluginModelManager.initializeTable(PluginModelManager.java:520)
+	at org.eclipse.pde.internal.core.PluginModelManager.getExternalModels(PluginModelManager.java:1027)
+	at com.ibm.etools.mft.uri.udn.UDNUtils.populateExternalModels(UDNUtils.java:110)
+	at com.ibm.etools.mft.uri.udn.UDNUtils.<clinit>(UDNUtils.java:92)
+	... 4 more
