@@ -1,0 +1,1 @@
+CREATE PROCEDURE decrypt(IN encryptedString CHAR) RETURNS CHAR LANGUAGE JAVA EXTERNAL NAME "com.esb.java.esbJavaRoutines.decrypt";

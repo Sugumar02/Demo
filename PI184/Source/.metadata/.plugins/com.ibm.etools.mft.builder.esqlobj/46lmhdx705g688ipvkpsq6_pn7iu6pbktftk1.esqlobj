@@ -1,0 +1,72 @@
+/*EATE FUNCTION Main() RETURNS BOOLE*/
+	BEGIN
+		
+		IF NOT EXISTS(CACHE.encryptedpwd[]) THEN -- Read flowconfig.xml file if encrypted password is not read before
+			SET OutputLocalEnvironment.Variables = Environment.Variables;
+			PROPAGATE to TERMINAL 'out1' DELETE NONE;
+			SET Environment.Variables = OutputLocalEnvironment.Variables;
+			DELETE FIELD OutputLocalEnvironment.Variables;
+		END IF;
+		
+		DECLARE objectRef REFERENCE TO Environment.XMLNSC.objectList;
+		
+		IF NOT EXISTS(CACHE.encryptedpwd[]) THEN
+			SET CACHE.encryptedpwd[] = SELECT A.password FROM objectRef.interface[] AS A WHERE A.id = Environment.Variables.InterfaceId; -- Fetching the encrypted password based on InterfaceId
+		END IF;
+
+		IF CACHE.encryptedpwd.password IS NULL OR CACHE.encryptedpwd.password ='' THEN -- Validating Encrypted Password Field
+			THROW USER EXCEPTION VALUES ('Password is not Set');
+		END IF;
+
+		IF EXISTS(CACHE.encryptedpwd.password[]) AND NOT EXISTS(CACHE.decryptedPassword[]) THEN
+			CALL decrypt(CACHE.encryptedpwd.password) INTO CACHE.decryptedPassword; -- Call Decryption procedure
+		END IF;
+
+		CREATE FIELD OutputLocalEnvironment.Destination.HTTP;
+		DECLARE refURL REFERENCE TO OutputLocalEnvironment.Destination.HTTP;
+
+		CREATE FIRSTCHILD OF Environment.Variables.Payload DOMAIN 'JSON' NAME 'JSON';
+		SET Environment.Variables.Payload.JSON = InputRoot.JSON;
+		-- If Session_Id exists then Sending Payload Data with existing Session Id.
+		IF EXISTS(CACHE.Session_Id[]) THEN
+			SET OutputRoot.HTTPInputHeader.Authorization = 'Basic sessionId=' ||CACHE.Session_Id ;
+			SET Environment.Variables.SessionId = CACHE.Session_Id ; -- For Audit Purpose
+			SET OutputRoot.JSON = Environment.Variables.Payload.JSON;
+			set refURL.RequestURL= RequestURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE ;
+		ELSE
+			-- Authenticating and Retrieving the Session ID.
+			SET OutputRoot.JSON.Data.username = UserName;
+			SET OutputRoot.JSON.Data.Password = CACHE.decryptedPassword;
+			SET refURL.RequestURL = LoginURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE;
+			-- Sending Payload Data with the Retrieved Session Id.
+			SET OutputRoot.HTTPInputHeader.Authorization = 'Basic sessionId=' ||CACHE.Session_Id ;
+			DELETE FIELD OutputRoot.JSON;
+			CREATE FIELD OutputRoot.JSON;
+			SET OutputRoot.JSON = Environment.Variables.Payload.JSON;
+			set refURL.RequestURL= RequestURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE;
+		END IF;
+		-- If the Session ID expired then Authenticating again to Retrieve new Session ID.
+		IF (Environment.Variables.responsecode = '401' )THEN
+			DELETE FIELD CACHE.Session_Id;
+			DELETE FIELD OutputRoot.JSON.Data.changes;
+			SET OutputRoot.JSON.Data.username = UserName;
+			SET OutputRoot.JSON.Data.Password = CACHE.decryptedPassword;
+			SET refURL.RequestURL = LoginURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE;
+			-- Sending Payload Data with the Retrieved Session Id.
+			DELETE FIELD OutputRoot.JSON;
+			SET OutputRoot.HTTPInputHeader.Authorization = 'Basic sessionId=' ||CACHE.Session_Id ;
+			CREATE FIELD OutputRoot.JSON;
+			SET OutputRoot.JSON = Environment.Variables.Payload.JSON;
+			set refURL.RequestURL= RequestURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE;
+		END IF;
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
