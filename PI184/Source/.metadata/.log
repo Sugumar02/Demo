@@ -869,3 +869,19 @@ Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etoo
 
 !ENTRY com.ibm.etools.references 4 0 2018-07-22 21:39:50.116
 !MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2018-09-21 07:13:51.995 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Parameterized_Build_Development/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l AUDIT_ERROR_LIB CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Parameterized_Build_Development/PI184/Source -b C:/Program Files (x86)/Jenkins/workspace/Parameterized_Build_Development/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l AUDIT_ERROR_LIB CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-09-21 07:13:53.288
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-09-21 07:13:53.551
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
