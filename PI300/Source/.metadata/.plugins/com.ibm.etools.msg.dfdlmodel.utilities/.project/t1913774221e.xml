@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><MessageBroker name="LIB_WMS">
+  <XSDCollection href="platform:/resource/LIB_WMS/RCPT_INB_IFD_27102017.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/RCPT_INB_IFD_27102017.xsd#//RCPT_INB_IFD;XSDElementDeclaration" name="RCPT_INB_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/CLOSE_WKO_v1.0.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/CLOSE_WKO_v1.0.xsd#//CLOSE_WKO;XSDElementDeclaration" name="CLOSE_WKO"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/UC_INV_RECONCILIATION_IFD_V1.0.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/UC_INV_RECONCILIATION_IFD_V1.0.xsd#//UC_INV_RECONCILIATION_IFD;XSDElementDeclaration" name="UC_INV_RECONCILIATION_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/SHIP_LOAD_OUB_IFD_v1.0.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/SHIP_LOAD_OUB_IFD_v1.0.xsd#//SHIP_LOAD_OUB_IFD;XSDElementDeclaration" name="SHIP_LOAD_OUB_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/WO_INB_IFD_v1.0.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/WO_INB_IFD_v1.0.xsd#//WO_INB_IFD;XSDElementDeclaration" name="WO_INB_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/INVENTORY_RECEIPT_ADJ_IFD_111017.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/INVENTORY_RECEIPT_ADJ_IFD_111017.xsd#//INVENTORY_RECEIPT_ADJ_IFD;XSDElementDeclaration" name="INVENTORY_RECEIPT_ADJ_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/SUPP_INB_IFD_27102017.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/SUPP_INB_IFD_27102017.xsd#//SUPP_INB_IFD;XSDElementDeclaration" name="SUPP_INB_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/CLOSE_PROD_LINE_v1.0.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/CLOSE_PROD_LINE_v1.0.xsd#//CLOSE_PROD_LINE;XSDElementDeclaration" name="CLOSE_PROD_LINE"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/INVENTORY_STATUS_CHANGE_IFD_V1.0.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/INVENTORY_STATUS_CHANGE_IFD_V1.0.xsd#//INVENTORY_STATUS_CHANGE_IFD;XSDElementDeclaration" name="INVENTORY_STATUS_CHANGE_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/INVENTORY_ADJUST_V1.0.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/INVENTORY_ADJUST_V1.0.xsd#//INVENTORY_ADJUST_IFD;XSDElementDeclaration" name="INVENTORY_ADJUST_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/SHIP_CANCEL_OUB_IFD_v1.0.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/SHIP_CANCEL_OUB_IFD_v1.0.xsd#//SHIP_CANCEL_OUB_IFD;XSDElementDeclaration" name="SHIP_CANCEL_OUB_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/RA_INB_IFD_17112017.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/RA_INB_IFD_17112017.xsd#//RA_INB_IFD;XSDElementDeclaration" name="RA_INB_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/INVENTORY_RECEIPT_IFD_101117.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/INVENTORY_RECEIPT_IFD_101117.xsd#//INVENTORY_RECEIPT_IFD;XSDElementDeclaration" name="INVENTORY_RECEIPT_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/CUST_INB_IFD_27102017.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/CUST_INB_IFD_27102017.xsd#//CUST_INB_IFD;XSDElementDeclaration" name="CUST_INB_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/PART_INB_IFD_27102017.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/PART_INB_IFD_27102017.xsd#//PART_INB_IFD;XSDElementDeclaration" name="PART_INB_IFD"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_WMS/ORDER_INB_IFD_v1.0.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_WMS/ORDER_INB_IFD_v1.0.xsd#//ORDER_INB_IFD;XSDElementDeclaration" name="ORDER_INB_IFD"/>
+  </XSDCollection>
+</MessageBroker>

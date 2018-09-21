@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><MessageBroker name="LIB_IGS_API_ASNInService">
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema2.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1">
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema2.xsd#//ASNInCtn;XSDElementDeclaration" name="ASNInCtn"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema2.xsd#//ASNInDesc;XSDElementDeclaration=1" name="ASNInDesc"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema2.xsd#//ASNInItem;XSDElementDeclaration=2" name="ASNInItem"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema2.xsd#//ASNInPO;XSDElementDeclaration=3" name="ASNInPO"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema2.xsd#//ASNInUIN;XSDElementDeclaration=4" name="ASNInUIN"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema5.xsd" prefix="Q1" targetNamespace="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1">
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema5.xsd#//BusinessObjectId;XSDElementDeclaration" name="BusinessObjectId"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd" prefix="xml" targetNamespace="http://www.w3.org/XML/1998/namespace">
+    <attribute href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd#//lang;XSDAttributeDeclaration" name="lang"/>
+    <attribute href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd#//space;XSDAttributeDeclaration=1" name="space"/>
+    <attribute href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd#//base;XSDAttributeDeclaration=2" name="base"/>
+    <attributeGroup href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd#//specialAttrs;XSDAttributeGroupDefinition" name="specialAttrs"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema7.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1">
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema7.xsd#//RoutingInfos;XSDElementDeclaration" name="RoutingInfos"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema7.xsd#//detail;XSDElementDeclaration=1" name="detail"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema7.xsd#//routingInfo;XSDElementDeclaration=2" name="routingInfo"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1">
+    <import name="ASNInPublishingService_InlineSchema3.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInDesc/v1"/>
+    <import name="ASNInPublishingService_InlineSchema1.xsd" targetNamespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1"/>
+    <import name="ASNInPublishingService_InlineSchema4.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInRef/v1"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//ping;XSDElementDeclaration" name="ping" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1}ping"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//pingResponse;XSDElementDeclaration=1" name="pingResponse" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1}pingResponse"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInCreateUsingExtOfNBASNInDesc;XSDElementDeclaration=2" name="publishNBASNInCreateUsingExtOfNBASNInDesc" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1}publishNBASNInCreateUsingExtOfNBASNInDesc"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInCreateUsingExtOfNBASNInDescResponse;XSDElementDeclaration=3" name="publishNBASNInCreateUsingExtOfNBASNInDescResponse" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1}publishNBASNInCreateUsingExtOfNBASNInDescResponse"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInDeleteUsingExtOfNBASNInRef;XSDElementDeclaration=4" name="publishNBASNInDeleteUsingExtOfNBASNInRef" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1}publishNBASNInDeleteUsingExtOfNBASNInRef"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInDeleteUsingExtOfNBASNInRefResponse;XSDElementDeclaration=5" name="publishNBASNInDeleteUsingExtOfNBASNInRefResponse" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1}publishNBASNInDeleteUsingExtOfNBASNInRefResponse"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInModifyUsingExtOfNBASNInDesc;XSDElementDeclaration=6" name="publishNBASNInModifyUsingExtOfNBASNInDesc" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1}publishNBASNInModifyUsingExtOfNBASNInDesc"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInModifyUsingExtOfNBASNInDescResponse;XSDElementDeclaration=7" name="publishNBASNInModifyUsingExtOfNBASNInDescResponse" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1}publishNBASNInModifyUsingExtOfNBASNInDescResponse"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInCreateUsingExtOfNBASNInDesc;XSDComplexTypeDefinition" name="publishNBASNInCreateUsingExtOfNBASNInDesc"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInCreateUsingExtOfNBASNInDescResponse;XSDComplexTypeDefinition=1" name="publishNBASNInCreateUsingExtOfNBASNInDescResponse"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInModifyUsingExtOfNBASNInDesc;XSDComplexTypeDefinition=2" name="publishNBASNInModifyUsingExtOfNBASNInDesc"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInModifyUsingExtOfNBASNInDescResponse;XSDComplexTypeDefinition=3" name="publishNBASNInModifyUsingExtOfNBASNInDescResponse"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInDeleteUsingExtOfNBASNInRef;XSDComplexTypeDefinition=4" name="publishNBASNInDeleteUsingExtOfNBASNInRef"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//publishNBASNInDeleteUsingExtOfNBASNInRefResponse;XSDComplexTypeDefinition=5" name="publishNBASNInDeleteUsingExtOfNBASNInRefResponse"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//ping;XSDComplexTypeDefinition=6" name="ping"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd#//pingResponse;XSDComplexTypeDefinition=7" name="pingResponse"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1">
+    <include name="/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema8.xsd" targetNamespace="http://www.oracle.com/retail/igs/integration/services/NBASNInPublishingService/v1"/>
+    <import name="ASNInPublishingService_InlineSchema7.xsd" targetNamespace="http://www.oracle.com/retail/integration/bus/gateway/services/RoutingInfos/v1"/>
+    <import name="ASNInPublishingService_InlineSchema6.xsd" targetNamespace="http://www.oracle.com/retail/integration/services/exception/v1"/>
+    <import name="ASNInPublishingService_InlineSchema5.xsd" targetNamespace="http://www.oracle.com/retail/integration/bus/gateway/services/BusinessObjectId/v1"/>
+    <import name="ASNInPublishingService_InlineSchema4.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInRef/v1"/>
+    <import name="ASNInPublishingService_InlineSchema3.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInDesc/v1"/>
+    <import name="ASNInPublishingService_InlineSchema2.xsd" targetNamespace="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1"/>
+    <import name="ASNInPublishingService_InlineSchema1.xsd" targetNamespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd" prefix="tns" targetNamespace="http://schemas.xmlsoap.org/soap/envelope/">
+    <import name="IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd" targetNamespace="http://www.w3.org/XML/1998/namespace"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Envelope;XSDElementDeclaration" name="Envelope" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://schemas.xmlsoap.org/soap/envelope/}Envelope"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Header;XSDElementDeclaration=1" name="Header" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://schemas.xmlsoap.org/soap/envelope/}Header"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Body;XSDElementDeclaration=2" name="Body" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Fault;XSDElementDeclaration=3" name="Fault" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://schemas.xmlsoap.org/soap/envelope/}Fault"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Envelope;XSDComplexTypeDefinition" name="Envelope"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Header;XSDComplexTypeDefinition=1" name="Header"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Body;XSDComplexTypeDefinition=2" name="Body"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Fault;XSDComplexTypeDefinition=3" name="Fault"/>
+    <complexType href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//FaultString;XSDComplexTypeDefinition=4" name="FaultString"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//detail;XSDComplexTypeDefinition=5" name="detail"/>
+    <simpleType href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//encodingStyle;XSDSimpleTypeDefinition" name="encodingStyle" variety="list"/>
+    <attribute href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//mustUnderstand;XSDAttributeDeclaration" name="mustUnderstand"/>
+    <attribute href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//actor;XSDAttributeDeclaration=1" name="actor"/>
+    <attribute href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//encodingStyle;XSDAttributeDeclaration=2" name="encodingStyle"/>
+    <attributeGroup href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//encodingStyle;XSDAttributeGroupDefinition" name="encodingStyle"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema4.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInRef/v1">
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema4.xsd#//ExtOfNBASNInRef;XSDElementDeclaration" name="ExtOfNBASNInRef"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema1.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/integration/services/ServiceOpStatus/v1">
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema1.xsd#//BusinessProblemDetail;XSDElementDeclaration" name="BusinessProblemDetail"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema1.xsd#//FailStatus;XSDElementDeclaration=1" name="FailStatus"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema1.xsd#//ProblemDetailEntry;XSDElementDeclaration=2" name="ProblemDetailEntry"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema1.xsd#//ServiceOpStatus;XSDElementDeclaration=3" name="ServiceOpStatus"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema1.xsd#//SuccessStatus;XSDElementDeclaration=4" name="SuccessStatus"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/soap.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/soap.xsd#//SOAP_Domain_Msg;XSDElementDeclaration" name="SOAP_Domain_Msg" type="mlib://LIB_IGS_API_ASNInService#/-/complexType{}SOAP_Msg_type"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/soap.xsd#//MIME_Headers_type;XSDComplexTypeDefinition" name="MIME_Headers_type"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/soap.xsd#//Attachment_type;XSDComplexTypeDefinition=1" name="Attachment_type"/>
+    <complexType baseType="mlib://LIB_IGS_API_ASNInService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/soap.xsd#//SOAP_Msg_type;XSDComplexTypeDefinition=2" name="SOAP_Msg_type"/>
+    <group href="platform:/resource/LIB_IGS_API_ASNInService/IBMdefined/soap.xsd#//MIME_header_fields;XSDModelGroupDefinition" name="MIME_header_fields"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema6.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/integration/services/exception/v1">
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema6.xsd#//BusinessProblemDetail;XSDElementDeclaration" name="BusinessProblemDetail"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema6.xsd#//IllegalStateWSFaultException;XSDElementDeclaration=1" name="IllegalStateWSFaultException"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema6.xsd#//ProblemDetailEntry;XSDElementDeclaration=2" name="ProblemDetailEntry"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema6.xsd#//PublishingWSFaultException;XSDElementDeclaration=3" name="PublishingWSFaultException"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema6.xsd#//ServiceOpFaultReason;XSDElementDeclaration=4" name="ServiceOpFaultReason"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema6.xsd#//ValidationWSFaultException;XSDElementDeclaration=5" name="ValidationWSFaultException"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema3.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInDesc/v1">
+    <import name="ASNInPublishingService_InlineSchema2.xsd" targetNamespace="http://www.oracle.com/retail/integration/base/bo/ASNInDesc/v1"/>
+    <element href="platform:/resource/LIB_IGS_API_ASNInService/ASNInPublishingService_InlineSchema3.xsd#//ExtOfNBASNInDesc;XSDElementDeclaration" name="ExtOfNBASNInDesc"/>
+  </XSDCollection>
+</MessageBroker>
