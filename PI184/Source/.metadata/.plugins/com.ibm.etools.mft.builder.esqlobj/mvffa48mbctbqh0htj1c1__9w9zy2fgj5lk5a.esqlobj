@@ -1,0 +1,42 @@
+/*EATE FUNCTION Main() RETURNS BOOLE*/
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		SET Environment.Variables.responsecode = InputRoot.HTTPResponseHeader."X-Original-HTTP-Status-Code"; -- For Audit Purpose
+		DECLARE CcsidValue INTEGER COALESCE(InputRoot.MQMD.CodedCharSetId,1208);
+		DECLARE ERROR CHAR CAST(CAST(InputRoot.BLOB.BLOB AS BLOB) AS CHAR CCSID CcsidValue);
+
+		SET Environment.Variables.ErrorResponse = ERROR ; -- For Audit Purpose
+		-- Throwing User Exception for Response Code Values other than 200 and 401.
+		IF (Environment.Variables.responsecode NOT IN (200,401) )THEN
+			THROW USER EXCEPTION VALUES ( 'Error Response Code ',Environment.Variables.responsecode,'Reason ',ERROR);
+		END IF;		
+
+
+		IF NOT EXISTS(CACHE.Session_Id[]) THEN
+			-- Throwing User Exception incase of Invalid Credentials.
+			IF NOT EXISTS (InputRoot.JSON.Data.sessionId[]) THEN
+				THROW USER EXCEPTION VALUES('Invalid Username or Password');
+			END IF;
+			-- Setting the Session Id to CACHE variable.
+			SET CACHE.Session_Id = InputRoot.JSON.Data.sessionId;
+			SET Environment.Variables.SessionId = InputRoot.JSON.Data.sessionId ; -- For Audit Purpose
+		END IF;
+
+		SET Environment.Variables.SessionCode = CAST (Environment.Variables.SessionId AS CHAR ) || '_' || CAST (Environment.Variables.responsecode AS CHAR );
+
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;

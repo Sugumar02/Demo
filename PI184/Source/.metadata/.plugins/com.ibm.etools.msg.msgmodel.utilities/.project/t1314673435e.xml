@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><MRMessageSet id="NI1OR5O002001" name="ORACLE_XCHG_RATESMessageSet" parser="XMLNSC">
-  <MRMsgCollection href="platform:/resource/ORACLE_XCHG_RATESMessageSet/ORACLE_XCHG_RATESMessageSet/FXRateXSD20170105.mxsd" prefix="" targetNamespace="">
+  
+<MRMsgCollection href="platform:/resource/ORACLE_XCHG_RATESMessageSet/ORACLE_XCHG_RATESMessageSet/FXRateXSD20170105.mxsd" prefix="" targetNamespace="">
     <message href="platform:/resource/ORACLE_XCHG_RATESMessageSet/ORACLE_XCHG_RATESMessageSet/FXRateXSD20170105.mxsd#/0/LIST_OF_FX_RATES;XSDElementDeclaration$MRMessage" name="LIST_OF_FX_RATES"/>
     <element href="platform:/resource/ORACLE_XCHG_RATESMessageSet/ORACLE_XCHG_RATESMessageSet/FXRateXSD20170105.mxsd#/0/LIST_OF_FX_RATES;XSDElementDeclaration" name="LIST_OF_FX_RATES"/>
   </MRMsgCollection>

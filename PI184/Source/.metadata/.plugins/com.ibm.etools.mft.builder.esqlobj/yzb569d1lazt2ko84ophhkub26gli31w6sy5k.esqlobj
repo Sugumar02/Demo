@@ -1,0 +1,23 @@
+/*EATE FUNCTION Main() RETURNS BOOLE*/
+	BEGIN
+		 CALL CopyMessageHeaders();
+		 CALL CopyEntireMessage();
+		 SET Environment.Variables.BussinessInfo.MessageId = COALESCE(OutputRoot.MQRFH2.usr.UUID || '|' || InputRoot.XMLNSC.LIST_OF_FX_RATES.FX_RATE[1].EXTRACTION_DATE,OutputRoot.MQRFH2.usr.UUID || '|' || 'Empty Message Dropped off');
+		 PROPAGATE TO TERMINAL 'out1' DELETE NONE;
+		 PROPAGATE TO TERMINAL 'out' DELETE NONE;
+		 RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
