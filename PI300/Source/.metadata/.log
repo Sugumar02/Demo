@@ -104,3 +104,31 @@ Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etoo
 
 !ENTRY com.ibm.etools.references 4 0 2018-09-21 07:32:16.549
 !MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2018-09-21 07:48:55.958 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Parameterized_Build_Development/PI300/Deployable/APP_IN_ASN.bar -a APP_IN_ASN -l LIB_IGS_API_ASNInService LIB_IGS_API_ASNOutService LIB_IGS_API_XOrderService LIB_RMS_API_NBASNService LIB_RMS_API_NBTsfService LIB_ESB_COMMON_JAVA -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Parameterized_Build_Development/PI300/Source -b C:/Program Files (x86)/Jenkins/workspace/Parameterized_Build_Development/PI300/Deployable/APP_IN_ASN.bar -a APP_IN_ASN -l LIB_IGS_API_ASNInService LIB_IGS_API_ASNOutService LIB_IGS_API_XOrderService LIB_RMS_API_NBASNService LIB_RMS_API_NBTsfService LIB_ESB_COMMON_JAVA -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-09-21 07:48:57.171
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-09-21 07:48:57.442
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2018-09-21 07:49:07.794
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-09-21 07:49:07.795
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2018-09-21 07:49:42.061
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2018-09-21 07:49:42.061
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 

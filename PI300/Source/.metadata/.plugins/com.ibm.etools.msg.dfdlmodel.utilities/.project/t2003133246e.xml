@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><MessageBroker name="LIB_SIV">
+  <XSDCollection href="platform:/resource/LIB_SIV/IBMdefined/CommaSeparatedFormat.xsd" prefix="tns" targetNamespace="http://www.ibm.com/dfdl/CommaSeparatedFormat"/>
+  <XSDCollection href="platform:/resource/LIB_SIV/FREIGHT_INVOICE_BRK.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/RecordFixLengthFieldFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/RecordFixLengthFieldFormat"/>
+    <element href="platform:/resource/LIB_SIV/FREIGHT_INVOICE_BRK.xsd#//FreightInvoiceBrk;XSDElementDeclaration" name="FreightInvoiceBrk"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/FACTORIES.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/RecordSeparatedFieldFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat"/>
+    <element href="platform:/resource/LIB_SIV/FACTORIES.xsd#//Factories;XSDElementDeclaration" name="Factories"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/ITEMS.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/RecordSeparatedFieldFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat"/>
+    <element href="platform:/resource/LIB_SIV/ITEMS.xsd#//Items;XSDElementDeclaration" name="Items"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/ASN.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/RecordSeparatedFieldFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat"/>
+    <element href="platform:/resource/LIB_SIV/ASN.xsd#//SIVASNs;XSDElementDeclaration" name="SIVASNs"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/PRERECEIPT_SH.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/CommaSeparatedFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/CommaSeparatedFormat"/>
+    <element href="platform:/resource/LIB_SIV/PRERECEIPT_SH.xsd#//PreReceiptSh;XSDElementDeclaration" name="PreReceiptSh"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/IBMdefined/RecordFixLengthFieldFormat.xsd" prefix="tns" targetNamespace="http://www.ibm.com/dfdl/RecordFixLengthFieldFormat"/>
+  <XSDCollection href="platform:/resource/LIB_SIV/PRERECEIPT_CONT.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/CommaSeparatedFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/CommaSeparatedFormat"/>
+    <element href="platform:/resource/LIB_SIV/PRERECEIPT_CONT.xsd#//PreReceiptCont;XSDElementDeclaration" name="PreReceiptCont"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/PRERECEIPT_PO.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/CommaSeparatedFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/CommaSeparatedFormat"/>
+    <element href="platform:/resource/LIB_SIV/PRERECEIPT_PO.xsd#//PreReceiptPo;XSDElementDeclaration" name="PreReceiptPo"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/PRERECEIPT_EVENT.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/CommaSeparatedFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/CommaSeparatedFormat"/>
+    <element href="platform:/resource/LIB_SIV/PRERECEIPT_EVENT.xsd#//PreReceiptEvent;XSDElementDeclaration" name="PreReceiptEvent"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/SUPPLIERS.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/RecordSeparatedFieldFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat"/>
+    <element href="platform:/resource/LIB_SIV/SUPPLIERS.xsd#//Suppliers;XSDElementDeclaration" name="Suppliers"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/IBMdefined/RecordSeparatedFieldFormat.xsd" prefix="tns" targetNamespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat"/>
+  <XSDCollection href="platform:/resource/LIB_SIV/PO.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/RecordSeparatedFieldFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat"/>
+    <element href="platform:/resource/LIB_SIV/PO.xsd#//SIVPO;XSDElementDeclaration" name="SIVPO"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_SIV/FREIGHT_INVOICE.xsd" prefix="" targetNamespace="">
+    <import name="IBMdefined/RecordFixLengthFieldFormat.xsd" targetNamespace="http://www.ibm.com/dfdl/RecordFixLengthFieldFormat"/>
+    <element href="platform:/resource/LIB_SIV/FREIGHT_INVOICE.xsd#//FreightInvoice;XSDElementDeclaration" name="FreightInvoice"/>
+  </XSDCollection>
+</MessageBroker>
