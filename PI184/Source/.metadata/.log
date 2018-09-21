@@ -1,0 +1,871 @@
+!SESSION 2017-06-23 18:57:51.993 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Test1/ORACLE_XCHG_RATES_23-June-2017.bar -a ORACLE_XCHG_RATES -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Test1/ORACLE_XCHG_RATES_23-June-2017.bar -a ORACLE_XCHG_RATES -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-06-23 18:57:58.166
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-23 18:58:19.044
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-23 18:58:22.633
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-23 18:58:22.635
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2017-06-23 18:58:46.279
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2017-06-23 18:58:46.281
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2017-06-23 21:16:08.101 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Test1/ORACLE_XCHG_RATES_23-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Test1/ORACLE_XCHG_RATES_23-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-06-23 21:16:11.953
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-06-23 21:16:12.485
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-23 21:16:19.163
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-23 21:16:21.811
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-23 21:16:21.813
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2017-06-23 21:16:40.235
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2017-06-23 21:16:40.237
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2017-06-28 13:01:31.317 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Pre-Prod1/ORACLE_XCHG_RATES_28-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Pre-Prod1/ORACLE_XCHG_RATES_28-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-06-28 13:01:33.791
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-06-28 13:01:34.384
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-28 13:01:42.944
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-28 13:01:45.062
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-28 13:01:45.065
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+!SESSION 2017-06-28 14:04:43.383 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Pre-Prod2/ORACLE_XCHG_RATES_28-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Pre-Prod2/ORACLE_XCHG_RATES_28-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-06-28 14:04:46.084
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-06-28 14:04:46.684
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-28 14:04:53.259
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-28 14:04:56.504
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-28 14:04:56.506
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2017-06-28 14:05:16.553
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2017-06-28 14:05:16.555
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2017-06-29 11:03:30.455 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_29-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_29-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-06-29 11:03:33.464
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-06-29 11:03:34.406
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-29 11:03:44.404
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-29 11:03:49.912
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-29 11:03:49.915
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+!SESSION 2017-06-30 12:58:18.931 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_30-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_30-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-06-30 12:58:22.465
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-06-30 12:58:23.575
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-30 12:58:34.934
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-30 12:58:38.624
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-30 12:58:38.633
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+!SESSION 2017-06-30 16:55:22.225 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Prod1/ORACLE_XCHG_RATES_30-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Prod1/ORACLE_XCHG_RATES_30-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-06-30 16:55:24.403
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-06-30 16:55:25.661
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-30 16:55:33.687
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-30 16:55:36.049
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-30 16:55:36.052
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+!SESSION 2017-06-30 18:31:54.487 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Prod2/ORACLE_XCHG_RATES_30-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Prod2/ORACLE_XCHG_RATES_30-June-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-06-30 18:31:58.506
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-06-30 18:31:59.177
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-30 18:32:06.664
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-30 18:32:10.588
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-06-30 18:32:10.591
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2017-06-30 18:32:29.732
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2017-06-30 18:32:29.734
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2017-07-03 11:12:17.291 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_3-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source/ -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_3-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-07-03 11:12:20.003
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-07-03 11:12:20.690
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-03 11:12:30.328
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-03 11:12:33.193
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-03 11:12:33.195
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2017-07-03 11:12:53.835
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2017-07-03 11:12:53.837
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2017-07-03 11:31:16.831 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_3-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_3-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-07-03 11:31:24.413
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-07-03 11:31:25.672
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-03 11:31:46.914
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-03 11:31:51.169
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-03 11:31:51.173
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+!SESSION 2017-07-03 13:21:54.146 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_3-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_3-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-07-03 13:21:57.903
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-07-03 13:21:58.601
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-03 13:22:10.398
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-03 13:22:14.731
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-03 13:22:14.748
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2017-07-03 13:22:37.734
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2017-07-03 13:22:37.736
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2017-07-06 21:14:16.860 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_6-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source/ -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_6-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-07-06 21:14:27.381
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-07-06 21:14:28.665
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-06 21:14:46.861
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-06 21:14:52.428
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-06 21:14:52.428
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2017-07-06 21:15:23.555
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2017-07-06 21:15:23.683
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2017-07-11 03:32:56.441 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_11-July-2017.bar -a ORACLE_XCHG_RATES -l C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/Common_Library/CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_11-July-2017.bar -a ORACLE_XCHG_RATES -l C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/Common_Library/CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-07-11 03:33:04.760
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-07-11 03:33:06.354
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.core.jobs 4 2 2017-07-11 03:33:09.975
+!MESSAGE An internal error occurred during: "Initializing User-defined Node framework...".
+!STACK 0
+java.lang.ExceptionInInitializerError
+	at java.lang.J9VMInternals.ensureError(J9VMInternals.java:134)
+	at java.lang.J9VMInternals.recordInitializationFailure(J9VMInternals.java:123)
+	at com.ibm.etools.gef.emf.utility.impl.TranslatableStringImpl.getBundle(TranslatableStringImpl.java:232)
+	at com.ibm.etools.mft.node.UDNUIUtils.<clinit>(UDNUIUtils.java:422)
+	at com.ibm.etools.mft.node.NodeToolingPlugin$RemainingInitializationJob.run(NodeToolingPlugin.java:177)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: java.lang.NullPointerException
+	at com.ibm.etools.mft.uri.udn.UDNUtils.getModelManager(UDNUtils.java:85)
+	at com.ibm.etools.mft.uri.udn.UDNUtils.populateExternalModels(UDNUtils.java:110)
+	at com.ibm.etools.mft.uri.udn.UDNUtils.<clinit>(UDNUtils.java:92)
+	... 4 more
+!SESSION 2017-07-11 04:13:40.496 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_11-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_11-July-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-07-11 04:13:58.938
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.osgi 2 0 2017-07-11 04:14:05.048
+!MESSAGE While loading class "org.eclipse.core.internal.resources.Rules", thread "Thread[Worker-0,5,main]" timed out waiting (4987ms) for thread "Thread[main,5,main]" to finish starting bundle "org.eclipse.core.resources_3.8.1.v20121114-1244 [693]". To avoid deadlock, thread "Thread[Worker-0,5,main]" is proceeding but "org.eclipse.core.internal.resources.Rules" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.core.resources_3.8.1.v20121114-1244.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1088)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:298)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:263)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:469)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:395)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:464)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:421)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:412)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:741)
+	at org.eclipse.core.internal.resources.Workspace.getRuleFactory(Workspace.java:1796)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1689)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:167)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 18 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1088)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:298)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:263)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:469)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:395)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:464)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:421)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:412)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:741)
+	at org.eclipse.core.internal.resources.Workspace.getRuleFactory(Workspace.java:1796)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1689)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:167)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+
+!ENTRY org.eclipse.osgi 2 0 2017-07-11 04:14:10.054
+!MESSAGE While loading class "org.eclipse.core.resources.team.ResourceRuleFactory", thread "Thread[Worker-0,5,main]" timed out waiting (5001ms) for thread "Thread[main,5,main]" to finish starting bundle "org.eclipse.core.resources_3.8.1.v20121114-1244 [693]". To avoid deadlock, thread "Thread[Worker-0,5,main]" is proceeding but "org.eclipse.core.resources.team.ResourceRuleFactory" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.core.resources_3.8.1.v20121114-1244.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1088)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:298)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:263)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:469)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:395)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:464)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:421)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:412)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:741)
+	at org.eclipse.core.internal.resources.Workspace.getRuleFactory(Workspace.java:1796)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1689)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:167)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 18 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1088)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:298)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:263)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:469)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:395)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:464)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:421)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:412)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:741)
+	at org.eclipse.core.internal.resources.Workspace.getRuleFactory(Workspace.java:1796)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1689)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:167)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-07-11 04:14:11.684
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-11 04:15:22.758
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-11 04:15:30.905
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-07-11 04:15:30.908
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+!SESSION 2017-08-07 00:07:11.232 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_7-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Dev/ORACLE_XCHG_RATES_7-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-08-07 00:07:13.300
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-08-07 00:07:14.151
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-07 00:07:21.481
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-07 00:07:23.498
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-07 00:07:23.498
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+!SESSION 2017-08-08 00:29:26.827 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Test1/ORACLE_XCHG_RATES_8-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Test1/ORACLE_XCHG_RATES_8-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-08-08 00:29:30.089
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-08-08 00:29:30.745
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 00:29:37.288
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 00:29:39.985
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 00:29:39.988
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+!SESSION 2017-08-08 01:28:04.803 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Test2/ORACLE_XCHG_RATES_8-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Test2/ORACLE_XCHG_RATES_8-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-08-08 01:28:07.060
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-08-08 01:28:07.428
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 01:28:14.317
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 01:28:16.344
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 01:28:16.344
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2017-08-08 01:28:37.179
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2017-08-08 01:28:37.183
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2017-08-08 02:32:33.872 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Pre-Prod1/ORACLE_XCHG_RATES_8-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Pre-Prod1/ORACLE_XCHG_RATES_8-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-08-08 02:32:36.047
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-08-08 02:32:36.503
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 02:32:43.082
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 02:32:45.252
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 02:32:45.254
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2017-08-08 02:33:05.778
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2017-08-08 02:33:05.781
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2017-08-08 03:23:15.070 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows 7 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Pre-Prod2/ORACLE_XCHG_RATES_8-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Source -b C:/Program Files (x86)/Jenkins/jobs/Bar_Build/workspace/PI184/Deployable/Pre-Prod2/ORACLE_XCHG_RATES_8-August-2017.bar -a ORACLE_XCHG_RATES -l CallPiatService -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-08-08 03:23:18.409
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2017-08-08 03:23:18.873
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 03:23:25.854
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 03:23:29.029
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2017-08-08 03:23:29.032
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+!SESSION 2018-07-18 14:05:13.236 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Source -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-07-18 14:05:14.401
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-07-18 14:05:14.624
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-18 14:05:18.230
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-18 14:05:19.748
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-18 14:05:19.748
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-18 14:05:36.943
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-18 14:05:36.943
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2018-07-18 21:34:34.126 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Source -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-07-18 21:34:35.360
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-07-18 21:34:35.626
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-18 21:34:39.392
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-18 21:34:40.798
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-18 21:34:40.798
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-18 21:34:57.767
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-18 21:34:57.767
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2018-07-19 06:11:22.925 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Source -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-07-19 06:11:24.196
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-07-19 06:11:24.490
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-19 06:11:28.327
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-19 06:11:29.945
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-19 06:11:29.945
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-19 06:11:46.733
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-19 06:11:46.733
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2018-07-19 21:35:01.968 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Source -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-07-19 21:35:03.433
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-07-19 21:35:03.761
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-19 21:35:07.636
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-19 21:35:09.149
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-19 21:35:09.149
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-19 21:35:26.022
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-19 21:35:26.022
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2018-07-20 12:07:48.326 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Source -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-07-20 12:07:49.552
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-07-20 12:07:49.810
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-20 12:07:53.449
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-20 12:07:54.940
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-20 12:07:54.941
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-20 12:08:11.757
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-20 12:08:11.758
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2018-07-20 21:34:26.400 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Source -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-07-20 21:34:27.634
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-07-20 21:34:27.884
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-20 21:34:31.759
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-20 21:34:33.181
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-20 21:34:33.181
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-20 21:34:49.025
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-20 21:34:49.025
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2018-07-21 21:39:18.104 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Source -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-07-21 21:39:19.323
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-07-21 21:39:19.573
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-21 21:39:23.307
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-21 21:39:24.651
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-21 21:39:24.651
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-21 21:39:41.495
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-21 21:39:41.495
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 
+!SESSION 2018-07-22 21:39:26.441 -----------------------------------------------
+eclipse.buildId=4.2.2.M20140918-1444
+java.fullversion=JRE 1.7.0 IBM J9 2.7 Windows Server 2012 R2 amd64-64 Compressed References 20150630_255653 (JIT enabled, AOT enabled)
+J9VM - R27_Java727_SR3_20150630_2236_B255653
+JIT  - tr.r13.java_20150623_94888.01
+GC   - R27_Java727_SR3_20150630_2236_B255653_CMPRSS
+J9CL - 20150630_255653
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -noupdate -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+Command-line arguments:  -noupdate -os win32 -ws win32 -application com.ibm.etools.mft.bar.cmdline.mqsicreatebar -data C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Source -b C:/Program Files (x86)/Jenkins/workspace/Scheduled_Build_Test/PI184/Deployable/ORACLE_XCHG_RATES.bar -a ORACLE_XCHG_RATES -l CallPiatService ESB_COMMON_LIBRARY -deployAsSource -wmbtData
+
+!ENTRY org.eclipse.core.resources 2 10035 2018-07-22 21:39:27.691
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.emf.ecore 2 0 2018-07-22 21:39:27.972
+!MESSAGE Both 'com.ibm.etools.javaee.core' and 'com.ibm.etools.mft.service.model' register an extension parser for 'application'
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-22 21:39:31.644
+!MESSAGE NLS missing message: Messages_EnumValue_BlockFinal_empty in: com.ibm.etools.msg.coremodel.utilities.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-22 21:39:33.144
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorSchemaInAppImportSchemaInSharedLib in: com.ibm.etools.msg.builder.messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-07-22 21:39:33.144
+!MESSAGE NLS unused message: DFDLXSDResourceBuilder_errorProjectReferenceIsMissing in: com.ibm.etools.msg.builder.messages
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-22 21:39:50.116
+!MESSAGE Link indexer shutdown-0[ERROR]Markers job was running at shutdown
+
+!ENTRY com.ibm.etools.references 4 0 2018-07-22 21:39:50.116
+!MESSAGE Link indexer shutdown-0[ERROR]Unsafe processor shutdown, index will be rebuilt on startup. (More exceptions may follow this message and likely can be ignored due to unsafe shutdown) 

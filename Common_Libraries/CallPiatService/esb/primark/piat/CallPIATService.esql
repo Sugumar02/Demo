@@ -1,0 +1,150 @@
+/*
+* Filename CallPIATService.esql
+* Modulename ComposeServiceCall
+* Date 			   LibraryName 		  			Name 				  Version 		Description
+* 02/01/2017 	CallPiatService 	G Sugumar Raja & ShahulHameed SS 	0.1 	Initial Version - Retrieving Session Id and
+																				Sending Payload Data to PIAT Server.
+* 06/01/2017 	CallPiatService 			G Sugumar Raja 				0.2 	Updated Version - Decrypting the encrypted password
+																				and Sending Payload Data to PIAT Server.
+* 06/05/2017	CallPiatService				G Sugumar Raja 				0.3		IQA Review comments are incorporated - Added Empty password
+																				scenario and using 'SELECT'statement instead of WHILE loop.
+* 07/06/2017	CallPiatService				G Sugumar Raja 				0.4		Incorporationg TEG Subflow with the Main Flow for Audit purpose.													
+*/
+
+BROKER SCHEMA esb.primark.piat
+PATH com.esb.common.functions;
+
+DECLARE CACHE SHARED ROW ;
+DECLARE UserName EXTERNAL CHARACTER '';
+DECLARE LoginURL EXTERNAL CHARACTER '';
+DECLARE RequestURL EXTERNAL CHARACTER '';	
+
+
+CREATE COMPUTE MODULE ComposeServiceCall
+
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		IF NOT EXISTS(CACHE.encryptedpwd[]) THEN -- Read flowconfig.xml file if encrypted password is not read before
+			SET OutputLocalEnvironment.Variables = Environment.Variables;
+			PROPAGATE to TERMINAL 'out1' DELETE NONE;
+			SET Environment.Variables = OutputLocalEnvironment.Variables;
+			DELETE FIELD OutputLocalEnvironment.Variables;
+		END IF;
+		
+		DECLARE objectRef REFERENCE TO Environment.XMLNSC.objectList;
+		
+		IF NOT EXISTS(CACHE.encryptedpwd[]) THEN
+			SET CACHE.encryptedpwd[] = SELECT A.password FROM objectRef.interface[] AS A WHERE A.id = Environment.Variables.InterfaceId; -- Fetching the encrypted password based on InterfaceId
+		END IF;
+
+		IF CACHE.encryptedpwd.password IS NULL OR CACHE.encryptedpwd.password ='' THEN -- Validating Encrypted Password Field
+			THROW USER EXCEPTION VALUES ('Password is not Set');
+		END IF;
+
+		IF EXISTS(CACHE.encryptedpwd.password[]) AND NOT EXISTS(CACHE.decryptedPassword[]) THEN
+			CALL decrypt(CACHE.encryptedpwd.password) INTO CACHE.decryptedPassword; -- Call Decryption procedure
+		END IF;
+
+		CREATE FIELD OutputLocalEnvironment.Destination.HTTP;
+		DECLARE refURL REFERENCE TO OutputLocalEnvironment.Destination.HTTP;
+
+		CREATE FIRSTCHILD OF Environment.Variables.Payload DOMAIN 'JSON' NAME 'JSON';
+		SET Environment.Variables.Payload.JSON = InputRoot.JSON;
+		-- If Session_Id exists then Sending Payload Data with existing Session Id.
+		IF EXISTS(CACHE.Session_Id[]) THEN
+			SET OutputRoot.HTTPInputHeader.Authorization = 'Basic sessionId=' ||CACHE.Session_Id ;
+			SET Environment.Variables.SessionId = CACHE.Session_Id ; -- For Audit Purpose
+			SET OutputRoot.JSON = Environment.Variables.Payload.JSON;
+			set refURL.RequestURL= RequestURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE ;
+		ELSE
+			-- Authenticating and Retrieving the Session ID.
+			SET OutputRoot.JSON.Data.username = UserName;
+			SET OutputRoot.JSON.Data.Password = CACHE.decryptedPassword;
+			SET refURL.RequestURL = LoginURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE;
+			-- Sending Payload Data with the Retrieved Session Id.
+			SET OutputRoot.HTTPInputHeader.Authorization = 'Basic sessionId=' ||CACHE.Session_Id ;
+			DELETE FIELD OutputRoot.JSON;
+			CREATE FIELD OutputRoot.JSON;
+			SET OutputRoot.JSON = Environment.Variables.Payload.JSON;
+			set refURL.RequestURL= RequestURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE;
+		END IF;
+		-- If the Session ID expired then Authenticating again to Retrieve new Session ID.
+		IF (Environment.Variables.responsecode = '401' )THEN
+			DELETE FIELD CACHE.Session_Id;
+			DELETE FIELD OutputRoot.JSON.Data.changes;
+			SET OutputRoot.JSON.Data.username = UserName;
+			SET OutputRoot.JSON.Data.Password = CACHE.decryptedPassword;
+			SET refURL.RequestURL = LoginURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE;
+			-- Sending Payload Data with the Retrieved Session Id.
+			DELETE FIELD OutputRoot.JSON;
+			SET OutputRoot.HTTPInputHeader.Authorization = 'Basic sessionId=' ||CACHE.Session_Id ;
+			CREATE FIELD OutputRoot.JSON;
+			SET OutputRoot.JSON = Environment.Variables.Payload.JSON;
+			set refURL.RequestURL= RequestURL;
+			PROPAGATE to TERMINAL 'out' DELETE NONE;
+		END IF;
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+/*
+* Filename CallPIATService.esql
+* Modulename ValidatePIATResponse
+* Date LibraryName Name Version Description
+* 01/02/2017 CallPiatService G Sugumar Raja & ShahulHameed SS 0.1 Initial Version - Checking the Response Code
+and throwing User Exception based on Response
+Code Values.
+*/
+
+CREATE COMPUTE MODULE ValidatePIATResponse
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		SET Environment.Variables.responsecode = InputRoot.HTTPResponseHeader."X-Original-HTTP-Status-Code"; -- For Audit Purpose
+		DECLARE CcsidValue INTEGER COALESCE(InputRoot.MQMD.CodedCharSetId,1208);
+		DECLARE ERROR CHAR CAST(CAST(InputRoot.BLOB.BLOB AS BLOB) AS CHAR CCSID CcsidValue);
+
+		SET Environment.Variables.ErrorResponse = ERROR ; -- For Audit Purpose
+		-- Throwing User Exception for Response Code Values other than 200 and 401.
+		IF (Environment.Variables.responsecode NOT IN (200,401) )THEN
+			THROW USER EXCEPTION VALUES ( 'Error Response Code ',Environment.Variables.responsecode,'Reason ',ERROR);
+		END IF;		
+
+
+		IF NOT EXISTS(CACHE.Session_Id[]) THEN
+			-- Throwing User Exception incase of Invalid Credentials.
+			IF NOT EXISTS (InputRoot.JSON.Data.sessionId[]) THEN
+				THROW USER EXCEPTION VALUES('Invalid Username or Password');
+			END IF;
+			-- Setting the Session Id to CACHE variable.
+			SET CACHE.Session_Id = InputRoot.JSON.Data.sessionId;
+			SET Environment.Variables.SessionId = InputRoot.JSON.Data.sessionId ; -- For Audit Purpose
+		END IF;
+
+		SET Environment.Variables.SessionCode = CAST (Environment.Variables.SessionId AS CHAR ) || '_' || CAST (Environment.Variables.responsecode AS CHAR );
+
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

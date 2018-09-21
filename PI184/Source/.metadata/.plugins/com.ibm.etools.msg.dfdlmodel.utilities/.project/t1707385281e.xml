@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><MessageBroker name="ORACLE_XCHG_RATES">
+  <XSDCollection href="platform:/resource/ORACLE_XCHG_RATES/FXRateXSD20170105.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/ORACLE_XCHG_RATES/FXRateXSD20170105.xsd#//LIST_OF_FX_RATES;XSDElementDeclaration" name="LIST_OF_FX_RATES"/>
+  </XSDCollection>
+</MessageBroker>
