@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><MessageBroker name="LIB_RMS_API_NBASNService">
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1">
+    <import name="NBASNService_InlineSchema11.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPORef/v1"/>
+    <import name="NBASNService_InlineSchema5.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInfoDesc/v1"/>
+    <import name="NBASNService_InlineSchema7.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegRef/v1"/>
+    <import name="NBASNService_InlineSchema8.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegDesc/v1"/>
+    <import name="NBASNService_InlineSchema6.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoRef/v1"/>
+    <import name="NBASNService_InlineSchema4.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoDesc/v1"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getASNInfo;XSDElementDeclaration" name="getASNInfo" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.oracle.com/retail/primark/integration/services/NBASNService/v1}getASNInfo"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getASNInfoResponse;XSDElementDeclaration=1" name="getASNInfoResponse" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.oracle.com/retail/primark/integration/services/NBASNService/v1}getASNInfoResponse"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getPOInfo;XSDElementDeclaration=2" name="getPOInfo" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.oracle.com/retail/primark/integration/services/NBASNService/v1}getPOInfo"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getPOInfoResponse;XSDElementDeclaration=3" name="getPOInfoResponse" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.oracle.com/retail/primark/integration/services/NBASNService/v1}getPOInfoResponse"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getTsfWhLeg;XSDElementDeclaration=4" name="getTsfWhLeg" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.oracle.com/retail/primark/integration/services/NBASNService/v1}getTsfWhLeg"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getTsfWhLegResponse;XSDElementDeclaration=5" name="getTsfWhLegResponse" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.oracle.com/retail/primark/integration/services/NBASNService/v1}getTsfWhLegResponse"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//ping;XSDElementDeclaration=6" name="ping" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.oracle.com/retail/primark/integration/services/NBASNService/v1}ping"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//pingResponse;XSDElementDeclaration=7" name="pingResponse" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.oracle.com/retail/primark/integration/services/NBASNService/v1}pingResponse"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getASNInfo;XSDComplexTypeDefinition" name="getASNInfo"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getASNInfoResponse;XSDComplexTypeDefinition=1" name="getASNInfoResponse"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//ping;XSDComplexTypeDefinition=2" name="ping"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//pingResponse;XSDComplexTypeDefinition=3" name="pingResponse"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getTsfWhLeg;XSDComplexTypeDefinition=4" name="getTsfWhLeg"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getTsfWhLegResponse;XSDComplexTypeDefinition=5" name="getTsfWhLegResponse"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getPOInfo;XSDComplexTypeDefinition=6" name="getPOInfo"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd#//getPOInfoResponse;XSDComplexTypeDefinition=7" name="getPOInfoResponse"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema11.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPORef/v1">
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema11.xsd#//ExtOfNBPORef;XSDElementDeclaration" name="ExtOfNBPORef"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema1.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/integration/services/exception/v1">
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema1.xsd#//BusinessProblemDetail;XSDElementDeclaration" name="BusinessProblemDetail"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema1.xsd#//EntityNotFoundWSFaultException;XSDElementDeclaration=1" name="EntityNotFoundWSFaultException"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema1.xsd#//IllegalArgumentWSFaultException;XSDElementDeclaration=2" name="IllegalArgumentWSFaultException"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema1.xsd#//IllegalStateWSFaultException;XSDElementDeclaration=3" name="IllegalStateWSFaultException"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema1.xsd#//ProblemDetailEntry;XSDElementDeclaration=4" name="ProblemDetailEntry"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema1.xsd#//ServiceOpFaultReason;XSDElementDeclaration=5" name="ServiceOpFaultReason"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema1.xsd#//ValidationWSFaultException;XSDElementDeclaration=6" name="ValidationWSFaultException"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema10.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1">
+    <import name="NBASNService_InlineSchema3.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema10.xsd#//ExtOfNBFactoryAddr;XSDElementDeclaration" name="ExtOfNBFactoryAddr"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema10.xsd#//ExtOfNBItemBarcode;XSDElementDeclaration=1" name="ExtOfNBItemBarcode"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema10.xsd#//ExtOfNBPODesc;XSDElementDeclaration=2" name="ExtOfNBPODesc"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema10.xsd#//ExtOfNBPODtl;XSDElementDeclaration=3" name="ExtOfNBPODtl"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema10.xsd#//ExtOfNBSupplierAddr;XSDElementDeclaration=4" name="ExtOfNBSupplierAddr"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema10.xsd#//ExtOfNbPoSku;XSDElementDeclaration=5" name="ExtOfNbPoSku"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService.xsd" prefix="tns" targetNamespace="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1">
+    <include name="/LIB_RMS_API_NBASNService/NBASNService_InlineSchema2.xsd" targetNamespace="http://www.oracle.com/retail/primark/integration/services/NBASNService/v1"/>
+    <import name="NBASNService_InlineSchema11.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPORef/v1"/>
+    <import name="NBASNService_InlineSchema10.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1"/>
+    <import name="NBASNService_InlineSchema9.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBLocDesc/v1"/>
+    <import name="NBASNService_InlineSchema8.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegDesc/v1"/>
+    <import name="NBASNService_InlineSchema7.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegRef/v1"/>
+    <import name="NBASNService_InlineSchema6.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoRef/v1"/>
+    <import name="NBASNService_InlineSchema5.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInfoDesc/v1"/>
+    <import name="NBASNService_InlineSchema4.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoDesc/v1"/>
+    <import name="NBASNService_InlineSchema3.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1"/>
+    <import name="NBASNService_InlineSchema1.xsd" targetNamespace="http://www.oracle.com/retail/integration/services/exception/v1"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema6.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoRef/v1">
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema6.xsd#//ExtOfNBPOInfoRef;XSDElementDeclaration" name="ExtOfNBPOInfoRef"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema8.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegDesc/v1">
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema8.xsd#//ExtOfNBTsfWhLegDesc;XSDElementDeclaration" name="ExtOfNBTsfWhLegDesc"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema4.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPOInfoDesc/v1">
+    <import name="NBASNService_InlineSchema10.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBPODesc/v1"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema4.xsd#//ExtOfNBPOInfoDesc;XSDElementDeclaration" name="ExtOfNBPOInfoDesc"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema9.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBLocDesc/v1">
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema9.xsd#//ExtOfNBLocDesc;XSDElementDeclaration" name="ExtOfNBLocDesc"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/soap.xsd" prefix="" targetNamespace="">
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/soap.xsd#//SOAP_Domain_Msg;XSDElementDeclaration" name="SOAP_Domain_Msg" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{}SOAP_Msg_type"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/soap.xsd#//MIME_Headers_type;XSDComplexTypeDefinition" name="MIME_Headers_type"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/soap.xsd#//Attachment_type;XSDComplexTypeDefinition=1" name="Attachment_type"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/soap.xsd#//SOAP_Msg_type;XSDComplexTypeDefinition=2" name="SOAP_Msg_type"/>
+    <group href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/soap.xsd#//MIME_header_fields;XSDModelGroupDefinition" name="MIME_header_fields"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema7.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBTsfWhLegRef/v1">
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema7.xsd#//ExtOfNBTsfWhLegRef;XSDElementDeclaration" name="ExtOfNBTsfWhLegRef"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd" prefix="xml" targetNamespace="http://www.w3.org/XML/1998/namespace">
+    <attribute href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd#//lang;XSDAttributeDeclaration" name="lang"/>
+    <attribute href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd#//space;XSDAttributeDeclaration=1" name="space"/>
+    <attribute href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd#//base;XSDAttributeDeclaration=2" name="base"/>
+    <attributeGroup href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd#//specialAttrs;XSDAttributeGroupDefinition" name="specialAttrs"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema3.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBAddrDesc/v1">
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema3.xsd#//ExtOfNBAddrDesc;XSDElementDeclaration" name="ExtOfNBAddrDesc"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd" prefix="tns" targetNamespace="http://schemas.xmlsoap.org/soap/envelope/">
+    <import name="IBMdefined/org/w3/www/xml/_1998/namespace/xml.xsd" targetNamespace="http://www.w3.org/XML/1998/namespace"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Envelope;XSDElementDeclaration" name="Envelope" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://schemas.xmlsoap.org/soap/envelope/}Envelope"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Header;XSDElementDeclaration=1" name="Header" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://schemas.xmlsoap.org/soap/envelope/}Header"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Body;XSDElementDeclaration=2" name="Body" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Fault;XSDElementDeclaration=3" name="Fault" type="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://schemas.xmlsoap.org/soap/envelope/}Fault"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Envelope;XSDComplexTypeDefinition" name="Envelope"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Header;XSDComplexTypeDefinition=1" name="Header"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Body;XSDComplexTypeDefinition=2" name="Body"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//Fault;XSDComplexTypeDefinition=3" name="Fault"/>
+    <complexType href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//FaultString;XSDComplexTypeDefinition=4" name="FaultString"/>
+    <complexType baseType="mlib://LIB_RMS_API_NBASNService#/-/complexType{http://www.w3.org/2001/XMLSchema}anyType" href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//detail;XSDComplexTypeDefinition=5" name="detail"/>
+    <simpleType href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//encodingStyle;XSDSimpleTypeDefinition" name="encodingStyle" variety="list"/>
+    <attribute href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//mustUnderstand;XSDAttributeDeclaration" name="mustUnderstand"/>
+    <attribute href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//actor;XSDAttributeDeclaration=1" name="actor"/>
+    <attribute href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//encodingStyle;XSDAttributeDeclaration=2" name="encodingStyle"/>
+    <attributeGroup href="platform:/resource/LIB_RMS_API_NBASNService/IBMdefined/org/xmlsoap/schemas/soap/envelope/soapenv11.xsd#//encodingStyle;XSDAttributeGroupDefinition" name="encodingStyle"/>
+  </XSDCollection>
+  <XSDCollection href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema5.xsd" prefix="" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBASNInfoDesc/v1">
+    <import name="NBASNService_InlineSchema9.xsd" targetNamespace="http://www.oracle.com/retail/integration/custom/bo/ExtOfNBLocDesc/v1"/>
+    <element href="platform:/resource/LIB_RMS_API_NBASNService/NBASNService_InlineSchema5.xsd#//ExtOfNBASNInfoDesc;XSDElementDeclaration" name="ExtOfNBASNInfoDesc"/>
+  </XSDCollection>
+</MessageBroker>
