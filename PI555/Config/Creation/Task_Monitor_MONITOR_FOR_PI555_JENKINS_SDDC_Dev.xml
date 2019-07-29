@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<request version="4.00" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:noNamespaceSchemaLocation="FileTransfer.xsd">
+   <managedTransfer>
+     <originator>
+       <hostName>172.23.11.81</hostName>
+       <userID>mqm</userID>
+     </originator>
+     <sourceAgent agent="JENKINS_TEST" QMgr="QDD2MFT1" />
+     <destinationAgent agent="WIN_STUB_SVER" QMgr="QDD2MFT1" />
+     <transferSet>
+       <item mode="binary" checksumMethod="MD5">
+         <source type="queue">
+           <queue useGroups="true" groupId="${GroupId}">Jenkins.MFT.Queue</queue>
+         </source>
+         <destination type="file" exist="overwrite">
+           <file>172.19.92.24:/C://MPE_FTP//MPE_DEV//AOM//${MQFTEFileName}</file>
+         </destination>
+       </item>
+     </transferSet>
+	 <job>
+		<name>MONITOR_FOR_PI555_JENKINS</name>
+	</job>
+   </managedTransfer>
+</request>

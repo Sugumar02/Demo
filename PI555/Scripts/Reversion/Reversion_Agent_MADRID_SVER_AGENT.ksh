@@ -1,0 +1,2 @@
+fteStopAgent  –p QDL2MFT1 IPP_CLIENT_AGENT
+ fteDeleteAgent –p QDL2MFT1 IPP_CLIENT_AGENT

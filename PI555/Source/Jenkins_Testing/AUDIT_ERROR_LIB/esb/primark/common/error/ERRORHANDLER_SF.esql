@@ -1,0 +1,420 @@
+BROKER SCHEMA esb.primark.common.error
+
+/* 
+ * Filename coeint_generic_errorflow.esql
+ * @author Tata Consultancy Services.
+ * © Copyright 2010 by TCS.  
+ * This Program is the property of TCS COE and may not be used in 
+ * whole, or in part without express permission of TCS COE
+ * Date	         Name			Version			Description
+ * TBC			 TCS			0.1 			Initial Version
+ * 
+ */
+DECLARE ProjectName EXTERNAL CHARACTER '';
+DECLARE SourceAppln EXTERNAL CHARACTER '';
+DECLARE TargetAppln EXTERNAL CHARACTER '';
+DECLARE InterfaceName EXTERNAL CHARACTER '';
+DECLARE InterfaceId EXTERNAL CHARACTER '';
+DECLARE LoggingType EXTERNAL CHARACTER ''; 
+DECLARE LoggingDBSchemaName EXTERNAL CHARACTER 'dbo';
+DECLARE IsRethrowable EXTERNAL CHARACTER 'NO';
+DECLARE EmailErrorMessageString EXTERNAL CHARACTER 'Error Report';
+DECLARE EmailFrom EXTERNAL CHARACTER '';
+DECLARE EmailToIf_DBDown EXTERNAL CHARACTER '';
+DECLARE Emailcc EXTERNAL CHARACTER '';
+DECLARE Severity EXTERNAL CHARACTER '';
+DECLARE FailedMessageRequired EXTERNAL CHARACTER '';
+DECLARE COE NAMESPACE 'http://w3c.com/schema/LogMessageV1';
+
+CREATE COMPUTE MODULE EnhancedGenericErrorhandlerFlow_RestructureFailureMessage
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- Set Message Header
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+		
+		SET OutputRoot.XMLNSC.ErrorMessage.ActualMessage = InputBody;
+		SET OutputRoot.XMLNSC.ErrorMessage.ExceptionList = InputExceptionList;
+		
+		RETURN TRUE;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE EnhancedGenericErrorhandlerFlow_GenerateErrorAndEmailMessage
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+	       CALL CopyMessageHeaders();
+		-- Variable declaration 
+		  
+			DECLARE DetailedErrorMsg CHARACTER ' '; 
+			DECLARE DetailedErrorMsgWithDBExpectedLength CHARACTER ' '; 
+			DECLARE ErrorNumber INTEGER 0;
+			DECLARE ErrorType CHARACTER '';
+			DECLARE SeverityLevel INTEGER;
+			DECLARE ErrorLocation CHARACTER '';
+			DECLARE ErrorDiagnosticInfo CHARACTER '';
+			DECLARE ExceptionMsgBLOB BLOB;	
+			DECLARE MsgId BLOB;
+			DECLARE PutDate CHARACTER '';
+			DECLARE PutTime CHARACTER '';
+			
+			DECLARE SourceQueue CHARACTER '';
+			DECLARE ReplyToQMgr CHARACTER '';	
+			DECLARE EncodingValue INTEGER InputRoot.Properties.Encoding;
+			DECLARE CcsidValue INTEGER InputRoot.Properties.CodedCharSetId;
+	   	---------------------------------------------------------------------------------------------------------------
+		-- IF MQMD header is not present in the input message 
+		-- which may be the case in NON MQ Messages
+		-- for e.g. FileInput messages, then we need to set some default values.
+			IF FIELDNAME(InputRoot.[>2]) = 'MQMD' THEN
+				
+				DECLARE InRef REFERENCE TO InputRoot.MQMD;
+	
+		
+	-- IF MQMD header is not present in the input message which may be the case in NON MQ Messages
+	-- for e.g. FileInput messages, then we need to set some default values.
+		
+			SET MsgId = COALESCE(InRef.MsgId,CAST(SUBSTRING(CAST(CURRENT_TIMESTAMP AS CHARACTER)FROM 4)AS BLOB CCSID COALESCE(InputProperties.CodedCharSetId,1208)));
+			SET PutDate = COALESCE(InRef.PutDate,CAST(CURRENT_DATE AS CHARACTER));
+			SET PutTime = COALESCE(InRef.PutTime,SUBSTRING(CAST(CURRENT_TIME AS CHARACTER)FROM 1 FOR 21)||''''); 
+			SET SourceQueue = COALESCE(InRef.SourceQueue,'');
+			SET ReplyToQMgr = COALESCE(InRef.ReplyToQMgr,'');			
+			
+		ELSE IF FIELDNAME(InputRoot.[>3]) = 'SOAP' THEN
+
+		DECLARE SoapRef REFERENCE TO InputRoot.SOAP;
+		    IF OutputRoot.Properties.IdentitySourceType=NULL OR OutputRoot.Properties.IdentitySourceType=''  THEN
+		    	SET OutputRoot.Properties.IdentitySourceType='usernameAndPassword';
+		    END IF;	
+		    IF NOT EXISTS(Environment.Variables.BussinessInfo.MessageId[]) THEN
+            	SET Environment.Variables.BussinessInfo.MessageId='Blank/Invalid Message';
+            END IF;
+			SET MsgId = COALESCE(SoapRef.Body,CAST(SUBSTRING(CAST(CURRENT_TIMESTAMP AS CHARACTER)FROM 4)AS BLOB CCSID InputProperties.CodedCharSetId));
+			SET PutDate = COALESCE(SoapRef.Context,CAST(CURRENT_DATE AS CHARACTER));
+			SET PutTime = COALESCE(SoapRef.PutTime,SUBSTRING(CAST(CURRENT_TIME AS CHARACTER)FROM 1 FOR 21)||'''');
+			SET SourceQueue = COALESCE(InputRoot.HTTPInputHeader."X-Original-HTTP-Command"); 
+			SET ReplyToQMgr = CAST(Environment.Destination.SOAP.Reply.ReplyIdentifier AS CHARACTER);
+			DELETE FIELD OutputRoot.HTTPInputHeader;
+			
+		ELSE IF FIELDVALUE(InputRoot.Properties.ReplyProtocol) = 'FILE' THEN
+			SET MsgId = COALESCE(CAST(InputLocalEnvironment.File.Name AS BLOB CCSID InputProperties.CodedCharSetId),CAST(SUBSTRING(CAST(CURRENT_TIMESTAMP AS CHARACTER)FROM 4)AS BLOB CCSID InputProperties.CodedCharSetId));
+			SET PutDate = COALESCE(InputRoot.Properties.CreationTime,CAST(CURRENT_DATE AS CHARACTER));
+			SET PutTime = COALESCE(InputRoot.Properties.CreationTime,SUBSTRING(CAST(CURRENT_TIME AS CHARACTER)FROM 1 FOR 21)||'''');
+			SET SourceQueue = COALESCE(InputLocalEnvironment.File.Directory); 
+			SET ReplyToQMgr = CAST(InputRoot.Properties.ReplyIdentifier AS CHARACTER);
+			
+		ELSE
+			SET MsgId = COALESCE(InputRoot.Properties.ReplyIdentifier,CAST(SUBSTRING(CAST(CURRENT_TIMESTAMP AS CHARACTER) FROM 4) AS BLOB CCSID COALESCE(CcsidValue,1208)));
+			SET PutDate = COALESCE(SUBSTRING(CAST(InputRoot.Properties.CreationTime AS CHARACTER) FROM 12 FOR 10),CAST(CURRENT_DATE AS CHARACTER));
+			SET PutTime = COALESCE(SUBSTRING(CAST(InputRoot.Properties.CreationTime AS CHARACTER) FROM 24 FOR 12),SUBSTRING(CAST(CURRENT_TIME AS CHARACTER)FROM 1 FOR 21)||'''');
+			SET SourceQueue = COALESCE(InputRoot.Properties.ReplyProtocol,'');
+			SET ReplyToQMgr = COALESCE(InputRoot.Properties.ReplyProtocol,'');	
+			END IF;		
+			END IF;	
+			END IF;		
+		---------------------------------------------------------------------------------------------------------------
+        -- To delete the HTTPInputHeader in outputroot and set username&passsword properties
+        IF FIELDNAME(InputRoot.[>2]) = 'HTTPInputHeader' THEN
+        	SET SourceQueue = COALESCE(InputRoot.HTTPInputHeader."X-Original-HTTP-Command"); 
+			SET ReplyToQMgr = CAST(Environment.Destination.HTTP.RequestIdentifier AS CHARACTER);
+            IF OutputRoot.Properties.IdentitySourceType=NULL OR OutputRoot.Properties.IdentitySourceType=''  THEN
+		    SET OutputRoot.Properties.IdentitySourceType='usernameAndPassword';
+		    END IF;	
+		    IF NOT EXISTS(Environment.Variables.BussinessInfo.MessageId[]) THEN
+            	SET Environment.Variables.BussinessInfo.MessageId='Blank/Invalid Message';
+            END IF;
+		    DELETE FIELD OutputRoot.HTTPInputHeader;
+        END IF;	
+
+
+		-- Extract Error details from ExceptionList tree
+			DECLARE ExceptionMessageLengthOK BOOLEAN FALSE;
+			DECLARE Ref_ExceptionPath REFERENCE TO InputExceptionList.*[1];
+
+			WHILE LASTMOVE(Ref_ExceptionPath) DO
+				-- If the ExceptionMessage length is less than 2300 then take the complete tree.
+				-- If the ExceptionMessage length is more than 2300 then take the outermost tree whose length is less than 2300
+				-- If the ExceptionMessage length is more than 2300 for even the innermost tree, take the last 2300 characters from it.
+				IF (ExceptionMessageLengthOK = FALSE) THEN
+					CREATE FIELD OutputRoot.XMLNSC.Message.ExceptionInformation;
+					SET OutputRoot.XMLNSC.Message.ExceptionInformation = Ref_ExceptionPath;
+					SET ExceptionMsgBLOB = ASBITSTREAM(OutputRoot.XMLNSC.Message.ExceptionInformation,EncodingValue,COALESCE(CcsidValue,1208),'','','',FolderBitStream); 
+					SET OutputRoot.XMLNSC = NULL;
+				
+					SET DetailedErrorMsg = CAST(ExceptionMsgBLOB AS CHARACTER CCSID 1208);
+		
+					SET DetailedErrorMsgWithDBExpectedLength = DetailedErrorMsg;
+					IF LENGTH(DetailedErrorMsg) < 2300 THEN 
+						SET ExceptionMessageLengthOK = TRUE;
+					END IF;
+				END IF;				
+			
+				IF NULLIF(Ref_ExceptionPath.Number,'') IS NOT NULL THEN
+					-- Remember only the deepest error number 
+					SET ErrorNumber = Ref_ExceptionPath.Number;
+				END IF;
+			
+				IF NULLIF(Ref_ExceptionPath.Label,'') IS NOT NULL THEN
+					-- Remember only the deepest error label 
+					SET ErrorLocation = Ref_ExceptionPath.Label;
+
+					-- Remember only the deepest error type 
+					SET ErrorType = FIELDNAME(Ref_ExceptionPath);
+
+					--Setting the severity level
+					SET SeverityLevel = Ref_ExceptionPath.Severity;
+
+					-- Append all error details to ErrorDiagnosticInfo
+					SET ErrorDiagnosticInfo = ErrorDiagnosticInfo || Ref_ExceptionPath.Text || '/ ';
+				END IF;	
+			
+				--------------------
+				IF Ref_ExceptionPath.Insert.Text IS NOT NULL THEN
+					DECLARE IncrementalCounter_Insert INTEGER 1;
+					DECLARE CardinalityCounter_Insert INTEGER CARDINALITY(Ref_ExceptionPath.Insert[]);
+				
+					WHILE (IncrementalCounter_Insert <= CardinalityCounter_Insert) DO					
+						SET ErrorDiagnosticInfo = ErrorDiagnosticInfo || COALESCE(Ref_ExceptionPath.Insert[IncrementalCounter_Insert].Text,'') || '/ ';
+						SET IncrementalCounter_Insert = IncrementalCounter_Insert + 1; 
+					END WHILE;			
+				END IF;	
+				--------------------
+			
+				IF ErrorNumber = 2667 AND Ref_ExceptionPath.Insert.Text IS NOT NULL THEN
+					DECLARE CardinalityCounter INTEGER;
+					DECLARE IncrementalCounter INTEGER 1;
+			
+					SET CardinalityCounter = CARDINALITY(Ref_ExceptionPath.Insert[]);
+				
+					INSERTLOOP : WHILE (IncrementalCounter <= CardinalityCounter) DO
+						IF LENGTH(Ref_ExceptionPath.Insert[IncrementalCounter].Text) = 6 THEN
+							IF LENGTH(Ref_ExceptionPath.Insert[IncrementalCounter+1].Text) = 4 THEN
+								SET ErrorNumber = Ref_ExceptionPath.Insert[IncrementalCounter+1].Text;
+								LEAVE INSERTLOOP;
+							END IF;
+						END IF;
+						SET IncrementalCounter = IncrementalCounter + 1; 
+					END WHILE INSERTLOOP;				
+				END IF;		
+				
+				MOVE Ref_ExceptionPath LASTCHILD;
+			END WHILE;	
+		
+			-- Append ErrorType and ErrorLocation to ErrorDiagnosticInfo
+			SET ErrorDiagnosticInfo = CAST(ErrorType AS CHAR) || ' / ' || CAST(ErrorLocation AS CHAR) || ' / ' || CAST(ErrorDiagnosticInfo AS CHAR); 
+								
+			--------------
+			-- Variable Declaration 
+			DECLARE OutputMessageBLOB BLOB;
+			DECLARE OutputHeadersBLOB BLOB;	
+			DECLARE DomainValue CHARACTER;
+		
+			-- IF MQMD header is not present in the input message which may be the case in NON MQ Messages
+			-- for e.g. FileInput messages, then we need to set some default values.
+			SET DomainValue = FIELDNAME(InputRoot.[<]);
+		
+			--  Create output message body BLOB
+			IF UPPER(DomainValue) = 'MRM' THEN 
+				SET OutputMessageBLOB = cast(ASBITSTREAM(InputRoot.MRM,EncodingValue,
+										CcsidValue,'ia9f_BLOB','BLOB_BO','CwXML')AS CHARACTER);
+			ELSEIF UPPER(DomainValue) = 'XMLNSC' THEN 
+				SET OutputMessageBLOB = cast(ASBITSTREAM(InputRoot.XMLNSC,EncodingValue,
+										CcsidValue,'ia9f_BLOB','BLOB_BO','CwXML')AS CHARACTER);
+			ELSEIF EXISTS(InputLocalEnvironment.TimeoutRequest[]) THEN 
+				SET OutputMessageBLOB = cast(Environment.Variables.OriginalMessage AS BLOB CCSID 1208);						
+			ELSE 
+				SET OutputMessageBLOB = cast(ASBITSTREAM(InputRoot.[<],COALESCE(EncodingValue,437),
+										COALESCE(CcsidValue,1208))AS CHARACTER);
+			END IF;
+
+		--  Create output message headers BLOB AND Message related information (Metadata of message)
+			DECLARE MessageRelatedInfo CHARACTER;
+			DECLARE MidSeparator CHARACTER ',';
+			DECLARE Separator CHARACTER ':';
+			DECLARE TempOutputHeadersBLOB BLOB;	
+			DECLARE NameOfField CHARACTER;
+			DECLARE FieldLength INTEGER 0;
+			DECLARE lengthofBlob INTEGER 0;	
+		
+			DECLARE IncrementalCounter INTEGER 1;
+			DECLARE CardinalityCounter INTEGER;
+			
+			SET CardinalityCounter = CARDINALITY(InputRoot.*[]);
+			WHILE (IncrementalCounter < CardinalityCounter) DO
+				SET NameOfField = FIELDNAME(InputRoot.[IncrementalCounter]);			
+				SET TempOutputHeadersBLOB = ASBITSTREAM(InputRoot.{NameOfField}, COALESCE(EncodingValue,437), COALESCE(CcsidValue,1208));			
+				SET FieldLength = LENGTH(TempOutputHeadersBLOB);
+				SEt lengthofBlob= LENGTH(OutputHeadersBLOB);			
+			
+				IF (OutputHeadersBLOB IS NULL AND FieldLength <> 0) THEN
+					SET OutputHeadersBLOB = TempOutputHeadersBLOB;
+				ELSEIF (OutputHeadersBLOB IS NOT NULL AND FieldLength <> 0) THEN
+					SET OutputHeadersBLOB = OutputHeadersBLOB || TempOutputHeadersBLOB;
+				END IF;
+	
+				SET IncrementalCounter = IncrementalCounter + 1;
+			END WHILE;
+	
+		-- For Removing HTTPResponseHeader from the OutputRoot as per email xml structure.
+	
+			SET CardinalityCounter = CARDINALITY(OutputRoot.[]);
+			SET IncrementalCounter = 1;
+			SET NameOfField = '';
+
+			WHILE (IncrementalCounter <= CardinalityCounter AND NameOfField <> 'HTTPResponseHeader') DO
+				SET NameOfField = FIELDNAME(OutputRoot.[IncrementalCounter]);
+				SET IncrementalCounter= IncrementalCounter +1 ;			
+			END WHILE;	
+
+			IF  (NameOfField = 'HTTPResponseHeader') THEN
+				SET IncrementalCounter = 1;
+				SET CardinalityCounter = CARDINALITY(OutputRoot.HTTPResponseHeader.[]);
+
+				WHILE (IncrementalCounter <= CardinalityCounter) DO
+					SET ErrorDiagnosticInfo = ErrorDiagnosticInfo || ' ' || FIELDNAME(OutputRoot.HTTPResponseHeader.[IncrementalCounter])
+						|| ' ' || CAST(COALESCE(OutputRoot.HTTPResponseHeader.[IncrementalCounter],'') AS CHARACTER) || ',';
+					SET IncrementalCounter= IncrementalCounter +1 ; 
+				END WHILE;
+
+			END IF;
+		
+			SET OutputRoot.HTTPResponseHeader = NULL;
+		--------------
+		
+		
+			
+		-- Create the output ERROR_LOG_MSG message. These details will be sent to 'MW_ERROR_LOG' table 
+			CREATE FIELD OutputRoot.MQMD;
+		    SET OutputRoot.MQMD = '';
+			
+			CREATE FIELD OutputRoot.XMLNSC.LogMessage;
+			
+			SET OutputRoot.XMLNSC.LogMessage.(XMLNSC.NamespaceDecl)xmlns:COE = COE;
+			DECLARE OutRef REFERENCE To OutputRoot.XMLNSC.LogMessage;
+
+		--GenericMetadata Specific Details	
+
+			SET OutRef.COE:GenericMetadata.COE:MessageType = 'Exception_Message';
+			SET OutRef.COE:GenericMetadata.COE:TimeStamp = CAST(CURRENT_TIMESTAMP AS CHARACTER FORMAT 'yyyy-MM-dd HH:mm:ss.SSSSSS');
+			SET OutRef.COE:GenericMetadata.COE:GlobalTransactionId = COALESCE(MsgId,'');
+			SET OutRef.COE:GenericMetadata.COE:LocalTransactionId = MsgId;
+			SET OutRef.COE:GenericMetadata.COE:ParentTransactionId = COALESCE(MsgId,'');
+			SET OutRef.COE:GenericMetadata.COE:ProjectName = ProjectName;
+			SET OutRef.COE:GenericMetadata.COE:InterfaceId = InterfaceId;
+			SET OutRef.COE:GenericMetadata.COE:InterfaceName = InterfaceName;
+			SET OutRef.COE:GenericMetadata.COE:SourceApp = SourceAppln;
+			SET OutRef.COE:GenericMetadata.COE:DestinationApp = TargetAppln;
+			SET OutRef.COE:GenericMetadata.COE:MessageId = Environment.Variables.BussinessInfo.MessageId;
+			SET OutRef.COE:GenericMetadata.COE:Misc = Environment.Variables.BussinessInfo.Misc;
+			SET OutRef.COE:GenericMetadata.COE:AuditType = 'Exception_Audit' ;
+
+		-- Technology Specific Details
+		
+			SET OutRef.COE:TechnologySpecific.COE:ToolName = 'IIB';
+			SET OutRef.COE:TechnologySpecific.COE:BrokerName = BrokerName;
+			SET OutRef.COE:TechnologySpecific.COE:BrokerFamily = Family;
+			SET OutRef.COE:TechnologySpecific.COE:ExecutionGroup = ExecutionGroupLabel;
+			SET OutRef.COE:TechnologySpecific.COE:QueueManager = QueueManagerName;
+			SET OutRef.COE:TechnologySpecific.COE:InputQueue = SourceQueue ;
+			SET OutRef.COE:TechnologySpecific.COE:MsgFlow = MessageFlowLabel;
+		
+		--Implementation Specific Details
+		
+			SET OutRef.COE:ImplementationSpecific.COE:LoggingPatternInfo[1].(XMLNSC.Attribute) name = 'IsPersisitant';
+			SET OutRef.COE:ImplementationSpecific.COE:LoggingPatternInfo[1] = 'TRUE';
+			SET OutRef.COE:ImplementationSpecific.COE:LoggingPatternInfo[2].(XMLNSC.Attribute) name = 'LoggingType';
+			SET OutRef.COE:ImplementationSpecific.COE:LoggingPatternInfo[2] = LoggingType;
+		
+		--Exception Information
+			SET OutRef.COE:ImplementationSpecific.COE:ExceptionInformation.COE:ExceptionNumber = ErrorNumber;
+			SET OutRef.COE:ImplementationSpecific.COE:ExceptionInformation.COE:Severity = Severity;
+			SET OutRef.COE:ImplementationSpecific.COE:ExceptionInformation.COE:Category = ErrorType;
+			SET OutRef.COE:ImplementationSpecific.COE:ExceptionInformation.COE:DetailErrorMessage = DetailedErrorMsg;
+			SET OutRef.COE:ImplementationSpecific.COE:ExceptionInformation.COE:ErrorSource = ErrorLocation;
+			SET OutRef.COE:ImplementationSpecific.COE:ExceptionInformation.COE:KeyIdentifier = Environment.Variables.ErrorKeyIdentifier;
+			IF FailedMessageRequired = 'Y' THEN
+			SET OutRef.COE:ImplementationSpecific.COE:ExceptionInformation.COE:OriginalMessage = CAST(OutputMessageBLOB AS CHARACTER CCSID COALESCE(CcsidValue,1208));
+			END IF;
+			SET OutRef.COE:ImplementationSpecific.COE:ExceptionInformation.COE:MessageHeader = CAST(OutputHeadersBLOB AS CHARACTER);
+         
+			PROPAGATE TO TERMINAL 'out' DELETE NONE; 
+			SET OutputRoot.XMLNSC = NULL;	
+
+			--In order to raise alert for IIB flow exceptions having nodes other than MQ as source(ex;HTTP/SOAP/FILE nodes etc),
+			--additionally messageid,exception list and original message will be backed out 
+			--to the queue dynamically of format ESB.USER.<<InterfaceId>>.BAK
+			IF FIELDVALUE(InputRoot.Properties.ReplyProtocol) <> 'FILE' AND MessageFlowLabel <> 'esb.primark.common.cherwell.ESB_CHERWELL_INCIDENT_CREATION_MF' AND (FIELDNAME(InputRoot.[>2]) IS NULL OR FIELDNAME(InputRoot.[>2]) <> 'MQMD') THEN
+				DELETE FIELD OutputRoot.XMLNSC;
+				CREATE FIELD OutputRoot.XMLNSC;
+				CREATE FIELD OutputRoot.XMLNSC.RollbackMessage;
+				DECLARE rollbackRef REFERENCE TO OutputRoot.XMLNSC.RollbackMessage;
+				SET rollbackRef.MessageId = Environment.Variables.BussinessInfo.MessageId;
+				SET rollbackRef.ExceptionMessage = InputExceptionList;
+				IF EXISTS(Environment.Variables.OriginalMessage[]) THEN
+					SET rollbackRef.OriginalMessage = Environment.Variables.OriginalMessage;
+				ELSE
+					SET rollbackRef.OriginalMessage = InputBody;	
+				END IF;
+				SET OutputLocalEnvironment.Destination.MQ.DestinationData[1].queueName = 'ESB.USER.'||TRIM(InterfaceId)||'.BAK';
+				PROPAGATE TO TERMINAL 'out2' DELETE NONE;
+				DELETE FIELD OutputRoot.XMLNSC;
+			END IF;
+
+		-- Generating the Email Output message 
+
+			-- Variable declaration 
+
+			DECLARE EmailBodySeparator CHARACTER ' : ';	
+			DECLARE CR CHAR CAST(CAST(X'0D0A' AS BLOB) AS CHAR CCSID 1208); 
+			DECLARE LF CHAR CAST(CAST(X'0D' AS BLOB) AS CHAR CCSID 1208); 
+			DECLARE CRLF CHARACTER CR||LF; 
+			DECLARE RetriveMailinfo boolean TRUE;
+			DECLARE RetriveStdError boolean TRUE;
+
+			-- Generate output email message XML
+			SET OutputRoot.XMLNSC.EmailMessage.EmailOutputHeader.To = EmailToIf_DBDown;
+			SET OutputRoot.XMLNSC.EmailMessage.EmailOutputHeader.Cc = Emailcc;
+			SET OutputRoot.XMLNSC.EmailMessage.EmailOutputHeader.Bcc = '';
+			SET OutputRoot.XMLNSC.EmailMessage.EmailOutputHeader.From = EmailFrom;	
+			
+			
+			-- Added broker name in the email subject.
+			SET OutputRoot.XMLNSC.EmailMessage.EmailOutputHeader.Subject =  'Broker Name : ' || BrokerName || ' - ' || ProjectName || ' - ' || MessageFlowLabel  || ' - ' || 'Severity : ' || COALESCE(CAST(Severity AS CHARACTER),'') ;
+		
+			SET OutputRoot.XMLNSC.EmailMessage.Body = COALESCE(EmailErrorMessageString,'') || CRLF || '----------' || CRLF || 
+			'Project Name' || EmailBodySeparator || ProjectName || CRLF ||  
+			'Service Name' || EmailBodySeparator || InterfaceName || CRLF || 
+			'Source Application' || EmailBodySeparator || SourceAppln || CRLF || 
+			'Target Application' || EmailBodySeparator || TargetAppln || CRLF || 
+			'Message Id' || EmailBodySeparator || CAST(COALESCE(OutRef.COE:GenericMetadata.COE:MessageId,'') AS CHARACTER) || CRLF || 
+			'Severity' || EmailBodySeparator || COALESCE(CAST(Severity AS CHARACTER),'') || CRLF || 
+			'Participating applications' || EmailBodySeparator || COALESCE(CAST(Environment.Variables.Coeint.MAIL_INFO.SOURCE AS CHARACTER),'') || CRLF || 
+			'Message Timestamp' || EmailBodySeparator || PutDate || ' ' || PutTime || CRLF || 
+			'Error Source' || EmailBodySeparator || 'IIB' || CRLF || 
+			'Error Code' || EmailBodySeparator || COALESCE(CAST(ErrorNumber AS CHARACTER),'') || CRLF || 
+			'Error Diagnostic Info' || EmailBodySeparator || ErrorDiagnosticInfo || CRLF || 
+			'Standard Error Category' || EmailBodySeparator || COALESCE(CAST(ErrorType AS CHARACTER),'') || CRLF || 
+			'Standard Error Description' || EmailBodySeparator || COALESCE(CAST(DetailedErrorMsg AS CHARACTER),'') || CRLF || 
+			'- IIB Administrator';	 
+	
+			PROPAGATE TO TERMINAL 'out1'; 	
+
+			RETURN FALSE;
+			END;	 
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+			DECLARE I INTEGER 1;
+			DECLARE J INTEGER;
+			SET J = CARDINALITY(InputRoot.*[]);
+			WHILE I < J DO
+				SET OutputRoot.*[I] = InputRoot.*[I];
+				SET I = I + 1;
+			END WHILE;
+		END;
+END MODULE;

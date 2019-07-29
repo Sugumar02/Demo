@@ -1,0 +1,2 @@
+fteDeleteMonitor -ma FTE_LOCAL_FTP -mm QDD2MFT1 -mn MONITOR_FOR_PI249_MPE_TLOG
+

@@ -1,0 +1,1 @@
+fteCreateBridgeAgent -agentName MADRID_SVER_AGENT -agentQMgr QDD2BRK1 -bt SFTP -bh <TBC> -bm <TBC> -bfe UTF-8

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmMQInput.msgnode="ComIbmMQInput.msgnode" xmlns:ComIbmMQOutput.msgnode="ComIbmMQOutput.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:esb_primark_common_audit_AUDITLOGGER_SF.subflow="esb/primark/common/audit/AUDITLOGGER_SF.subflow" xmlns:esb_primark_common_error_ERRORHANDLER_SF.subflow="esb/primark/common/error/ERRORHANDLER_SF.subflow"
+    xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="Jenkins_Test.msgflow" nsPrefix="Jenkins_Test.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.InboundPayload" name="InboundPayload" lowerBound="1" defaultValueLiteral="Y">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.InterfaceId" name="InterfaceId" lowerBound="1" defaultValueLiteral="PI555">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.InterfaceName" name="InterfaceName" lowerBound="1" defaultValueLiteral="Jenkins_Testing">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.LoggingType" name="LoggingType" lowerBound="1" defaultValueLiteral="FILE">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.OutboundPayload" name="OutboundPayload" lowerBound="1" defaultValueLiteral="Y">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.ProjectName" name="ProjectName" lowerBound="1" defaultValueLiteral="Jenkins_Dev">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.SourceAppln" name="SourceAppln" lowerBound="1" defaultValueLiteral="XXX">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.TargetAppln" name="TargetAppln" lowerBound="1" defaultValueLiteral="YYY">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Emailcc" name="Emailcc" defaultValueLiteral="ganisha@primark.co.uk">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.EmailErrorMessageString" name="EmailErrorMessageString" lowerBound="1" defaultValueLiteral="EmailErrorMessageString">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.EmailFrom" name="EmailFrom" lowerBound="1" defaultValueLiteral="admin@primark.co.uk">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.EmailToIf_DBDown" name="EmailToIf_DBDown" lowerBound="1" defaultValueLiteral="ganisha@primark.co.uk">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.FailedMessageRequired" name="FailedMessageRequired" lowerBound="1" defaultValueLiteral="Y">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Severity" name="Severity" lowerBound="1" defaultValueLiteral="3">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="Jenkins_Test" bundleName="Jenkins_Test" pluginId="Jenkins_Testing"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/Jenkins_Testing/icons/full/obj16/Jenkins_Test.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/Jenkins_Testing/icons/full/obj30/Jenkins_Test.gif"/>
+    <composition>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="101,175" queueName="Jenkins.Input.Queue1" messageDomainProperty="XMLNSC">
+        <translation xmi:type="utility:ConstantString" string="MQ Input"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="484,114" queueName="Jenkins.Output.Queue1">
+        <translation xmi:type="utility:ConstantString" string="MQ Output"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="293,175" computeExpression="esql://routine/#Jenkins_Test_Compute.Main">
+        <translation xmi:type="utility:ConstantString" string="Compute"/>
+      </nodes>
+      <nodes xmi:type="esb_primark_common_audit_AUDITLOGGER_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_5" location="592,175">
+        <translation xmi:type="utility:ConstantString" string="AUDITLOGGER_SF"/>
+      </nodes>
+      <nodes xmi:type="esb_primark_common_error_ERRORHANDLER_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_6" location="323,72">
+        <translation xmi:type="utility:ConstantString" string="ERRORHANDLER_SF"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out2" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.catch" targetTerminalName="InTerminal.Input"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Auditing" configurable="true" userDefined="true" describedAttribute="Property.InboundPayload">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.InboundPayload" bundleName="esb/primark/common/audit/AUDITLOGGER_SF" pluginId="AUDIT_ERROR_LIB"/>
+        <propertyDescriptor groupName="Group.Auditing" configurable="true" userDefined="true" describedAttribute="Property.InterfaceId">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.InterfaceId" bundleName="esb/primark/common/audit/AUDITLOGGER_SF" pluginId="AUDIT_ERROR_LIB"/>
+          <propertyDescriptor groupName="Group.Auditing" configurable="true" userDefined="true" describedAttribute="Property.InterfaceName">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.InterfaceName" bundleName="esb/primark/common/audit/AUDITLOGGER_SF" pluginId="AUDIT_ERROR_LIB"/>
+            <propertyDescriptor groupName="Group.Auditing" configurable="true" userDefined="true" describedAttribute="Property.LoggingType">
+              <propertyName xmi:type="utility:TranslatableString" key="Property.LoggingType" bundleName="esb/primark/common/audit/AUDITLOGGER_SF" pluginId="AUDIT_ERROR_LIB"/>
+              <propertyDescriptor groupName="Group.Auditing" configurable="true" userDefined="true" describedAttribute="Property.OutboundPayload">
+                <propertyName xmi:type="utility:TranslatableString" key="Property.OutboundPayload" bundleName="esb/primark/common/audit/AUDITLOGGER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                <propertyDescriptor groupName="Group.Auditing" configurable="true" userDefined="true" describedAttribute="Property.ProjectName">
+                  <propertyName xmi:type="utility:TranslatableString" key="Property.ProjectName" bundleName="esb/primark/common/audit/AUDITLOGGER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                  <propertyDescriptor groupName="Group.Auditing" configurable="true" userDefined="true" describedAttribute="Property.SourceAppln">
+                    <propertyName xmi:type="utility:TranslatableString" key="Property.SourceAppln" bundleName="esb/primark/common/audit/AUDITLOGGER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                    <propertyDescriptor groupName="Group.Auditing" configurable="true" userDefined="true" describedAttribute="Property.TargetAppln">
+                      <propertyName xmi:type="utility:TranslatableString" key="Property.TargetAppln" bundleName="esb/primark/common/audit/AUDITLOGGER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                      <propertyDescriptor groupName="Group.ErrorHandling" configurable="true" userDefined="true" describedAttribute="Property.Emailcc">
+                        <propertyName xmi:type="utility:TranslatableString" key="Property.Emailcc" bundleName="esb/primark/common/error/ERRORHANDLER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                        <propertyDescriptor groupName="Group.ErrorHandling" configurable="true" userDefined="true" describedAttribute="Property.EmailErrorMessageString">
+                          <propertyName xmi:type="utility:TranslatableString" key="Property.EmailErrorMessageString" bundleName="esb/primark/common/error/ERRORHANDLER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                          <propertyDescriptor groupName="Group.ErrorHandling" configurable="true" userDefined="true" describedAttribute="Property.EmailFrom">
+                            <propertyName xmi:type="utility:TranslatableString" key="Property.EmailFrom" bundleName="esb/primark/common/error/ERRORHANDLER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                            <propertyDescriptor groupName="Group.ErrorHandling" configurable="true" userDefined="true" describedAttribute="Property.EmailToIf_DBDown">
+                              <propertyName xmi:type="utility:TranslatableString" key="Property.EmailToIf_DBDown" bundleName="esb/primark/common/error/ERRORHANDLER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                              <propertyDescriptor groupName="Group.ErrorHandling" configurable="true" userDefined="true" describedAttribute="Property.FailedMessageRequired">
+                                <propertyName xmi:type="utility:TranslatableString" key="Property.FailedMessageRequired" bundleName="esb/primark/common/error/ERRORHANDLER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                                <propertyDescriptor groupName="Group.ErrorHandling" configurable="true" userDefined="true" describedAttribute="Property.Severity">
+                                  <propertyName xmi:type="utility:TranslatableString" key="Property.Severity" bundleName="esb/primark/common/error/ERRORHANDLER_SF" pluginId="AUDIT_ERROR_LIB"/>
+                                </propertyDescriptor>
+                              </propertyDescriptor>
+                            </propertyDescriptor>
+                          </propertyDescriptor>
+                        </propertyDescriptor>
+                      </propertyDescriptor>
+                    </propertyDescriptor>
+                  </propertyDescriptor>
+                </propertyDescriptor>
+              </propertyDescriptor>
+            </propertyDescriptor>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <attributeLinks promotedAttribute="Property.InboundPayload" overriddenNodes="FCMComposite_1_5">
+      <overriddenAttribute href="esb/primark/common/audit/AUDITLOGGER_SF.subflow#Property.InboundPayload"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.InterfaceId" overriddenNodes="FCMComposite_1_5">
+      <overriddenAttribute href="esb/primark/common/audit/AUDITLOGGER_SF.subflow#Property.InterfaceId"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.InterfaceId" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.InterfaceId"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.InterfaceName" overriddenNodes="FCMComposite_1_5">
+      <overriddenAttribute href="esb/primark/common/audit/AUDITLOGGER_SF.subflow#Property.InterfaceName"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.InterfaceName" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.InterfaceName"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.LoggingType" overriddenNodes="FCMComposite_1_5">
+      <overriddenAttribute href="esb/primark/common/audit/AUDITLOGGER_SF.subflow#Property.LoggingType"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.LoggingType" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.LoggingType"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.OutboundPayload" overriddenNodes="FCMComposite_1_5">
+      <overriddenAttribute href="esb/primark/common/audit/AUDITLOGGER_SF.subflow#Property.OutboundPayload"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.ProjectName" overriddenNodes="FCMComposite_1_5">
+      <overriddenAttribute href="esb/primark/common/audit/AUDITLOGGER_SF.subflow#Property.ProjectName"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.ProjectName" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.ProjectName"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.SourceAppln" overriddenNodes="FCMComposite_1_5">
+      <overriddenAttribute href="esb/primark/common/audit/AUDITLOGGER_SF.subflow#Property.SourceAppln"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.SourceAppln" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.SourceAppln"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.TargetAppln" overriddenNodes="FCMComposite_1_5">
+      <overriddenAttribute href="esb/primark/common/audit/AUDITLOGGER_SF.subflow#Property.TargetAppln"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.TargetAppln" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.TargetAppln"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.Emailcc" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.Emailcc"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.EmailErrorMessageString" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.EmailErrorMessageString"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.EmailFrom" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.EmailFrom"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.EmailToIf_DBDown" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.EmailToIf_DBDown"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.FailedMessageRequired" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.FailedMessageRequired"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.Severity" overriddenNodes="FCMComposite_1_6">
+      <overriddenAttribute href="esb/primark/common/error/ERRORHANDLER_SF.subflow#Property.Severity"/>
+    </attributeLinks>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

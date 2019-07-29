@@ -1,0 +1,198 @@
+BROKER SCHEMA esb.primark.common.audit
+
+DECLARE ProjectName EXTERNAL CHARACTER '';
+DECLARE SourceAppln EXTERNAL CHARACTER '';
+DECLARE TargetAppln EXTERNAL CHARACTER '';
+DECLARE InterfaceName EXTERNAL CHARACTER '';
+DECLARE InterfaceId EXTERNAL CHARACTER '';
+DECLARE LoggingType EXTERNAL CHARACTER ''; 
+DECLARE InboundPayload EXTERNAL CHARACTER '';
+DECLARE OutboundPayload EXTERNAL CHARACTER '';
+DECLARE COE NAMESPACE 'http://w3c.com/schema/LogMessageV1';
+
+CREATE COMPUTE MODULE AUDITLOGGER_SF_Compute 
+	CREATE FUNCTION Main() RETURNS BOOLEAN 
+	BEGIN
+		CALL CopyMessageHeaders();
+	-- Variable Declaration 
+		DECLARE MsgId BLOB;
+		DECLARE PutDate CHARACTER '';
+		DECLARE PutTime CHARACTER '';
+		DECLARE SourceQueue CHARACTER '';
+		DECLARE ReplyToQMgr CHARACTER '';
+		DECLARE OutputMessageBLOB BLOB;
+		DECLARE OutputHeadersBLOB BLOB;		
+		DECLARE CcsidValue INTEGER InputRoot.Properties.CodedCharSetId;
+		DECLARE EncodingValue INTEGER InputRoot.Properties.Encoding;
+		DECLARE DomainValue CHARACTER;
+		DECLARE MessageSet CHARACTER InputRoot.Properties.MessageSet;
+		DECLARE MessageType CHARACTER InputRoot.Properties.MessageType;
+		DECLARE MessageFormat CHARACTER InputRoot.Properties.MessageFormat;
+				
+		IF FIELDNAME(InputRoot.[>2]) = 'MQMD' THEN
+			DECLARE InRef REFERENCE TO InputRoot.MQMD;
+		-- IF MQMD header is present in the input message
+			SET MsgId = COALESCE(InRef.MsgId,CAST(SUBSTRING(CAST(CURRENT_TIMESTAMP AS CHARACTER)FROM 4)AS BLOB CCSID COALESCE(InputProperties.CodedCharSetId,1208)));
+			SET PutDate = COALESCE(InRef.PutDate,CAST(CURRENT_DATE AS CHARACTER));
+			SET PutTime = COALESCE(InRef.PutTime,SUBSTRING(CAST(CURRENT_TIME AS CHARACTER)FROM 1 FOR 21)||''''); 
+			SET SourceQueue = COALESCE(InRef.SourceQueue,'');
+			SET ReplyToQMgr = COALESCE(InRef.ReplyToQMgr,'');			
+			SET DomainValue = FIELDNAME(InputRoot.[<]);
+		
+		ELSE IF FIELDNAME(InputRoot.[>3]) = 'SOAP' THEN
+			 IF OutputRoot.Properties.IdentitySourceType=NULL OR OutputRoot.Properties.IdentitySourceType=''  THEN
+		       SET OutputRoot.Properties.IdentitySourceType='usernameAndPassword';
+		     END IF;	
+			DECLARE SoapRef REFERENCE TO InputRoot.SOAP;
+			SET MsgId = COALESCE(SoapRef.Body,CAST(SUBSTRING(CAST(CURRENT_TIMESTAMP AS CHARACTER)FROM 4)AS BLOB CCSID InputProperties.CodedCharSetId));
+			SET PutDate = COALESCE(SoapRef.Context,CAST(CURRENT_DATE AS CHARACTER));
+			SET PutTime = COALESCE(SoapRef.PutTime,SUBSTRING(CAST(CURRENT_TIME AS CHARACTER)FROM 1 FOR 21)||'''');
+			SET SourceQueue = COALESCE(InputRoot.HTTPInputHeader."X-Original-HTTP-Command"); 
+			SET ReplyToQMgr = CAST(Environment.Destination.SOAP.Reply.ReplyIdentifier AS CHARACTER);
+			--SET OutputMessageBLOB = CAST(ASBITSTREAM(SoapRef.Body) AS CHARACTER);
+			SET DomainValue = CAST(FIELDNAME(InputRoot.[<]) AS CHARACTER);
+			DELETE FIELD OutputRoot.HTTPInputHeader;
+			DELETE FIELD OutputRoot.HTTPResponseHeader;
+
+		ELSE IF FIELDVALUE(InputRoot.Properties.ReplyProtocol) = 'FILE' THEN
+			SET MsgId = COALESCE(CAST(InputLocalEnvironment.File.Name AS BLOB CCSID InputRoot.Properties.CodedCharSetId),CAST(SUBSTRING(CAST(CURRENT_TIMESTAMP AS CHARACTER)FROM 4)AS BLOB CCSID InputRoot.Properties.CodedCharSetId));
+			SET PutDate = COALESCE(InputRoot.Properties.CreationTime,CAST(CURRENT_DATE AS CHARACTER));
+			SET PutTime = COALESCE(InputRoot.Properties.CreationTime,SUBSTRING(CAST(CURRENT_TIME AS CHARACTER)FROM 1 FOR 21)||'''');
+			SET SourceQueue = COALESCE(InputLocalEnvironment.File.Directory);
+			SET OutputMessageBLOB = CAST(ASBITSTREAM(InputBody) AS CHARACTER);
+			SET DomainValue = CAST(FIELDNAME(InputRoot.[<]) AS CHARACTER);
+			
+		ELSE
+			SET MsgId = COALESCE(CAST(SUBSTRING(CAST(CURRENT_TIMESTAMP AS CHARACTER)FROM 4)AS BLOB CCSID COALESCE(InputRoot.Properties.CodedCharSetId,1208)));
+			SET PutDate = COALESCE(CAST(CURRENT_DATE AS CHARACTER));
+			SET PutTime = COALESCE(InputRoot.Properties.CreationTime,SUBSTRING(CAST(CURRENT_TIME AS CHARACTER)FROM 1 FOR 21)||'''');
+			IF FIELDNAME(InputRoot.[>2]) = 'HTTPInputHeader' THEN
+				SET SourceQueue = COALESCE(InputRoot.HTTPInputHeader."X-Original-HTTP-Command"); 
+				SET ReplyToQMgr = CAST(Environment.Destination.HTTP.RequestIdentifier AS CHARACTER);	
+			ELSE
+				SET SourceQueue = COALESCE('');
+				SET ReplyToQMgr = COALESCE(CAST(InputRoot.Properties.ReplyIdentifier AS CHARACTER),'');
+			END IF;
+			SET OutputMessageBLOB = CAST(ASBITSTREAM(InputBody) AS CHARACTER);
+			SET DomainValue = CAST(FIELDNAME(InputRoot.[<]) AS CHARACTER);
+			DELETE FIELD OutputRoot;
+			CREATE FIELD OutputRoot;
+			SET OutputRoot.Properties = InputRoot.Properties;
+			
+		END IF;
+		END IF;
+		END IF;
+		
+		
+	
+		IF UPPER(DomainValue) = 'MRM' THEN 
+				SET OutputMessageBLOB = cast(ASBITSTREAM(InputRoot.MRM,EncodingValue,CcsidValue,MessageSet,MessageType,MessageFormat)AS CHARACTER);
+		ELSEIF UPPER(DomainValue) = 'XMLNSC' THEN 
+				SET OutputMessageBLOB = cast(ASBITSTREAM(InputRoot.XMLNSC,COALESCE(EncodingValue,437),COALESCE(CcsidValue,1208)) AS CHARACTER);		
+		ELSE 
+				SET OutputMessageBLOB = cast(ASBITSTREAM(InputRoot.[<],COALESCE(EncodingValue,437),COALESCE(CcsidValue,1208),MessageSet,MessageType,MessageFormat)AS CHARACTER);
+		END IF;
+
+	--  Create output message headers BLOB AND Message related information (Metadata of message)
+
+		DECLARE MessageRelatedInfo CHARACTER;
+		DECLARE MidSeparator CHARACTER ',';
+		DECLARE Separator CHARACTER ':';
+		DECLARE TempOutputHeadersBLOB BLOB;	
+		DECLARE NameOfField CHARACTER;
+		DECLARE FieldLength INTEGER 0;
+		DECLARE lengthofBlob INTEGER 0;	
+		
+
+		SET MessageRelatedInfo = CAST(COALESCE(NULLIF(CcsidValue,''),1208) AS CHAR) || MidSeparator || CAST(COALESCE(NULLIF(EncodingValue,''),437) AS CHAR) || MidSeparator || DomainValue ||Separator;
+
+		DECLARE IncrementalCounter INTEGER 1;
+		DECLARE CardinalityCounter INTEGER;
+		SET CardinalityCounter = CARDINALITY(InputRoot.*[]);
+		WHILE (IncrementalCounter < CardinalityCounter) DO			
+			SET NameOfField = FIELDNAME(InputRoot.[IncrementalCounter]);			
+			SET TempOutputHeadersBLOB = ASBITSTREAM(InputRoot.{NameOfField},COALESCE(NULLIF(EncodingValue,''),437),COALESCE(NULLIF(CcsidValue,''),1208));			
+			SET FieldLength = LENGTH(TempOutputHeadersBLOB);
+						
+			IF (OutputHeadersBLOB IS NULL AND FieldLength <> 0) THEN
+				SET OutputHeadersBLOB = TempOutputHeadersBLOB;
+			ELSEIF (OutputHeadersBLOB IS NOT NULL AND FieldLength <> 0) THEN
+				SET OutputHeadersBLOB = OutputHeadersBLOB || TempOutputHeadersBLOB;
+			END IF;
+		
+			SET MessageRelatedInfo = MessageRelatedInfo || NameOfField || MidSeparator || CAST(FieldLength AS CHAR) || Separator;				
+			SET IncrementalCounter = IncrementalCounter + 1;
+		END WHILE;
+	
+	--Prepare the Output LOG_MSG message. These details will be sent to 'AUDIT_TABLE' table
+		CREATE FIELD OutputRoot.MQMD;
+		SET OutputRoot.MQMD = '';
+		CREATE FIELD OutputRoot.XMLNSC.LogMessage;
+		SET OutputRoot.XMLNSC.LogMessage.(XMLNSC.NamespaceDecl)xmlns:COE = COE;
+		DECLARE OutRef REFERENCE To OutputRoot.XMLNSC.LogMessage;
+	
+	--Generic Metadata Specific Details
+
+		SET OutRef.COE:GenericMetadata.COE:MessageType = 'Audit_Message';
+		SET OutRef.COE:GenericMetadata.COE:TimeStamp = CAST(CURRENT_TIMESTAMP AS CHARACTER FORMAT 'yyyy-MM-dd HH:mm:ss.SSSSS');
+		SET OutRef.COE:GenericMetadata.COE:GlobalTransactionId = COALESCE(MsgId,'');
+		SET OutRef.COE:GenericMetadata.COE:LocalTransactionId = MsgId;
+		SET OutRef.COE:GenericMetadata.COE:ParentTransactionId = COALESCE(MsgId,'');
+		SET OutRef.COE:GenericMetadata.COE:ProjectName = ProjectName;
+			SET OutRef.COE:GenericMetadata.COE:InterfaceId = InterfaceId;
+		SET OutRef.COE:GenericMetadata.COE:InterfaceName = InterfaceName;
+		SET OutRef.COE:GenericMetadata.COE:SourceApp = SourceAppln;
+		SET OutRef.COE:GenericMetadata.COE:DestinationApp = TargetAppln;
+		SET OutRef.COE:GenericMetadata.COE:MessageId = Environment.Variables.BussinessInfo.MessageId;
+		SET OutRef.COE:GenericMetadata.COE:Misc = Environment.Variables.BussinessInfo.Misc;
+		IF NOT EXISTS(Environment.Variables.AuditType[]) THEN
+		SET OutRef.COE:GenericMetadata.COE:AuditType = COALESCE(Environment.Variables.AuditName,'Inbound_Audit');
+		ELSE
+		SET OutRef.COE:GenericMetadata.COE:AuditType = COALESCE(Environment.Variables.AuditName,'Outbound_Audit') ;
+		END IF;
+		
+	-- Technology Specific Details	
+		SET OutRef.COE:TechnologySpecific.COE:ToolName = 'IIB';
+		SET OutRef.COE:TechnologySpecific.COE:BrokerName = BrokerName;
+		SET OutRef.COE:TechnologySpecific.COE:BrokerFamily = Family;
+		SET OutRef.COE:TechnologySpecific.COE:ExecutionGroup = ExecutionGroupLabel;
+		SET OutRef.COE:TechnologySpecific.COE:QueueManager = QueueManagerName;
+		SET OutRef.COE:TechnologySpecific.COE:InputQueue = SourceQueue ;
+		SET OutRef.COE:TechnologySpecific.COE:MsgFlow = MessageFlowLabel;
+		
+	--Implementation Specific Details
+		SET OutRef.COE:ImplementationSpecific.COE:LoggingPatternInfo[1].(XMLNSC.Attribute) name = 'IsPersisitant';
+		SET OutRef.COE:ImplementationSpecific.COE:LoggingPatternInfo[1] = 'TRUE';
+		SET OutRef.COE:ImplementationSpecific.COE:LoggingPatternInfo[2].(XMLNSC.Attribute) name = 'LoggingType';
+		SET OutRef.COE:ImplementationSpecific.COE:LoggingPatternInfo[2] = LoggingType;
+		
+	-- Audit Information
+	IF NOT EXISTS(Environment.Variables.AuditType[]) AND InboundPayload = 'Y' THEN
+		SET OutRef.COE:ImplementationSpecific.COE:AuditInformation.COE:OriginalMessage = CAST(OutputMessageBLOB AS CHARACTER CCSID 1208);
+		SET Environment.Variables.AuditType = 1;
+	ELSEIF EXISTS(Environment.Variables.AuditType[]) AND OutboundPayload = 'Y' THEN
+		SET OutRef.COE:ImplementationSpecific.COE:AuditInformation.COE:OriginalMessage = CAST(OutputMessageBLOB AS CHARACTER CCSID 1208);
+	ELSEIF NOT EXISTS(Environment.Variables.AuditType[]) AND InboundPayload = 'N' THEN
+		SET Environment.Variables.AuditType = 1;
+	END IF;
+		SET OutRef.COE:ImplementationSpecific.COE:AuditInformation.COE:MessageHeader = CAST(OutputHeadersBLOB AS CHARACTER);
+		SET OutRef.COE:ImplementationSpecific.COE:AuditInformation.COE:KeyIdentifier = Environment.Variables.SessionCode;
+		SET OutRef.COE:ImplementationSpecific.COE:AuditInformation.COE:MessageDetails = MessageRelatedInfo;
+			
+			
+		
+	RETURN TRUE;
+	END;	
+
+
+CREATE PROCEDURE CopyMessageHeaders() BEGIN
+			DECLARE I INTEGER 1;
+			DECLARE J INTEGER;
+			SET J = CARDINALITY(InputRoot.*[]);
+			WHILE I < J DO
+				SET OutputRoot.*[I] = InputRoot.*[I];
+				SET I = I + 1;
+			END WHILE;
+		END;
+	
+END MODULE;
